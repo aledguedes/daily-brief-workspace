@@ -2,13 +2,15 @@
   "name": "daily-brief",
   "version": "0.0.0",
   "scripts": {
-    "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
-    "watch": "ng build --watch --configuration development",
-    "test": "ng test",
-    "serve:ssr:daily-blog": "node dist/daily-blog/server/server.mjs",
-    "serve:ssr:daily-admin": "node dist/daily-admin/server/server.mjs"
+  "ng": "ng",
+  "start": "ng serve",
+  "build": "ng build",
+  "build:ssr:daily-blog": "ng build daily-blog && ng run daily-blog:server",
+  "build:ssr:daily-admin": "ng build daily-admin && ng run daily-admin:server",
+  "watch": "ng build --watch --configuration development",
+  "test": "ng test",
+  "serve:ssr:daily-blog": "node dist/daily-blog/server/server.mjs",
+  "serve:ssr:daily-admin": "node dist/daily-admin/server/server.mjs"
   },
   "private": true,
   "dependencies": {
