@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/daily-blog/browser",
+            "outputPath": "dist/daily-blog",
             "index": "projects/daily-blog/src/index.html",
             "browser": "projects/daily-blog/src/main.ts",
             "polyfills": [
@@ -117,7 +117,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/daily-admin/browser",
+            "outputPath": "dist/daily-admin",
             "index": "projects/daily-admin/src/index.html",
             "browser": "projects/daily-admin/src/main.ts",
             "polyfills": [
