@@ -1,6 +1,18 @@
 {
-  "rewrites": [
-    { "source": "/(.*)", "destination": "/index.html" }
+  "version": 2,
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "dist/daily-admin/browser"
+      }
+    }
   ],
-  "outputDirectory": "dist/daily-blog"
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/dist/daily-admin/browser/$1"
+    }
+  ]
 }
