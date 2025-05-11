@@ -5,10 +5,8 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "build:ssr:daily-blog": "ng build daily-blog && ng run daily-blog:server",
-    "build:ssr:daily-admin": "ng build daily-admin && ng run daily-admin:server",
-    "build:daily-admin": "ng build daily-admin --configuration production",
     "watch": "ng build --watch --configuration development",
+    "build:daily-admin": "ng build daily-admin --configuration production",
     "test": "ng test",
     "serve:ssr:daily-blog": "node dist/daily-blog/server/server.mjs",
     "serve:ssr:daily-admin": "node dist/daily-admin/server/server.mjs"
