@@ -7,7 +7,7 @@
     "build": "ng build",
     "build:ssr:daily-blog": "ng build daily-blog && ng run daily-blog:server",
     "build:ssr:daily-admin": "ng build daily-admin && ng run daily-admin:server",
-    "npm run build -- --configuration=production --output-path=dist/daily-admin",
+    "build:daily-admin": "ng build daily-admin --configuration production"
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "serve:ssr:daily-blog": "node dist/daily-blog/server/server.mjs",
