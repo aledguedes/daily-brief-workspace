@@ -1,0 +1,50 @@
+<header
+  class="h-16 bg-indigo-600 text-white shadow-md flex items-center justify-between px-4 fixed w-full z-50"
+>
+  <div class="flex items-center">
+    <button
+      class="md:hidden text-white hover:bg-indigo-700 p-2 rounded-md"
+      (click)="toggleSidebar()"
+    >
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M4 6h16M4 12h16m-7 6h7"
+        />
+      </svg>
+    </button>
+    <h1 class="text-xl font-bold tracking-tight ml-2">DailyBrief Admin</h1>
+  </div>
+  <div class="flex items-center space-x-4">
+    <nav class="hidden md:flex ml-8 space-x-4">
+      @for (item of navItems; track $index) {
+        <a
+          [routerLink]="item.route"
+          routerLinkActive="bg-indigo-700 text-white"
+          class="flex items-center px-3 py-2 rounded-md hover:bg-indigo-500 transition-all font-medium"
+          [ngClass]="{ 'bg-indigo-700': item.route }"
+        >
+          <i [class]="item.icon"></i>
+          <span class="ml-2">{{ item.title }}</span>
+        </a>
+      }
+    </nav>
+    <select
+      [ngModel]="language()"
+      (ngModelChange)="language.set($event)"
+      class="bg-white text-indigo-600 border-indigo-300 rounded-md px-2 py-1 focus:ring-2 focus:ring-indigo-500 hover:bg-gray-100 transition-all"
+    >
+      <option value="pt">PT</option>
+      <option value="en">EN</option>
+      <option value="es">ES</option>
+    </select>
+    <button
+      class="bg-white text-indigo-600 px-4 py-1 rounded-md hover:bg-gray-100 transition-all"
+      (click)="logout()"
+    >
+      Logout
+    </button>
+  </div>
+</header>
