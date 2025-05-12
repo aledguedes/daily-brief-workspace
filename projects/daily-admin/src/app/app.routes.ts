@@ -18,21 +18,18 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./dashboard/dashboard.component').then((c) => c.DashboardComponent),
       },
-      //     {
-      //       path: 'posts',
-      //       loadComponent: () =>
-      //         import('./posts/posts.component').then(c => c.PostsComponent),
-      //     },
-      //     {
-      //       path: 'users',
-      //       loadComponent: () =>
-      //         import('./users/users.component').then(c => c.UsersComponent),
-      //     },
-      //     {
-      //       path: 'logs',
-      //       loadComponent: () =>
-      //         import('./logs/logs.component').then(c => c.LogsComponent),
-      //     },
+      {
+        path: 'posts',
+        loadComponent: () => import('./posts/posts.component').then((c) => c.PostsComponent),
+      },
+      {
+        path: 'users',
+        loadComponent: () => import('./users/users.component').then((c) => c.UsersComponent),
+      },
+      {
+        path: 'logs',
+        loadComponent: () => import('./logs/logs.component').then((c) => c.LogsComponent),
+      },
     ],
   },
   { path: '**', redirectTo: 'login' },

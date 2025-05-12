@@ -2,23 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { PostService } from '../../services/post.service';
-import { IPost } from '../../../../daily-brief/src/app/model/post.model';
-
-interface Post {
-  id: number;
-  title: { pt: string; en: string; es: string };
-  excerpt: { pt: string; en: string; es: string };
-  content: { pt: string; en: string; es: string };
-  image: string;
-  author: string;
-  tags: string[];
-  category: string;
-  metaDescription: { pt: string; en: string; es: string };
-  affiliateLinks: { pt: string; en: string; es: string };
-  status: 'PENDING' | 'APPROVED' | 'REJECTED';
-  date: string;
-  readTime: string;
-}
+import { IPost } from '../model/post.model';
 
 @Component({
   selector: 'app-posts',
@@ -79,10 +63,7 @@ interface Post {
                 >
                   Approve
                 </button>
-                <button
-                  (click)="rejectPost(post.id)"
-                  class="text-red-600 hover:text-red-900"
-                >
+                <button (click)="rejectPost(post.id)" class="text-red-600 hover:text-red-900">
                   Reject
                 </button>
               </td>
@@ -96,9 +77,7 @@ interface Post {
         <form (submit)="createPost()" class="space-y-4">
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label
-                for="title-pt"
-                class="block text-sm font-medium text-gray-700"
+              <label for="title-pt" class="block text-sm font-medium text-gray-700"
                 >Title (PT)</label
               >
               <input
@@ -111,9 +90,7 @@ interface Post {
               />
             </div>
             <div>
-              <label
-                for="title-en"
-                class="block text-sm font-medium text-gray-700"
+              <label for="title-en" class="block text-sm font-medium text-gray-700"
                 >Title (EN)</label
               >
               <input
@@ -126,9 +103,7 @@ interface Post {
               />
             </div>
             <div>
-              <label
-                for="title-es"
-                class="block text-sm font-medium text-gray-700"
+              <label for="title-es" class="block text-sm font-medium text-gray-700"
                 >Title (ES)</label
               >
               <input
@@ -156,9 +131,9 @@ interface Post {
 })
 export class PostsComponent implements OnInit {
   private postService = inject(PostService);
-  posts: Post[] = [];
+  posts: IPost[] = [];
   currentLanguage: 'pt' | 'en' | 'es' = 'pt';
-  newPost: Post = {
+  newPost: IPost = {
     id: 0,
     title: { pt: '', en: '', es: '' },
     excerpt: { pt: '', en: '', es: '' },
@@ -184,7 +159,7 @@ export class PostsComponent implements OnInit {
         // this.posts = response;
         console.log('GET ALL POSTS RESPONSE', response);
       },
-      error: err => {
+      error: (err) => {
         console.log('GET ALL POSTS ERROR', err);
       },
     });
@@ -204,7 +179,7 @@ export class PostsComponent implements OnInit {
   }
 
   approvePost(postId: number): void {
-    const post = this.posts.find(p => p.id === postId);
+    const post = this.posts.find((p) => p.id === postId);
     if (post) {
       post.status = 'APPROVED';
       console.log(`Post ${postId} approved`);
@@ -212,7 +187,7 @@ export class PostsComponent implements OnInit {
   }
 
   rejectPost(postId: number): void {
-    const post = this.posts.find(p => p.id === postId);
+    const post = this.posts.find((p) => p.id === postId);
     if (post) {
       post.status = 'REJECTED';
       console.log(`Post ${postId} rejected`);

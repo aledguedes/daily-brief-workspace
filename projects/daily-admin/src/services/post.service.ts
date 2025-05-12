@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../environments/environment';
-import { IPost } from '../../../daily-brief/src/app/model/post.model';
+import { IPost } from '../app/model/post.model';
 
 @Injectable({
   providedIn: 'root',
