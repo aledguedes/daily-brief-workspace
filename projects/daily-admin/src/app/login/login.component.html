@@ -28,7 +28,7 @@
               Digite suas credenciais para acessar o painel
             </p>
           </div>
-          <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+          <form [formGroup]="loginForm">
             <div class="space-y-4 px-6">
               <div class="space-y-2">
                 <label for="email" class="text-left block">Email</label>
@@ -63,7 +63,7 @@
                   <button
                     type="button"
                     class="absolute right-0 top-0 h-full px-3 text-gray-500"
-                    (click)="onSubmit()"
+                    (click)="showPassword = !showPassword"
                   >
                     @if (showPassword) {
                       <i class="ri-eye-off-line"></i>
@@ -79,6 +79,7 @@
                 class="w-full bg-blue-600 hover:bg-blue-700 transition-colors text-white text-base rounded-md px-4 py-2 flex items-center justify-center"
                 type="submit"
                 [disabled]="isLoading"
+                (click)="onSubmit()"
               >
                 @if (isLoading) {
                   <svg
@@ -103,7 +104,7 @@
                   </svg>
                   <span>Entrando...</span>
                 } @else {
-                  <i class="ri-eye-line"></i>
+                  <i class="ri-logout-circle-r-line mr-2"></i>
                   <span>Entrar</span>
                 }
               </button>
@@ -120,3 +121,9 @@
     </div>
   </div>
 </div>
+<app-notification
+  [message]="notificationMessage"
+  [type]="notificationType"
+  [show]="notificationShow"
+  [title]="notificationTitle"
+/>

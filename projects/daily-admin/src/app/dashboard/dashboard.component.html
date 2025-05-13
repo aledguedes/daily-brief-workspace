@@ -5,21 +5,12 @@
       <h1 class="text-2xl font-bold tracking-tight">Dashboard</h1>
       <p class="text-muted-foreground">Visão geral do desempenho do blog.</p>
     </div>
-    <button class="md:self-start">
+    <button
+      class="md:self-start bg-indigo-600 text-white font-semibold rounded-md px-4 py-2 flex items-center gap-2 hover:bg-indigo-700 transition"
+    >
       <a routerLink="/posts" class="flex items-center">
         <span>Ver todos os posts</span>
-        <svg
-          class="ml-2 h-4 w-4"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        >
-          <path d="M5 12h14M12 5l7 7-7 7" />
-        </svg>
+        <i class="ri-arrow-right-line ml-2"></i>
       </a>
     </button>
   </div>

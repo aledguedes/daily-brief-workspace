@@ -19,33 +19,38 @@ export class HeaderComponent {
   navItems: IMenu[] = [
     {
       title: 'Dashboard',
-      route: '/',
-      icon: 'ri-dashboard-line h-4 w-4',
+      route: '/home',
+      icon: 'ri-dashboard-line',
     },
     {
       title: 'Posts',
-      route: '/posts',
-      icon: 'ri-signpost-line h-4 w-4',
+      route: '/home/posts',
+      icon: 'ri-signpost-line',
     },
     {
       title: 'Logs',
-      route: '/logs',
-      icon: 'ri-bubble-line h-4 w-4',
+      route: '/home/logs',
+      icon: 'ri-bubble-line',
     },
     {
       title: 'Usuários',
-      route: '/users',
-      icon: 'ri-dashboard-line h-4 w-4',
+      route: '/home/users',
+      icon: 'ri-dashboard-line',
     },
     {
       title: 'Analytics',
-      route: '/analytics',
-      icon: 'ri-user-follow-line h-4 w-4',
+      route: '/home/analytics',
+      icon: 'ri-user-follow-line',
     },
     {
       title: 'Configurações',
-      route: '/settings',
-      icon: 'ri-settings-3-line h-4 w-4',
+      route: '/home/settings',
+      icon: 'ri-settings-3-line',
+    },
+    {
+      title: 'Sair',
+      route: '/',
+      icon: 'ri-logout-circle-line',
     },
   ];
 

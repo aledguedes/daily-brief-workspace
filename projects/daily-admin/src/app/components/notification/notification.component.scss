@@ -1,0 +1,33 @@
+.notification-box {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  left: auto;
+  transform: none;
+  margin-left: 0;
+  margin-right: 0;
+  z-index: 1050;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12);
+}
+.notification-enter {
+  opacity: 0;
+  transform: translateY(-20px);
+}
+.notification-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition:
+    opacity 0.3s,
+    transform 0.3s;
+}
+.notification-leave {
+  opacity: 1;
+  transform: translateY(0);
+}
+.notification-leave-active {
+  opacity: 0;
+  transform: translateY(-20px);
+  transition:
+    opacity 0.3s,
+    transform 0.3s;
+}

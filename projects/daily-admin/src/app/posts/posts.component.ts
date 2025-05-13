@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { PostService } from '../../services/post.service';
 import { IPost } from '../model/post.model';
+import { GenericService } from '../../services/generic.service';
+import { IPagination } from '../../models/pagination.model';
 
 @Component({
   selector: 'app-posts',
@@ -71,7 +73,7 @@ import { IPost } from '../model/post.model';
           </tbody>
         </table>
       </div>
-
+      <!-- 
       <div class="mt-4">
         <h3 class="text-lg font-semibold mb-2">Create New Post</h3>
         <form (submit)="createPost()" class="space-y-4">
@@ -124,7 +126,7 @@ import { IPost } from '../model/post.model';
             Create Post
           </button>
         </form>
-      </div>
+      </div> -->
     </div>
   `,
   styles: [],
@@ -155,8 +157,8 @@ export class PostsComponent implements OnInit {
 
   loadMockData(): void {
     this.postService.getAllPosts().subscribe({
-      next: (response: IPost[]) => {
-        // this.posts = response;
+      next: (response: IPagination<IPost>) => {
+        this.posts = response.content;
         console.log('GET ALL POSTS RESPONSE', response);
       },
       error: (err) => {
