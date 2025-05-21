@@ -1,7 +1,7 @@
 type MultilangText = {
-  pt: string;
-  en: string;
-  es: string;
+  PT: string;
+  EN: string;
+  ES: string;
 };
 
 export interface IPost {

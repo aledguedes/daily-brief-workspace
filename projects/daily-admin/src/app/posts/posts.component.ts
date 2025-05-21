@@ -3,149 +3,40 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { PostService } from '../../services/post.service';
 import { IPost } from '../model/post.model';
-import { GenericService } from '../../services/generic.service';
 import { IPagination } from '../../models/pagination.model';
+import { RouterLink } from '@angular/router';
+import { INotification } from '../model/notification.model';
 
 @Component({
   selector: 'app-posts',
   standalone: true,
-  imports: [CommonModule, FormsModule],
-  template: `
-    <div class="container mx-auto p-4">
-      <h2 class="text-2xl font-bold mb-4">Posts</h2>
-
-      <div class="overflow-x-auto">
-        <table class="min-w-full divide-y divide-gray-200">
-          <thead class="bg-gray-50">
-            <tr>
-              <th
-                scope="col"
-                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-              >
-                ID
-              </th>
-              <th
-                scope="col"
-                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-              >
-                Title
-              </th>
-              <th
-                scope="col"
-                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-              >
-                Status
-              </th>
-              <th
-                scope="col"
-                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-              >
-                Actions
-              </th>
-            </tr>
-          </thead>
-          <tbody class="bg-white divide-y divide-gray-200">
-            <tr *ngFor="let post of posts" class="hover:bg-gray-100">
-              <td class="px-6 py-4 whitespace-nowrap">{{ post.id }}</td>
-              <td class="px-6 py-4 whitespace-nowrap">
-                {{ post.title[currentLanguage] }}
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap">
-                <span
-                  [ngClass]="getStatusClass(post.status)"
-                  class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full"
-                >
-                  {{ post.status }}
-                </span>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap">
-                <button
-                  (click)="approvePost(post.id)"
-                  class="text-green-600 hover:text-green-900 mr-2"
-                >
-                  Approve
-                </button>
-                <button (click)="rejectPost(post.id)" class="text-red-600 hover:text-red-900">
-                  Reject
-                </button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <!-- 
-      <div class="mt-4">
-        <h3 class="text-lg font-semibold mb-2">Create New Post</h3>
-        <form (submit)="createPost()" class="space-y-4">
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label for="title-pt" class="block text-sm font-medium text-gray-700"
-                >Title (PT)</label
-              >
-              <input
-                type="text"
-                id="title-pt"
-                [(ngModel)]="newPost.title.pt"
-                name="title-pt"
-                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                required
-              />
-            </div>
-            <div>
-              <label for="title-en" class="block text-sm font-medium text-gray-700"
-                >Title (EN)</label
-              >
-              <input
-                type="text"
-                id="title-en"
-                [(ngModel)]="newPost.title.en"
-                name="title-en"
-                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                required
-              />
-            </div>
-            <div>
-              <label for="title-es" class="block text-sm font-medium text-gray-700"
-                >Title (ES)</label
-              >
-              <input
-                type="text"
-                id="title-es"
-                [(ngModel)]="newPost.title.es"
-                name="title-es"
-                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                required
-              />
-            </div>
-          </div>
-
-          <button
-            type="submit"
-            class="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-          >
-            Create Post
-          </button>
-        </form>
-      </div> -->
-    </div>
-  `,
-  styles: [],
+  imports: [CommonModule, FormsModule, RouterLink],
+  templateUrl: './posts.component.html',
+  styleUrls: ['./posts.component.scss'],
 })
 export class PostsComponent implements OnInit {
   private postService = inject(PostService);
+
+  notification: INotification = {
+    message: 'Our privacy policy has changed',
+    type: 'info',
+    show: true,
+    title: 'Make sure you know how these changes affect you.',
+  };
+
   posts: IPost[] = [];
-  currentLanguage: 'pt' | 'en' | 'es' = 'pt';
+  currentLanguage: 'PT' | 'EN' | 'ES' = 'PT';
   newPost: IPost = {
     id: 0,
-    title: { pt: '', en: '', es: '' },
-    excerpt: { pt: '', en: '', es: '' },
-    content: { pt: '', en: '', es: '' },
+    title: { PT: '', EN: '', ES: '' },
+    excerpt: { PT: '', EN: '', ES: '' },
+    content: { PT: '', EN: '', ES: '' },
     image: '',
     author: 'Admin',
     tags: [],
     category: '',
-    metaDescription: { pt: '', en: '', es: '' },
-    affiliateLinks: { pt: '', en: '', es: '' },
+    metaDescription: { PT: '', EN: '', ES: '' },
+    affiliateLinks: { PT: '', EN: '', ES: '' },
     status: 'PENDING',
     date: '',
     readTime: '',
@@ -201,15 +92,15 @@ export class PostsComponent implements OnInit {
     this.posts.push(this.newPost);
     this.newPost = {
       id: 0,
-      title: { pt: '', en: '', es: '' },
-      excerpt: { pt: '', en: '', es: '' },
-      content: { pt: '', en: '', es: '' },
+      title: { PT: '', EN: '', ES: '' },
+      excerpt: { PT: '', EN: '', ES: '' },
+      content: { PT: '', EN: '', ES: '' },
       image: '',
       author: 'Admin',
       tags: [],
       category: '',
-      metaDescription: { pt: '', en: '', es: '' },
-      affiliateLinks: { pt: '', en: '', es: '' },
+      metaDescription: { PT: '', EN: '', ES: '' },
+      affiliateLinks: { PT: '', EN: '', ES: '' },
       status: 'PENDING',
       date: '',
       readTime: '',

@@ -20,8 +20,14 @@ export const routes: Routes = [
           import('./dashboard/dashboard.component').then((c) => c.DashboardComponent),
       },
       {
-        path: 'posts',
+        path: 'posts', // Rota para /home/posts (ex: lista de posts)
         loadComponent: () => import('./posts/posts.component').then((c) => c.PostsComponent),
+        pathMatch: 'full', // Garante que esta rota corresponda exatamente a /home/posts
+      },
+      {
+        path: 'posts/:id', // Rota para /home/posts/:id (ex: visualização de um post específico)
+        loadComponent: () =>
+          import('./components/post-view/post-view.component').then((c) => c.PostViewComponent),
       },
       {
         path: 'users',
