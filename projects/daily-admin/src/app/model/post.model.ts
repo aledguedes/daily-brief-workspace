@@ -18,4 +18,5 @@ export interface IPost {
   status: 'PENDING' | 'APPROVED' | 'REJECTED';
   date: string;
   readTime: string;
+  updated_at: string;
 }

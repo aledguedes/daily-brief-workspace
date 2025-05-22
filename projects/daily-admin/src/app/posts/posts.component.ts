@@ -40,6 +40,7 @@ export class PostsComponent implements OnInit {
     status: 'PENDING',
     date: '',
     readTime: '',
+    updated_at: '',
   };
 
   ngOnInit(): void {
@@ -104,6 +105,7 @@ export class PostsComponent implements OnInit {
       status: 'PENDING',
       date: '',
       readTime: '',
+      updated_at: '',
     };
     console.log('Post created');
   }

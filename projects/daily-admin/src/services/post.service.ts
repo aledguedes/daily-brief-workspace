@@ -24,6 +24,16 @@ export class PostService {
         Authorization: `Bearer ${this.auth_token}`,
       }),
     };
-    return this.http.post<IPost>(`${environment.apiUrl}/auth/login`, JSON.stringify(form));
+    return this.http.post<IPost>(`${environment.apiUrl}/posts`, JSON.stringify(form), headers);
+  }
+
+  getPostById(id: number) {
+    const headers = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${this.auth_token}`,
+      }),
+    };
+    return this.http.get<IPost>(`${environment.apiUrl}/posts/${id}`, headers);
   }
 }

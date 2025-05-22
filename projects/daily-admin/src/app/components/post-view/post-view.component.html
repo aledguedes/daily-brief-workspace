@@ -1,61 +1,125 @@
-<div class="p-4 max-w-4xl mx-auto">
-  <!-- Seletor de Idioma -->
-  <div class="flex justify-end mb-4">
-    @for (idioma of idiomas; track $index) {
-      <button
-        (click)="lang.set(idioma)"
-        class="text-sm font-medium px-3 py-1 rounded-full transition-colors"
-        [ngClass]="{
-          'bg-blue-600 text-white': lang() === idioma,
-          'bg-gray-100 text-gray-700 hover:bg-gray-200': lang() !== idioma,
-        }"
-      >
-        {{ idioma }}
-      </button>
-    }
+<div class="p-6 max-w-5xl mx-auto bg-gray-100 min-h-screen">
+  <!-- Botões de Idioma -->
+  <div class="flex justify-start space-x-2 mb-6">
+    <button
+      class="px-3 py-1 rounded-md border"
+      [class.bg-blue-500]="currentLang() === 'PT'"
+      [class.text-white]="currentLang() === 'PT'"
+      (click)="setLanguage('PT')"
+    >
+      Português
+    </button>
+    <button
+      class="px-3 py-1 rounded-md border"
+      [class.bg-blue-500]="currentLang() === 'EN'"
+      [class.text-white]="currentLang() === 'EN'"
+      (click)="setLanguage('EN')"
+    >
+      English
+    </button>
+    <button
+      class="px-3 py-1 rounded-md border"
+      [class.bg-blue-500]="currentLang() === 'ES'"
+      [class.text-white]="currentLang() === 'ES'"
+      (click)="setLanguage('ES')"
+    >
+      Español
+    </button>
   </div>
 
-  <!-- Imagem -->
-  <img [src]="post.image" alt="Imagem do artigo" class="w-full rounded-lg mb-4" />
+  <div class="flex space-x-4">
+    <!-- Post Content -->
+    <div class="flex-1 bg-white p-6 rounded-lg shadow-md">
+      <article class="overflow-hidden">
+        <div class="relative">
+          <img
+            [src]="article().image"
+            alt="iPhone 17 concept design"
+            class="w-full h-64 md:h-80 object-cover"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+        </div>
 
-  <!-- Categoria e tempo de leitura -->
-  <div class="flex flex-wrap items-center text-sm text-gray-500 mb-2 gap-2">
-    <span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full">{{ post.category }}</span>
-    <span class="text-gray-400">•</span>
-    <span>{{ post.readTime }} de leitura</span>
-  </div>
+        <div class="p-6 md:p-10">
+          <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-6 leading-tight">
+            {{ article().title[currentLang()] }}
+          </h1>
 
-  <!-- Título -->
-  <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-    {{ post.title[lang()] }}
-    <!-- Acessando valor do signal com lang() -->
-  </h1>
+          <div class="prose max-w-none prose-sm sm:prose-base text-justify dark:prose-invert">
+            <p class="text-xl text-gray-700 mb-8 leading-relaxed font-medium">
+              {{ article().excerpt[currentLang()] }}
+            </p>
+            <div [innerHTML]="safeContent()"></div>
+          </div>
+        </div>
+      </article>
+    </div>
 
-  <!-- Autor -->
-  <p class="text-gray-600 mb-6">
-    Por <span class="font-semibold">{{ post.author }}</span>
-  </p>
+    <!-- Sidebar -->
+    <div class="w-80 bg-white p-4 rounded-lg shadow-md">
+      <h2 class="text-lg font-semibold mb-4">Informações</h2>
 
-  <!-- Excerpt -->
-  <p class="text-lg text-gray-700 mb-6">{{ post.excerpt[lang()] }}</p>
-  <!-- Acessando valor do signal com lang() -->
+      <!-- Status -->
+      <div class="mb-4">
+        <span class="font-medium">Status: </span>
+        @if (article().status === 'PENDING') {
+          <span class="text-yellow-500">Pendente</span>
+        } @else {
+          <span>{{ article().status }}</span>
+        }
+      </div>
 
-  <!-- Conteúdo -->
-  <div class="prose prose-sm md:prose-base prose-gray max-w-none text-justify">
-    @for (paragraph of contentParagraphs(); track $index) {
-      <p>{{ paragraph }}</p>
-    }
-  </div>
+      <!-- Datas -->
+      <div class="mb-4">
+        <p><span class="font-medium">Criado: </span>{{ article().date | date }}</p>
+        <p><span class="font-medium">Atualizado: </span>{{ article().updated_at | date }}</p>
+      </div>
 
-  <!-- Tags -->
-  <div class="mt-8">
-    <h2 class="text-gray-700 font-semibold mb-2">Tags</h2>
-    <div class="flex flex-wrap gap-2">
-      @for (tag of post.tags; track tag) {
-        <span class="bg-blue-100 text-blue-800 text-sm px-3 py-1 rounded-full">
-          {{ tag }}
-        </span>
-      }
+      <!-- Autor -->
+      <div class="mb-4"><span class="font-medium">Autor: </span>{{ article().author }}</div>
+
+      <!-- Categoria -->
+      <div class="mb-4"><span class="font-medium">Categoria: </span>{{ article().category }}</div>
+
+      <!-- Tags -->
+      <div class="mb-4">
+        <span class="font-medium">Tags: </span>
+        @if (article().tags.length) {
+          <div class="flex flex-wrap gap-2 mt-1">
+            @for (tag of article().tags; track tag) {
+              <span class="bg-gray-200 text-sm px-2 py-1 rounded">{{ tag }}</span>
+            }
+          </div>
+        } @else {
+          <span>Nenhuma tag</span>
+        }
+      </div>
+
+      <!-- Affiliate Links -->
+      <div class="mb-4">
+        <span class="font-medium">Links de Afiliados: </span>
+        @if (article().affiliateLinks) {
+          <div class="mt-1">
+            <p>
+              <a [href]="article().affiliateLinks.ES" class="text-blue-500" target="_blank"
+                >Amazon ES</a
+              >
+            </p>
+            <p>
+              <a [href]="article().affiliateLinks.PT" class="text-blue-500" target="_blank"
+                >Amazon PT</a
+              >
+            </p>
+            <p>
+              <a [href]="article().affiliateLinks.EN" class="text-blue-500" target="_blank"
+                >Apple EN</a
+              >
+            </p>
+          </div>
+        } @else {
+          <p>Nenhum link</p>
+        }
+      </div>
     </div>
   </div>
 </div>
