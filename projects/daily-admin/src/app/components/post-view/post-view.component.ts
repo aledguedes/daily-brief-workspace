@@ -1,26 +1,24 @@
-import { Component, signal, computed, OnInit, inject } from '@angular/core';
+import { Component, signal, computed, OnInit, inject, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule, DatePipe } from '@angular/common';
 import { IPost } from '../../model/post.model';
 import { PostService } from '../../../services/post.service';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { BodyArticleComponent } from './components/body-article/body-article.component';
 
 @Component({
   selector: 'app-post-view',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, BodyArticleComponent],
   providers: [DatePipe],
   templateUrl: './post-view.component.html',
   styleUrls: ['./post-view.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class PostViewComponent implements OnInit {
   private actRoute = inject(ActivatedRoute);
-  private router = inject(Router);
-  private datePipe = inject(DatePipe);
   private postService = inject(PostService);
-  private sanitizer = inject(DomSanitizer);
 
-  article = signal<IPost>({
+  article: IPost = {
     id: 0,
     title: { PT: '', EN: '', ES: '' },
     excerpt: { PT: '', EN: '', ES: '' },
@@ -35,13 +33,7 @@ export class PostViewComponent implements OnInit {
     date: '',
     readTime: '',
     updated_at: '',
-  });
-
-  currentLang = signal<'PT' | 'EN' | 'ES'>('PT');
-
-  safeContent = computed<SafeHtml>(() =>
-    this.sanitizer.bypassSecurityTrustHtml(this.article().content[this.currentLang()]),
-  );
+  };
 
   ngOnInit() {
     const postId = this.actRoute.snapshot.paramMap.get('id') || '';
@@ -53,16 +45,11 @@ export class PostViewComponent implements OnInit {
   getPostById(postId: number) {
     this.postService.getPostById(postId).subscribe({
       next: (response: IPost) => {
-        console.log('GET POST BY ID ERROR', response);
-        this.article.set(response);
+        this.article = response;
       },
       error: (error) => {
         console.log('GET POST BY ID ERROR', error);
       },
     });
-  }
-
-  setLanguage(lang: 'PT' | 'EN' | 'ES') {
-    this.currentLang.set(lang);
   }
 }

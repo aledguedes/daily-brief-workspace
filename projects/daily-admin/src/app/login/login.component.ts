@@ -47,7 +47,7 @@ export class LoginComponent implements OnInit {
   initForm() {
     this.loginForm = this.fb.group({
       email: ['admin@dailybrief.com', [Validators.required, Validators.email]],
-      password: ['12345678999', [Validators.required, Validators.minLength(6)]],
+      password: ['12345678', [Validators.required, Validators.minLength(6)]],
     });
   }
 
@@ -62,7 +62,7 @@ export class LoginComponent implements OnInit {
           setTimeout(() => {
             this.router.navigate(['/home']);
             this.isLoading = false;
-          }, 2500);
+          }, 500);
         },
         error: (err: IErrorResponse) => {
           const errorMessage = 'Falha na autenticação';

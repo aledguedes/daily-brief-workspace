@@ -4,3 +4,27 @@
 body {
   background-color: #f3f4f6;
 }
+
+.prose h2 {
+  @apply text-2xl font-semibold text-gray-900 mt-6 mb-4;
+}
+
+.prose h3 {
+  @apply text-xl font-semibold text-gray-800 mt-5 mb-3;
+}
+
+.prose p {
+  @apply text-gray-700 leading-relaxed mb-4;
+}
+
+.prose ul {
+  @apply list-disc pl-6 mb-4;
+}
+
+.prose li {
+  @apply mb-2 text-gray-700;
+}
+
+.prose a {
+  @apply text-blue-600 underline hover:text-blue-500;
+}
