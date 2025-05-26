@@ -56,13 +56,13 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.valid) {
       this.loginService.login(this.loginForm.value).subscribe({
         next: (response) => {
+          console.log('Token recebido:', response.token);
           localStorage.setItem('daily-token', response.token);
           const successMessage = 'Login realizado com sucesso';
           this.notificationService.show('Login realizado com sucesso!', 'success', successMessage);
-          setTimeout(() => {
-            this.router.navigate(['/home']);
-            this.isLoading = false;
-          }, 500);
+          console.log('Redirecionando para /home');
+          this.router.navigate(['/home']);
+          this.isLoading = false;
         },
         error: (err: IErrorResponse) => {
           const errorMessage = 'Falha na autenticação';

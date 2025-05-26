@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
-import { AuthGuard } from './guards/auth.guard';
+import { authGuard } from './guards/auth-guard.guard';
 
 export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'login' },
@@ -11,7 +11,7 @@ export const routes: Routes = [
   {
     path: 'home',
     component: HomeComponent,
-    canActivate: [AuthGuard],
+    canActivate: [authGuard],
     children: [
       { path: '', pathMatch: 'full', redirectTo: 'dashboard' },
       {
@@ -20,12 +20,11 @@ export const routes: Routes = [
           import('./dashboard/dashboard.component').then((c) => c.DashboardComponent),
       },
       {
-        path: 'posts', // Rota para /home/posts (ex: lista de posts)
+        path: 'posts', // Removi pathMatch para evitar conflito com posts/:id
         loadComponent: () => import('./posts/posts.component').then((c) => c.PostsComponent),
-        pathMatch: 'full', // Garante que esta rota corresponda exatamente a /home/posts
       },
       {
-        path: 'posts/:id', // Rota para /home/posts/:id (ex: visualização de um post específico)
+        path: 'posts/:id',
         loadComponent: () =>
           import('./components/post-view/post-view.component').then((c) => c.PostViewComponent),
       },
