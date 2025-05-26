@@ -71,7 +71,7 @@ export class PostsComponent implements OnInit {
       next: (response: IPagination<IPost>) => {
         this.posts = response.content;
         this.totalPages = response.totalPages;
-        console.log('GET ALL POSTS RESPONSE', response);
+        // console.log('GET ALL POSTS RESPONSE', response);
       },
       error: (err) => {
         console.log('GET ALL POSTS ERROR', err);
@@ -81,17 +81,6 @@ export class PostsComponent implements OnInit {
 
   onStatusFilterChange() {
     this.currentPage = 1;
-    this.applyFiltersAndPagination();
-  }
-
-  applyFiltersAndPagination() {
-    let filtered = this.statusFilter
-      ? this.posts.filter((post) => post.status === this.statusFilter)
-      : [...this.posts];
-    // this.totalPages = Math.max(1, Math.ceil(filtered.length / this.pageSize));
-    const start = (this.currentPage - 1) * this.pageSize;
-    const end = start + this.pageSize;
-    this.paginatedPosts = filtered.slice(start, end);
   }
 
   previousPage() {
@@ -126,11 +115,9 @@ export class PostsComponent implements OnInit {
   patchPost(postId: number, statusFlag: string = 'approve') {
     this.postService.patchPost(+postId, statusFlag).subscribe({
       next: (response: IPost) => {
-        // Atualiza o post na lista
         const idx = this.posts.findIndex((p) => p.id === postId);
         if (idx !== -1) {
           this.posts[idx] = response;
-          this.applyFiltersAndPagination();
         }
       },
       error: (err) => {
