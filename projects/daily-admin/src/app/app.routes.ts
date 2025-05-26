@@ -1,12 +1,12 @@
 import { Routes } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
-import { authGuard } from './guards/auth-guard.guard';
+import { authGuard } from './services/auth-guard.guard';
 
 export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'login' },
   {
     path: 'login',
-    loadComponent: () => import('./login/login.component').then((c) => c.LoginComponent),
+    loadComponent: () => import('./pages/login/login.component').then((c) => c.LoginComponent),
   },
   {
     path: 'home',
@@ -17,11 +17,11 @@ export const routes: Routes = [
       {
         path: 'dashboard',
         loadComponent: () =>
-          import('./dashboard/dashboard.component').then((c) => c.DashboardComponent),
+          import('./pages/dashboard/dashboard.component').then((c) => c.DashboardComponent),
       },
       {
         path: 'posts', // Removi pathMatch para evitar conflito com posts/:id
-        loadComponent: () => import('./posts/posts.component').then((c) => c.PostsComponent),
+        loadComponent: () => import('./pages/posts/posts.component').then((c) => c.PostsComponent),
       },
       {
         path: 'posts/:id',
@@ -30,11 +30,11 @@ export const routes: Routes = [
       },
       {
         path: 'users',
-        loadComponent: () => import('./users/users.component').then((c) => c.UsersComponent),
+        loadComponent: () => import('./pages/users/users.component').then((c) => c.UsersComponent),
       },
       {
         path: 'logs',
-        loadComponent: () => import('./logs/logs.component').then((c) => c.LogsComponent),
+        loadComponent: () => import('./pages/logs/logs.component').then((c) => c.LogsComponent),
       },
     ],
   },

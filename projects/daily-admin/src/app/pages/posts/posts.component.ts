@@ -1,11 +1,11 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { PostService } from '../../services/post.service';
-import { IPost } from '../model/post.model';
-import { IPagination } from '../../models/pagination.model';
 import { RouterLink } from '@angular/router';
-import { INotification } from '../model/notification.model';
+import { INotification } from '../../model/notification.model';
+import { IPost } from '../../model/post.model';
+import { IPagination } from '../../models/pagination.model';
+import { PostService } from '../../services/post.service';
 
 @Component({
   selector: 'app-posts',

@@ -2,8 +2,8 @@ import { Component, signal, computed, OnInit, inject, ViewEncapsulation } from '
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule, DatePipe } from '@angular/common';
 import { IPost } from '../../model/post.model';
-import { PostService } from '../../../services/post.service';
 import { BodyArticleComponent } from './components/body-article/body-article.component';
+import { PostService } from '../../services/post.service';
 
 @Component({
   selector: 'app-post-view',

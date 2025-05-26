@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { environment } from '../environments/environment';
-import { IPost } from '../app/model/post.model';
+import { environment } from '../../environments/environment';
+import { IPost } from '../../app/model/post.model';
 import { GenericService } from './generic.service';
 
 @Injectable({

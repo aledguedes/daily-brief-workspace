@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
-import { blogDashboardCards, mockLogs, mockPosts } from '../data/mockData';
-import { LogItemComponent } from '../components/log-item/log-item.component';
-import { StatCardComponent } from '../components/stat-card/stat-card.component';
-import { PostCardDashComponent } from '../components/post-card-dash/post-card-dash.component';
+import { LogItemComponent } from '../../components/log-item/log-item.component';
+import { StatCardComponent } from '../../components/stat-card/stat-card.component';
+import { PostCardDashComponent } from '../../components/post-card-dash/post-card-dash.component';
+import { blogDashboardCards, mockLogs, mockPosts } from '../../data/mockData';
 
 @Component({
   selector: 'app-dashboard',

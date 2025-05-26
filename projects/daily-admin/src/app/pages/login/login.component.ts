@@ -2,10 +2,10 @@ import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { NotificationComponent } from '../../components/notification/notification.component';
+import { IErrorResponse } from '../../model/error.model';
 import { LoginService } from '../../services/login.service';
-import { NotificationService } from '../services/notification.service';
-import { NotificationComponent } from '../components/notification/notification.component';
-import { IErrorResponse } from '../model/error.model';
+import { NotificationService } from '../../services/notification.service';
 
 @Component({
   selector: 'app-login',
