@@ -19,24 +19,48 @@ interface User {
         <table class="min-w-full divide-y divide-gray-200">
           <thead class="bg-gray-50">
             <tr>
-              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
-              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
-              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
-              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Role</th>
+              <th
+                scope="col"
+                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
+                ID
+              </th>
+              <th
+                scope="col"
+                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
+                Name
+              </th>
+              <th
+                scope="col"
+                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
+                Email
+              </th>
+              <th
+                scope="col"
+                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
+                Role
+              </th>
             </tr>
           </thead>
           <tbody class="bg-white divide-y divide-gray-200">
-            <tr *ngFor="let user of users">
-              <td class="px-6 py-4 whitespace-nowrap">{{ user.id }}</td>
-              <td class="px-6 py-4 whitespace-nowrap">{{ user.name }}</td>
-              <td class="px-6 py-4 whitespace-nowrap">{{ user.email }}</td>
-              <td class="px-6 py-4 whitespace-nowrap">{{ user.role }}</td>
-            </tr>
+            @for (user of users; track user.id) {
+              <tr>
+                <td class="px-6 py-4 whitespace-nowrap">{{ user.id }}</td>
+                <td class="px-6 py-4 whitespace-nowrap">{{ user.name }}</td>
+                <td class="px-6 py-4 whitespace-nowrap">{{ user.email }}</td>
+                <td class="px-6 py-4 whitespace-nowrap">{{ user.role }}</td>
+              </tr>
+            }
           </tbody>
         </table>
       </div>
       <div class="mt-4">
-        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Create User</button>
+        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+          Create User
+        </button>
       </div>
     </div>
   `,

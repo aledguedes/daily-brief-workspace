@@ -19,19 +19,41 @@ interface Log {
         <table class="min-w-full divide-y divide-gray-200">
           <thead class="bg-gray-50">
             <tr>
-              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
-              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Timestamp</th>
-              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Level</th>
-              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Message</th>
+              <th
+                scope="col"
+                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
+                ID
+              </th>
+              <th
+                scope="col"
+                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
+                Timestamp
+              </th>
+              <th
+                scope="col"
+                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
+                Level
+              </th>
+              <th
+                scope="col"
+                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
+                Message
+              </th>
             </tr>
           </thead>
           <tbody class="bg-white divide-y divide-gray-200">
-            <tr *ngFor="let log of logs" class="hover:bg-gray-100">
-              <td class="px-6 py-4 whitespace-nowrap">{{ log.id }}</td>
-              <td class="px-6 py-4 whitespace-nowrap">{{ log.timestamp }}</td>
-              <td class="px-6 py-4 whitespace-nowrap">{{ log.level }}</td>
-              <td class="px-6 py-4">{{ log.message }}</td>
-            </tr>
+            @for (log of logs; track log.id) {
+              <tr class="hover:bg-gray-100">
+                <td class="px-6 py-4 whitespace-nowrap">{{ log.id }}</td>
+                <td class="px-6 py-4 whitespace-nowrap">{{ log.timestamp }}</td>
+                <td class="px-6 py-4 whitespace-nowrap">{{ log.level }}</td>
+                <td class="px-6 py-4">{{ log.message }}</td>
+              </tr>
+            }
           </tbody>
         </table>
       </div>
@@ -44,7 +66,12 @@ export class LogsComponent {
     { id: 1, timestamp: '2024-05-05 10:00:00', level: 'INFO', message: 'User logged in' },
     { id: 2, timestamp: '2024-05-05 10:05:00', level: 'WARNING', message: 'Failed login attempt' },
     { id: 3, timestamp: '2024-05-05 10:10:00', level: 'INFO', message: 'Post created' },
-    { id: 4, timestamp: '2024-05-05 10:15:00', level: 'ERROR', message: 'Database connection error' },
+    {
+      id: 4,
+      timestamp: '2024-05-05 10:15:00',
+      level: 'ERROR',
+      message: 'Database connection error',
+    },
     { id: 5, timestamp: '2024-05-05 10:20:00', level: 'INFO', message: 'User updated profile' },
   ];
 }

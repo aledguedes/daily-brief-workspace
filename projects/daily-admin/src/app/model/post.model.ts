@@ -18,5 +18,16 @@ export interface IPost {
   status: 'PENDING' | 'APPROVED' | 'REJECTED';
   date: string;
   readTime: string;
-  updated_at: string;
+  updatedAt: string;
+  createdAt: string;
+}
+
+export interface ISideManuArticle {
+  status: 'PENDING' | 'APPROVED' | 'REJECTED' | string;
+  createdAt: string;
+  updatedAt: string;
+  author: string;
+  category: string;
+  tags: string[];
+  affiliateLinks: MultilangText;
 }

@@ -2,17 +2,13 @@
   <div class="pb-2 px-4 pt-4">
     <div class="flex justify-between items-center">
       <h2 class="text-lg font-semibold">Logs Recentes</h2>
-      <a routerLink="/posts" class="text-xs text-blue-600 hover:underline">
-        Ver todos
-      </a>
+      <a routerLink="/posts" class="text-xs text-blue-600 hover:underline"> Ver todos </a>
     </div>
   </div>
   <div class="p-4">
     <div class="space-y-4">
       @for (log of logs; track $index) {
-        <div
-          [ngClass]="['p-4 border rounded-md mb-2', getActionClass(log.action)]"
-        >
+        <div [ngClass]="['p-4 border rounded-md mb-2', getActionClass(log.action)]">
           <div class="flex items-start">
             <div class="mr-3 mt-1">
               <span [innerHTML]="getActionIcon(log.action)"></span>
@@ -31,21 +27,22 @@
                 </div>
               </div>
 
-              <div *ngIf="log.details?.postId" class="mt-2 text-sm">
-                <span class="text-muted-foreground">Post: </span>
-                <a
-                  [routerLink]="['/posts', log.details.postId]"
-                  class="text-blue-600 hover:underline"
-                >
-                  {{ log.details.postTitle }}
-                </a>
-                <div
-                  *ngIf="log.details.change"
-                  class="mt-1 text-xs text-muted-foreground"
-                >
-                  {{ log.details.change }}
+              @if (log.details.postId) {
+                <div class="mt-2 text-sm">
+                  <span class="text-muted-foreground">Post: </span>
+                  <a
+                    [routerLink]="['/posts', log.details.postId]"
+                    class="text-blue-600 hover:underline"
+                  >
+                    {{ log.details.postTitle }}
+                  </a>
+                  @if (log.details.change) {
+                    <div class="mt-1 text-xs text-muted-foreground">
+                      {{ log.details.change }}
+                    </div>
+                  }
                 </div>
-              </div>
+              }
             </div>
           </div>
         </div>

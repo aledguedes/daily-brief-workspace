@@ -6,6 +6,7 @@ import { INotification } from '../../model/notification.model';
 import { IPost } from '../../model/post.model';
 import { IPagination } from '../../models/pagination.model';
 import { PostService } from '../../services/post.service';
+import { NotificationService } from '../../services/notification.service';
 
 @Component({
   selector: 'app-posts',
@@ -16,6 +17,7 @@ import { PostService } from '../../services/post.service';
 })
 export class PostsComponent implements OnInit {
   private postService = inject(PostService);
+  private notificationService = inject(NotificationService);
 
   notification: INotification = {
     message: 'Our privacy policy has changed',
@@ -25,7 +27,23 @@ export class PostsComponent implements OnInit {
   };
 
   posts: IPost[] = [];
+  paginatedPosts: IPost[] = [];
+  statusFilter: string = '';
+
+  pageSize: number = 10;
+  totalPages: number = 1;
+  currentPage: number = 1;
+
+  pagination: {
+    page: number;
+    size: number;
+  } = {
+    page: 0,
+    size: 5,
+  };
+
   currentLanguage: 'PT' | 'EN' | 'ES' = 'PT';
+
   newPost: IPost = {
     id: 0,
     title: { PT: '', EN: '', ES: '' },
@@ -40,7 +58,8 @@ export class PostsComponent implements OnInit {
     status: 'PENDING',
     date: '',
     readTime: '',
-    updated_at: '',
+    updatedAt: '',
+    createdAt: '',
   };
 
   ngOnInit(): void {
@@ -48,15 +67,47 @@ export class PostsComponent implements OnInit {
   }
 
   loadMockData(): void {
-    this.postService.getAllPosts().subscribe({
+    this.postService.getAllPosts(this.pagination.page, this.pagination.size).subscribe({
       next: (response: IPagination<IPost>) => {
         this.posts = response.content;
+        this.totalPages = response.totalPages;
         console.log('GET ALL POSTS RESPONSE', response);
       },
       error: (err) => {
         console.log('GET ALL POSTS ERROR', err);
       },
     });
+  }
+
+  onStatusFilterChange() {
+    this.currentPage = 1;
+    this.applyFiltersAndPagination();
+  }
+
+  applyFiltersAndPagination() {
+    let filtered = this.statusFilter
+      ? this.posts.filter((post) => post.status === this.statusFilter)
+      : [...this.posts];
+    // this.totalPages = Math.max(1, Math.ceil(filtered.length / this.pageSize));
+    const start = (this.currentPage - 1) * this.pageSize;
+    const end = start + this.pageSize;
+    this.paginatedPosts = filtered.slice(start, end);
+  }
+
+  previousPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.pagination.page--;
+      this.loadMockData();
+    }
+  }
+
+  nextPage() {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+      this.pagination.page++;
+      this.loadMockData();
+    }
   }
 
   getStatusClass(status: 'PENDING' | 'APPROVED' | 'REJECTED'): string {
@@ -72,20 +123,24 @@ export class PostsComponent implements OnInit {
     }
   }
 
-  approvePost(postId: number): void {
-    const post = this.posts.find((p) => p.id === postId);
-    if (post) {
-      post.status = 'APPROVED';
-      console.log(`Post ${postId} approved`);
-    }
+  patchPost(postId: number, statusFlag: string = 'approve') {
+    this.postService.patchPost(+postId, statusFlag).subscribe({
+      next: (response: IPost) => {
+        // Atualiza o post na lista
+        const idx = this.posts.findIndex((p) => p.id === postId);
+        if (idx !== -1) {
+          this.posts[idx] = response;
+          this.applyFiltersAndPagination();
+        }
+      },
+      error: (err) => {
+        console.log('PATCH POST ERROR', err);
+      },
+    });
   }
 
-  rejectPost(postId: number): void {
-    const post = this.posts.find((p) => p.id === postId);
-    if (post) {
-      post.status = 'REJECTED';
-      console.log(`Post ${postId} rejected`);
-    }
+  messageNotification(flag: string) {
+    return flag === 'approved' ? 'Post aprovado com sucesso!' : 'Post rejeitado com sucesso!';
   }
 
   createPost(): void {
@@ -105,7 +160,8 @@ export class PostsComponent implements OnInit {
       status: 'PENDING',
       date: '',
       readTime: '',
-      updated_at: '',
+      updatedAt: '',
+      createdAt: '',
     };
     console.log('Post created');
   }

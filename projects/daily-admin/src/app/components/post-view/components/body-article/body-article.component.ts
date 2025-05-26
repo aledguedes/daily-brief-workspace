@@ -50,7 +50,8 @@ export class BodyArticleComponent implements OnChanges {
     status: 'PENDING',
     date: '',
     readTime: '',
-    updated_at: '',
+    updatedAt: '',
+    createdAt: '',
   };
 
   currentLang = signal<'PT' | 'EN' | 'ES'>('PT');

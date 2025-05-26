@@ -13,8 +13,8 @@ export class PostService {
   private http = inject(HttpClient);
   private genericService = inject(GenericService);
 
-  getAllPosts() {
-    return this.genericService.getPaginated<IPost>('posts');
+  getAllPosts(page: number, size: number) {
+    return this.genericService.getPaginated<IPost>('posts', page, size);
   }
 
   createPost(form: any) {
@@ -35,5 +35,15 @@ export class PostService {
       }),
     };
     return this.http.get<IPost>(`${environment.apiUrl}/posts/${id}`, headers);
+  }
+
+  patchPost(id: number, flagStatus: string = 'approve') {
+    const headers = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${this.auth_token}`,
+      }),
+    };
+    return this.http.patch<IPost>(`${environment.apiUrl}/posts/${id}/${flagStatus}`, {}, headers);
   }
 }

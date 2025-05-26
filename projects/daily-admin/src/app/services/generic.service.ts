@@ -12,7 +12,7 @@ export class GenericService {
 
   constructor(private http: HttpClient) {}
 
-  getPaginated<T>(flag: string): Observable<IPagination<T>> {
+  getPaginated<T>(flag: string, page: number, size: number): Observable<IPagination<T>> {
     const headers = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -20,6 +20,9 @@ export class GenericService {
       }),
     };
 
-    return this.http.get<IPagination<T>>(`${environment.apiUrl}/${flag}`, headers);
+    return this.http.get<IPagination<T>>(
+      `${environment.apiUrl}/${flag}?page=${page}&size=${size}`,
+      headers,
+    );
   }
 }
