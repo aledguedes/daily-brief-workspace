@@ -17,9 +17,13 @@
   <!-- Gráficos -->
   <div class="grid gap-6 lg:grid-cols-12 mb-8">
     <div class="lg:col-span-5 flex flex-col gap-6">
-      <app-chart [title]="'Posts por Status'" [data]="postsByStatusChart" [chartType]="'bar'" />
+      <app-chart
+        [title]="'Posts por Status'"
+        [data]="postsByStatusChart"
+        [chartType]="'doughnut'"
+      />
 
-      <app-chart [title]="'Fontes de Tráfego'" [data]="trafficSourcesChart" [chartType]="'pie'" />
+      <app-chart [title]="'Fontes de Tráfego'" [data]="trafficSourcesChart" [chartType]="'bar'" />
     </div>
     <div class="lg:col-span-7 flex">
       <app-chart
