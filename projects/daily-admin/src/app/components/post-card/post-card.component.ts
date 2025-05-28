@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Post } from '../../../../data/modelMock';
 
 @Component({
   selector: 'app-post-card',
@@ -9,7 +8,7 @@ import { Post } from '../../../../data/modelMock';
   styleUrl: './post-card.component.scss',
 })
 export class PostCardComponent {
-  @Input() post: Post = {
+  @Input() post: any = {
     id: '',
     slug: '',
     title: {

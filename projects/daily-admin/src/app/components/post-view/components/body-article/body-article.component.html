@@ -1,0 +1,51 @@
+<article class="overflow-hidden">
+  <div class="relative">
+    <img
+      [src]="article.image"
+      alt="iPhone 17 concept design"
+      class="w-full h-64 md:h-80 object-cover"
+    />
+    <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+  </div>
+
+  <div class="p-6 md:p-10">
+    <!-- Botões de Idioma -->
+    <div class="flex justify-center space-x-2 mb-6">
+      <button
+        class="px-3 py-1 rounded-md border"
+        [class.bg-blue-500]="currentLang() === 'PT'"
+        [class.text-white]="currentLang() === 'PT'"
+        (click)="onSetLanguage('PT')"
+      >
+        Português
+      </button>
+      <button
+        class="px-3 py-1 rounded-md border"
+        [class.bg-blue-500]="currentLang() === 'EN'"
+        [class.text-white]="currentLang() === 'EN'"
+        (click)="onSetLanguage('EN')"
+      >
+        English
+      </button>
+      <button
+        class="px-3 py-1 rounded-md border"
+        [class.bg-blue-500]="currentLang() === 'ES'"
+        [class.text-white]="currentLang() === 'ES'"
+        (click)="onSetLanguage('ES')"
+      >
+        Español
+      </button>
+    </div>
+
+    <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-6 leading-tight">
+      {{ article.title[currentLang()] }}
+    </h1>
+
+    <div class="prose max-w-none prose-sm sm:prose-base text-justify dark:prose-invert">
+      <p class="text-xl text-gray-700 mb-8 leading-relaxed font-medium">
+        {{ article.excerpt[currentLang()] }}
+      </p>
+      <div [innerHTML]="safeContent"></div>
+    </div>
+  </div>
+</article>

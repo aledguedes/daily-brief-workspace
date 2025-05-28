@@ -1,6 +1,6 @@
 export type Language = 'pt-BR' | 'en' | 'es';
 
-export type PostStatus = 'pending' | 'approved' | 'rejected';
+export type PostStatus = 'pending' | 'approved' | 'rejected' | 'draft';
 
 export type PostVersion = {
   id: string;
@@ -77,15 +77,3 @@ export type User = {
   createdAt: string;
   lastActive?: string;
 };
-
-export interface DashboardCard {
-  title: string;
-  value: number | string;
-  icon: string;
-  iconBgColor: string;
-  iconColor: string;
-  trend?: {
-    value: number;
-    isPositive: boolean;
-  };
-}

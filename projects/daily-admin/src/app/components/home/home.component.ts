@@ -8,9 +8,11 @@ import { HeaderComponent } from '../header/header.component';
   standalone: true,
   imports: [CommonModule, RouterModule, HeaderComponent, RouterOutlet],
   template: `
-    <app-header></app-header>
-    <div class="container mx-auto px-4">
-      <router-outlet />
+    <div class="flex flex-col min-h-screen">
+      <app-header />
+      <div class="container mx-auto px-4 pt-24">
+        <router-outlet />
+      </div>
     </div>
   `,
   styles: [],

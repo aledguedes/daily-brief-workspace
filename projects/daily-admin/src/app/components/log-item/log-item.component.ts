@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
-import { Log } from '../../data/modelMock';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { IDashboardLog, ILogDisplayItem } from '../../model/dashboard.model';
 
 @Component({
   selector: 'app-log-item',
@@ -10,7 +10,7 @@ import { CommonModule } from '@angular/common';
   styleUrl: './log-item.component.scss',
 })
 export class LogItemComponent {
-  @Input() logs: Log[] = [];
+  @Input() logs: ILogDisplayItem[] = [];
 
   getActionIcon(action: string): string {
     switch (action) {

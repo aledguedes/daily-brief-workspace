@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
-import { DashboardCard } from '../../data/modelMock';
+import { IDashboardCard } from '../../model/dashboard.model';
 
 @Component({
   selector: 'app-stat-card',
@@ -10,7 +10,7 @@ import { DashboardCard } from '../../data/modelMock';
   styleUrls: ['./stat-card.component.scss'],
 })
 export class StatCardComponent {
-  @Input() stat: DashboardCard = {
+  @Input() stat: IDashboardCard = {
     title: '',
     value: '',
     icon: '',
