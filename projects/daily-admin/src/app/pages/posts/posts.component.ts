@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { INotification } from '../../model/notification.model';
 import { IPost } from '../../model/post.model';
-import { IPagination } from '../../models/pagination.model';
+import { IPagination } from '../../model/pagination.model';
 import { PostService } from '../../services/post.service';
 import { NotificationService } from '../../services/notification.service';
 
@@ -99,7 +99,7 @@ export class PostsComponent implements OnInit {
     }
   }
 
-  getStatusClass(status: 'PENDING' | 'APPROVED' | 'REJECTED'): string {
+  getStatusClass(status: 'PENDING' | 'APPROVED' | 'REJECTED' | 'DRAFT'): string {
     switch (status) {
       case 'PENDING':
         return 'bg-yellow-100 text-yellow-800';

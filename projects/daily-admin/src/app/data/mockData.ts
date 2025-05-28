@@ -1,4 +1,4 @@
-import { DashboardCard, DashboardSummary, Log, Post, User } from './modelMock';
+import { Log, Post, User } from './modelMock';
 
 export const mockPosts: Post[] = [
   {
@@ -26,12 +26,7 @@ export const mockPosts: Post[] = [
     author: 'Robô FinTech',
     featuredImage:
       'https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?q=80&w=2070&auto=format&fit=crop',
-    tags: [
-      'investimentos',
-      'bolsa de valores',
-      'finanças pessoais',
-      'iniciantes',
-    ],
+    tags: ['investimentos', 'bolsa de valores', 'finanças pessoais', 'iniciantes'],
     createdAt: '2025-05-01T10:30:00.000Z',
     updatedAt: '2025-05-01T10:30:00.000Z',
     monetization: {
@@ -66,8 +61,7 @@ export const mockPosts: Post[] = [
     id: '2',
     slug: 'inteligencia-artificial-transformando-marketing-digital',
     title: {
-      'pt-BR':
-        'Como a Inteligência Artificial está transformando o Marketing Digital',
+      'pt-BR': 'Como a Inteligência Artificial está transformando o Marketing Digital',
       en: 'How Artificial Intelligence is transforming Digital Marketing',
       es: 'Cómo la Inteligencia Artificial está transformando el Marketing Digital',
     },
@@ -88,12 +82,7 @@ export const mockPosts: Post[] = [
     author: 'Robô MarketingGPT',
     featuredImage:
       'https://images.unsplash.com/photo-1595039838779-9d40c98e9c7c?q=80&w=2070&auto=format&fit=crop',
-    tags: [
-      'inteligência artificial',
-      'marketing digital',
-      'tecnologia',
-      'automação',
-    ],
+    tags: ['inteligência artificial', 'marketing digital', 'tecnologia', 'automação'],
     createdAt: '2025-05-02T14:45:00.000Z',
     updatedAt: '2025-05-03T09:15:00.000Z',
     publishDate: '2025-05-03T10:00:00.000Z',
@@ -138,8 +127,7 @@ export const mockPosts: Post[] = [
           es: 'Contenido revisado y expandido en español',
         },
         title: {
-          'pt-BR':
-            'Como a Inteligência Artificial está transformando o Marketing Digital',
+          'pt-BR': 'Como a Inteligência Artificial está transformando o Marketing Digital',
           en: 'How Artificial Intelligence is transforming Digital Marketing',
           es: 'Cómo la Inteligencia Artificial está transformando el Marketing Digital',
         },
@@ -267,8 +255,7 @@ export const mockPosts: Post[] = [
     id: '5',
     slug: 'guia-completo-energia-solar-residencial',
     title: {
-      'pt-BR':
-        'Guia completo sobre energia solar residencial: economia e sustentabilidade',
+      'pt-BR': 'Guia completo sobre energia solar residencial: economia e sustentabilidade',
       en: 'Complete guide to residential solar energy: economy and sustainability',
       es: 'Guía completo sobre energía solar residencial: economía y sostenibilidad',
     },
@@ -329,8 +316,7 @@ export const mockPosts: Post[] = [
           es: 'Contenido revisado y expandido en español',
         },
         title: {
-          'pt-BR':
-            'Guia completo sobre energia solar residencial: economia e sustentabilidade',
+          'pt-BR': 'Guia completo sobre energia solar residencial: economia e sustentabilidade',
           en: 'Complete guide to residential solar energy: economy and sustainability',
           es: 'Guía completa sobre energía solar residencial: economía y sostenibilidad',
         },
@@ -347,8 +333,7 @@ export const mockLogs: Log[] = [
     user: 'Admin',
     details: {
       postId: '2',
-      postTitle:
-        'Como a Inteligência Artificial está transformando o Marketing Digital',
+      postTitle: 'Como a Inteligência Artificial está transformando o Marketing Digital',
       change: 'Título e conteúdo revisados',
     },
   },
@@ -359,8 +344,7 @@ export const mockLogs: Log[] = [
     user: 'Admin',
     details: {
       postId: '5',
-      postTitle:
-        'Guia completo sobre energia solar residencial: economia e sustentabilidade',
+      postTitle: 'Guia completo sobre energia solar residencial: economia e sustentabilidade',
       change: 'Título e conteúdo expandidos',
     },
   },
@@ -427,89 +411,13 @@ export const mockLogs: Log[] = [
   },
 ];
 
-export const blogDashboardCards: DashboardCard[] = [
-  {
-    title: 'Total de Posts',
-    value: 5,
-    icon: 'ri-file-text-line',
-    iconBgColor: 'bg-blue-100',
-    iconColor: 'text-blue-600',
-  },
-  {
-    title: 'Posts Pendentes',
-    value: 2,
-    icon: 'ri-time-line',
-    iconBgColor: 'bg-yellow-100',
-    iconColor: 'text-yellow-600',
-  },
-  {
-    title: 'Posts Aprovados',
-    value: 2,
-    icon: 'ri-checkbox-circle-line',
-    iconBgColor: 'bg-green-100',
-    iconColor: 'text-green-600',
-  },
-  {
-    title: 'Posts Rejeitados',
-    value: 1,
-    icon: 'ri-close-circle-line',
-    iconBgColor: 'bg-red-100',
-    iconColor: 'text-red-600',
-  },
-  {
-    title: 'Visualizações Hoje',
-    value: '1.250',
-    icon: 'ri-eye-line',
-    iconBgColor: 'bg-purple-100',
-    iconColor: 'text-purple-600',
-    trend: {
-      value: 12,
-      isPositive: true,
-    },
-  },
-  {
-    title: 'Visualizações no Mês',
-    value: '28.500',
-    icon: 'ri-bar-chart-line',
-    iconBgColor: 'bg-blue-100',
-    iconColor: 'text-blue-600',
-    trend: {
-      value: 8,
-      isPositive: true,
-    },
-  },
-  {
-    title: 'Cliques em Afiliados',
-    value: 145,
-    icon: 'ri-external-link-line',
-    iconBgColor: 'bg-orange-100',
-    iconColor: 'text-orange-600',
-    trend: {
-      value: 5,
-      isPositive: true,
-    },
-  },
-  {
-    title: 'Conversões de Afiliados',
-    value: 23,
-    icon: 'ri-money-dollar-circle-line',
-    iconBgColor: 'bg-green-100',
-    iconColor: 'text-green-600',
-    trend: {
-      value: 3,
-      isPositive: true,
-    },
-  },
-];
-
 export const mockUsers: User[] = [
   {
     id: '1',
     name: 'Admin User',
     email: 'admin@dailybrief.com',
     role: 'admin',
-    avatar:
-      'https://ui-avatars.com/api/?name=Admin+User&background=3B82F6&color=fff',
+    avatar: 'https://ui-avatars.com/api/?name=Admin+User&background=3B82F6&color=fff',
     createdAt: '2025-01-01T00:00:00.000Z',
     lastActive: '2025-05-06T08:30:00.000Z',
   },
@@ -518,8 +426,7 @@ export const mockUsers: User[] = [
     name: 'Editor Principal',
     email: 'editor@dailybrief.com',
     role: 'editor',
-    avatar:
-      'https://ui-avatars.com/api/?name=Editor+Principal&background=3B82F6&color=fff',
+    avatar: 'https://ui-avatars.com/api/?name=Editor+Principal&background=3B82F6&color=fff',
     createdAt: '2025-01-15T00:00:00.000Z',
     lastActive: '2025-05-05T16:45:00.000Z',
   },
@@ -528,8 +435,7 @@ export const mockUsers: User[] = [
     name: 'Visualizador',
     email: 'viewer@dailybrief.com',
     role: 'viewer',
-    avatar:
-      'https://ui-avatars.com/api/?name=Visualizador&background=3B82F6&color=fff',
+    avatar: 'https://ui-avatars.com/api/?name=Visualizador&background=3B82F6&color=fff',
     createdAt: '2025-02-10T00:00:00.000Z',
     lastActive: '2025-05-04T10:20:00.000Z',
   },

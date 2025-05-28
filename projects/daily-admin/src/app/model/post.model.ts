@@ -1,8 +1,4 @@
-type MultilangText = {
-  PT: string;
-  EN: string;
-  ES: string;
-};
+import { MultilangText } from '../types/general.types';
 
 export interface IPost {
   id: number;
@@ -15,7 +11,7 @@ export interface IPost {
   category: string;
   metaDescription: MultilangText;
   affiliateLinks: MultilangText;
-  status: 'PENDING' | 'APPROVED' | 'REJECTED';
+  status: 'PENDING' | 'APPROVED' | 'REJECTED' | 'DRAFT';
   date: string;
   readTime: string;
   updatedAt: string;
@@ -23,7 +19,7 @@ export interface IPost {
 }
 
 export interface ISideManuArticle {
-  status: 'PENDING' | 'APPROVED' | 'REJECTED' | string;
+  status: 'PENDING' | 'APPROVED' | 'REJECTED' | 'DRAFT' | string;
   createdAt: string;
   updatedAt: string;
   author: string;
