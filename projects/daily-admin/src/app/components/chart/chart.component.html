@@ -1,1 +1,5 @@
 <p>chart works!</p>
+<div class="chart-container p-4 bg-white rounded shadow">
+  <h3 class="text-lg font-bold mb-2">{{ title }}</h3>
+  <canvas baseChart [data]="data" [type]="chartType" [options]="chartOptions"></canvas>
+</div>

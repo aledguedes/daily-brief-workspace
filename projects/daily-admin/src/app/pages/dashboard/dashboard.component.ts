@@ -3,6 +3,7 @@ import { Router, RouterModule } from '@angular/router';
 import { DashboardService } from '../../services/dashboard.service';
 import {
   IDashboardCard,
+  IDashboardLog,
   IDashboarResponse,
   ILogDisplayItem,
   IRecentPost,
@@ -14,6 +15,7 @@ import { LogItemComponent } from '../../components/log-item/log-item.component';
 import { StatCardComponent } from '../../components/stat-card/stat-card.component';
 import { PostCardDashComponent } from '../../components/post-card-dash/post-card-dash.component';
 import { ChartComponent } from '../../components/chart/chart.component';
+import { mapBackendLogToDisplayItem } from '../../utils/log.mapper';
 
 @Component({
   selector: 'app-dashboard',
@@ -57,7 +59,8 @@ export class DashboardComponent implements OnInit {
         this.blogDashboardCards = mapBackendToDashboardCards(response.analytics);
         this.populateIChart(response.analytics);
         this.recentPosts = response.recentPosts;
-        // this.recentLogs = response.recentLogs;
+        this.recentLogs =
+          response.recentLogs.map((log: IDashboardLog) => mapBackendLogToDisplayItem(log)) || [];
       },
       error: (err) => {
         console.log('DASHBOARD DATA ERROR', err);
@@ -66,8 +69,6 @@ export class DashboardComponent implements OnInit {
   }
 
   private populateIChart(analytics: any): void {
-    // Usar 'any' temporariamente se a interface IAnalytics não estiver 100% pronta
-    // Gráfico de Posts por Status
     this.postsByStatusChart = {
       labels: ['Aprovado', 'Pendente', 'Rejeitado'],
       datasets: [

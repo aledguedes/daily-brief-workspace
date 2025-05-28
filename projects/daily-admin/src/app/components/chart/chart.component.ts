@@ -9,10 +9,16 @@ import { IChart } from '../../model/chart.model';
 })
 export class ChartComponent implements OnChanges {
   @Input() title: string = '';
-  @Input() data: IChart | undefined;
+  @Input() data: any;
+  @Input() chartType: ChartType = 'line'; // valor padrão
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['data'] && changes['data']?.currentValue) {
-    }
-  }
+  public chartOptions: ChartConfiguration['options'] = {
+    responsive: true,
+    plugins: {
+      legend: {
+        display: true,
+        position: 'top',
+      },
+    },
+  };
 }
