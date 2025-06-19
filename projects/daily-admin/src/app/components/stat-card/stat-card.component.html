@@ -1,27 +1,28 @@
-<div class="bg-white shadow-lg rounded-lg p-6">
-  <div class="flex items-center justify-between">
-    <!-- Texto -->
-    <div class="flex-1">
-      <p class="text-sm font-semibold text-muted-foreground">
-        {{ stat.title }}
-      </p>
-      <p class="text-xl">{{ stat.value }}</p>
-      @if (stat.trend) {
-        <p
-          [ngClass]="stat.trend.isPositive ? 'text-green-500' : 'text-red-500'"
-          class="text-sm"
-        >
-          {{ stat.trend.isPositive ? '↑' : '↓' }} {{ stat.trend.value }}%
+@if (isLoading) {
+  <div class="bg-white shadow-lg rounded-lg p-6">
+    <div class="flex items-center justify-between">
+      <!-- Texto -->
+      <div class="flex-1">
+        <p class="text-sm font-semibold text-muted-foreground">
+          {{ stat.title }}
         </p>
-      }
-    </div>
+        <p class="text-xl">{{ stat.value }}</p>
+        @if (stat.trend) {
+          <p [ngClass]="stat.trend.isPositive ? 'text-green-500' : 'text-red-500'" class="text-sm">
+            {{ stat.trend.isPositive ? '↑' : '↓' }} {{ stat.trend.value }}%
+          </p>
+        }
+      </div>
 
-    <!-- Ícone ajustado -->
-    <div
-      [ngClass]="stat.iconBgColor"
-      class="w-14 h-14 flex items-center justify-center rounded-md ml-4"
-    >
-      <i [ngClass]="[stat.icon, stat.iconColor]" class="text-2xl"></i>
+      <!-- Ícone ajustado -->
+      <div
+        [ngClass]="stat.iconBgColor"
+        class="w-14 h-14 flex items-center justify-center rounded-md ml-4"
+      >
+        <i [ngClass]="[stat.icon, stat.iconColor]" class="text-2xl"></i>
+      </div>
     </div>
   </div>
-</div>
+} @else {
+  <div class="w-full h-28 shadow-lg bg-gray-300 animate-pulse rounded mb-2"></div>
+}

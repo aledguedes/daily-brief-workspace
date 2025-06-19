@@ -34,6 +34,7 @@ export class DashboardComponent implements OnInit {
   private dashService = inject(DashboardService);
   private router = inject(Router);
 
+  isLoading = false;
   selectedLanguage = 'pt-BR';
   blogDashboardCards: IDashboardCard[] = [];
 
@@ -61,6 +62,10 @@ export class DashboardComponent implements OnInit {
         this.recentPosts = response.recentPosts;
         this.recentLogs =
           response.recentLogs.map((log: IDashboardLog) => mapBackendLogToDisplayItem(log)) || [];
+
+        setTimeout(() => {
+          this.isLoading = true;
+        }, 3000);
       },
       error: (err) => {
         console.log('DASHBOARD DATA ERROR', err);

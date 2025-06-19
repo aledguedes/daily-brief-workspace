@@ -16,6 +16,8 @@ export class HeaderComponent {
   sidebarOpen = signal(false);
   private router = inject(Router);
 
+  mobileMenuOpen = false;
+
   navItems: IMenu[] = [
     {
       title: 'Dashboard',
@@ -61,5 +63,9 @@ export class HeaderComponent {
   logout() {
     localStorage.removeItem('mock-token');
     this.router.navigate(['/login']);
+  }
+
+  toggleMobileMenu(): void {
+    this.mobileMenuOpen = !this.mobileMenuOpen;
   }
 }

@@ -10,7 +10,7 @@ import { HeaderComponent } from '../header/header.component';
   template: `
     <div class="flex flex-col min-h-screen">
       <app-header />
-      <div class="container mx-auto px-4 pt-24">
+      <div class="container mx-auto px-4 pt-4">
         <router-outlet />
       </div>
     </div>

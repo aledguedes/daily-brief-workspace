@@ -10,6 +10,7 @@ import { IDashboardCard } from '../../model/dashboard.model';
   styleUrls: ['./stat-card.component.scss'],
 })
 export class StatCardComponent {
+  @Input() isLoading = false;
   @Input() stat: IDashboardCard = {
     title: '',
     value: '',

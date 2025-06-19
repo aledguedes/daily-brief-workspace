@@ -16,6 +16,12 @@
         <option value="APPROVED">Aprovado</option>
         <option value="REJECTED">Rejeitado</option>
       </select>
+      <button
+        (click)="isModalOpen = true"
+        class="border font-semibold border-blue-600 text-blue-600 bg-transparent px-3 py-1 rounded-lg shadow hover:bg-blue-600 hover:text-white transition-colors flex items-center disabled:opacity-50 disabled:cursor-not-allowed"
+      >
+        Novo Post <i class="ri-add-line"></i>
+      </button>
     </div>
   </div>
 
@@ -149,59 +155,9 @@
       </div>
     </div>
   }
-
-  <!-- 
-    <div class="mt-4">
-      <h3 class="text-lg font-semibold mb-2">Create New Post</h3>
-      <form (submit)="createPost()" class="space-y-4">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <label for="title-pt" class="block text-sm font-medium text-gray-700"
-              >Title (PT)</label
-            >
-            <input
-              type="text"
-              id="title-pt"
-              [(ngModel)]="newPost.title.pt"
-              name="title-pt"
-              class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-              required
-            />
-          </div>
-          <div>
-            <label for="title-en" class="block text-sm font-medium text-gray-700"
-              >Title (EN)</label
-            >
-            <input
-              type="text"
-              id="title-en"
-              [(ngModel)]="newPost.title.en"
-              name="title-en"
-              class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-              required
-            />
-          </div>
-          <div>
-            <label for="title-es" class="block text-sm font-medium text-gray-700"
-              >Title (ES)</label
-            >
-            <input
-              type="text"
-              id="title-es"
-              [(ngModel)]="newPost.title.es"
-              name="title-es"
-              class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-              required
-            />
-          </div>
-        </div>
-
-        <button
-          type="submit"
-          class="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-        >
-          Create Post
-        </button>
-      </form>
-    </div> -->
 </div>
+
+<!-- Modal Overlay & Dialog -->
+@if (isModalOpen) {
+  <app-modal-post-create (controlModal)="closeModal($event)" />
+}
