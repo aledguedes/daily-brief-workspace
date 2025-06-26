@@ -15,8 +15,6 @@ import { HomePageService } from '../services/homepage/homepage.service';
       <main class="flex-1">
         <app-hero [post]="featuredPost"></app-hero>
         <app-post-list [posts]="recentPosts" [title]="'Posts Recentes'"></app-post-list>
-        <app-post-list [posts]="techPosts" [title]="'Tecnologia'"></app-post-list>
-        <app-post-list [posts]="aiPosts" [title]="'Inteligência Artificial'"></app-post-list>
         <app-newsletter></app-newsletter>
       </main>
     </div>

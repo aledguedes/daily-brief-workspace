@@ -9,79 +9,13 @@ module.exports = {
       fontFamily: {
         sans: ['Inter', ...defaultTheme.fontFamily.sans],
       },
+      // Você pode adicionar outras extensões de tema específicas para daily-brief aqui
       colors: {
-        'db-dark-bg': '#181e26',
+        primary: '#3B82F6',
+        secondary: '#8B5CF6',
+        accent: '#06B6D4',
+        dark: '#1F2937',
       },
-      animation: {
-        'accordion-down': 'accordion-down 0.2s ease-out',
-        'accordion-up': 'accordion-up 0.2s ease-out',
-      },
-      typography: (theme) => ({
-        DEFAULT: {
-          css: {
-            // Texto principal
-            color: theme('colors.gray.800'),
-            fontFamily: 'Inter, sans-serif',
-            maxWidth: 'none',
-            // Cabeçalhos
-            h1: {
-              fontWeight: theme('fontWeight.bold'),
-              color: theme('colors.gray.900'),
-            },
-            h2: {
-              fontWeight: theme('fontWeight.semibold'),
-              color: theme('colors.gray.100'),
-              marginTop: theme('spacing.6'),
-              marginBottom: theme('spacing.4'),
-            },
-            h3: {
-              fontWeight: theme('fontWeight.semibold'),
-              color: theme('colors.gray.800'),
-              marginTop: theme('spacing.5'),
-              marginBottom: theme('spacing.3'),
-            },
-            // Parágrafos
-            p: {
-              lineHeight: theme('lineHeight.relaxed'),
-              marginBottom: theme('spacing.4'),
-            },
-            // Links
-            a: {
-              color: theme('colors.blue.600'),
-              textDecoration: 'underline',
-              '&:hover': {
-                color: theme('colors.blue.500'),
-                textDecoration: 'none',
-              },
-            },
-            // Listas
-            ul: {
-              listStyleType: 'disc',
-              marginBottom: theme('spacing.4'),
-              paddingLeft: theme('spacing.6'),
-            },
-            li: {
-              marginBottom: theme('spacing.2'),
-            },
-            // Estilo para modo escuro
-            '.prose-invert': {
-              color: theme('colors.gray.200'),
-              h1: { color: theme('colors.gray.100') },
-              h2: { color: theme('colors.gray.100') },
-              h3: { color: theme('colors.gray.200') },
-              a: {
-                color: theme('colors.blue.400'),
-                '&:hover': {
-                  color: theme('colors.blue.300'),
-                },
-              },
-              ul: {
-                listStyleType: 'disc',
-              },
-            },
-          },
-        },
-      }),
     },
   },
   plugins: [

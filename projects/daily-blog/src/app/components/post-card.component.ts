@@ -9,53 +9,46 @@ import { IPost } from '../model/post.model';
   imports: [CommonModule, RouterModule],
   template: `
     <div
-      class="rounded-lg border-[0.5px] border-gray-200 text-[var(--primary-text)] shadow-sm overflow-hidden h-full flex flex-col dark:border-gray-900 bg-[var(--card-bg-color)]"
+      class="group bg-white rounded-2xl shadow-md transition-all duration-300 overflow-hidden border border-gray-100 hover:border-primary/20"
     >
-      @if (post.image) {
-        <div class="aspect-video overflow-hidden">
-          <img
-            [src]="post.image"
-            [alt]="post.title"
-            class="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
-          />
+      <div class="relative">
+        <img
+          [src]="post.image"
+          [alt]="post.title"
+          class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+        />
+        <div class="absolute top-4 left-4">
+          <span class="bg-yellow-500 text-white px-3 py-1 rounded-full text-xs font-medium">{{
+            post.category
+          }}</span>
         </div>
-      }
-      <div class="p-4 pb-0">
-        <div class="flex justify-between items-center mb-4 mt-4">
-          <time class="text-sm text-[var(--secondary-text)]">{{ post.date }}</time>
-          <span
-            class="ml-2 inline-flex items-center justify-center rounded-full px-4 py-1.5 text-xs font-semibold bg-gray-200 dark:bg-gray-600 text-gray-800 dark:text-gray-200"
-          >
-            {{ post.category }}
-          </span>
+      </div>
+      <div class="p-6">
+        <div class="flex items-center mb-3 text-sm text-gray-500">
+          <span>{{ post.date | date }}</span>
+          <span class="mx-2">•</span>
+          <span>{{ post.readTime }}</span>
         </div>
-        <h3 class="font-semibold text-xl mb-4">{{ post.title }}</h3>
-      </div>
-      <div class="p-4 pt-2 flex-grow">
-        <p class="text-[var(--secondary-text)]">{{ post.excerpt }}</p>
-      </div>
-      <div class="p-4 pt-0">
-        <a
-          [routerLink]="['/post', post.id]"
-          class="text-sm font-medium text-[var(--accent)] hover:underline inline-flex items-center"
+        <h3
+          class="text-lg font-semibold text-gray-900 mb-3 group-hover:text-blue-500 transition-colors cursor-pointer leading-tight"
         >
-          Ler Mais
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="ml-1"
+          {{ post.title }}
+        </h3>
+        <p class="text-gray-600 text-sm mb-4 leading-relaxed">
+          {{ post.excerpt }}
+        </p>
+        <div class="flex items-center justify-between">
+          <div class="flex items-center">
+            <img [src]="post.author" [alt]="post.author" class="w-6 h-6 rounded-full" />
+            <span class="text-xs text-gray-600 ml-2">{{ post.author }}</span>
+          </div>
+          <a
+            [routerLink]="['/post', post.id]"
+            class="text-primary hover:text-primary/80 text-sm font-medium"
           >
-            <path d="M5 12h14"></path>
-            <path d="m12 5 7 7-7 7"></path>
-          </svg>
-        </a>
+            Ler mais →
+          </a>
+        </div>
       </div>
     </div>
   `,

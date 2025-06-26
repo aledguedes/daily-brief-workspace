@@ -11,7 +11,7 @@ export class PostService {
   private apiUrl = environment.apiUrl;
 
   getPostPublicById(id: number) {
-    const lang = navigator.language || 'pt-BR';
+    const lang = typeof navigator !== 'undefined' ? navigator.language : 'pt-BR';
     return this.http.get<IPost>(`${this.apiUrl}/posts/public/${id}?lang=${lang}`);
   }
 }

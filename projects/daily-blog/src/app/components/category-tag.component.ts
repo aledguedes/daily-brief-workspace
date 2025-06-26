@@ -6,10 +6,7 @@ import { ICategory } from '../model/category.model';
   standalone: true,
   template: `
     <button
-      [class]="
-        'px-4 py-2 rounded-full text-sm font-medium transition-colors ' +
-        (active ? 'bg-[#1E88E5] text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300')
-      "
+      [class]="'bg-blue-500 text-white px-3 py-1 rounded-full text-sm font-medium shadow-lg'"
       (click)="onClick()"
     >
       {{ category }}

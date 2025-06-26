@@ -12,7 +12,7 @@ export class HomePageService {
 
   getPostHomePage(limit: number) {
     // Captura a linguagem do navegador (ex.: 'pt-BR')
-    const lang = navigator.language || 'pt-BR';
+    const lang = typeof navigator !== 'undefined' ? navigator.language : 'pt-BR';
     return this.http.get<IHomePage>(`${this.apiUrl}/posts/homepage?limit=${limit}&lang=${lang}`);
   }
 }
