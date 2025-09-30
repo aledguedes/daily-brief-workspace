@@ -12,26 +12,33 @@ import { IMenu } from '../../model/menu.model';
   imports: [CommonModule, RouterOutlet, HeaderComponent, SidebarComponent],
   template: `
     <div class="bg-gray-50 min-h-screen">
-      <app-header />
+      <app-header (toggleCollapse)="toggleCollapse()" />
 
       <div
         id="sidebar"
         [class.translate-x-0]="isSidebarOpen"
         [class.-translate-x-full]="!isSidebarOpen"
-        class="fixed left-0 top-14 h-full w-64 bg-white shadow-lg transform lg:translate-x-0 transition-transform duration-300 ease-in-out z-40 overflow-y-auto"
+        (mouseenter)="handleMouseEnter()"
+        (mouseleave)="handleMouseLeave()"
+        [class.lg:w-20]="isSidebarRetracted"
+        [class.lg:w-64]="!isSidebarRetracted"
+        class="fixed left-0 top-16 h-full w-64 bg-white shadow-lg transform lg:translate-x-0 transition-all duration-300 ease-in-out z-40 overflow-y-auto"
       >
-        <app-sidebar [navItems]="navItems" />
+        <app-sidebar [navItems]="navItems" [isCollapsed]="isSidebarRetracted" />
       </div>
 
       <div
         id="overlay"
         [class.hidden]="!isSidebarOpen"
         (click)="closeSidebar()"
-        class="fixed inset-0 bg-black/30 z-30 lg:hidden 
-         backdrop-blur-sm backdrop-saturate-150"
+        class="fixed inset-0 bg-black/30 z-30 lg:hidden backdrop-blur-sm backdrop-saturate-150"
       ></div>
 
-      <main class="lg:ml-64 pt-14 min-h-screen">
+      <main
+        class="min-h-screen transition-all duration-300 ease-in-out p-4 pt-16"
+        [class.lg:ml-20]="isSidebarRetracted"
+        [class.lg:ml-64]="!isSidebarRetracted"
+      >
         <div class="p-6">
           <router-outlet />
         </div>
@@ -64,14 +71,16 @@ import { IMenu } from '../../model/menu.model';
 export class HomeComponent implements OnInit {
   private sidebarStateService = inject(SidebarStateService);
   isSidebarOpen = false;
+  isSidebarCollapsed = false;
+  isCollapsed: boolean = true;
+  isHovering: boolean = false;
 
-  // Array de navegação fornecido no prompt
   navItems: IMenu[] = [
     {
       id: 1,
       title: 'Dashboard',
       route: '/home',
-      icon: 'ri-dashboard-line',
+      icon: 'fas fa-chart-line',
       childrens: [],
       hasChildren: false,
     },
@@ -79,7 +88,7 @@ export class HomeComponent implements OnInit {
       id: 2,
       title: 'Automation',
       route: '/home/automation',
-      icon: 'ri-signpost-line ri-lg',
+      icon: 'fas fa-robot',
       childrens: [
         {
           id: 3,
@@ -95,7 +104,7 @@ export class HomeComponent implements OnInit {
       id: 5,
       title: 'Posts',
       route: '/home/posts',
-      icon: 'ri-signpost-line',
+      icon: 'fas fa-newspaper',
       childrens: [
         {
           id: 6,
@@ -113,7 +122,7 @@ export class HomeComponent implements OnInit {
       id: 10,
       title: 'Logs',
       route: '/home/logs',
-      icon: 'ri-bubble-line',
+      icon: 'fas fa-clipboard-list',
       childrens: [],
       hasChildren: false,
     },
@@ -121,7 +130,7 @@ export class HomeComponent implements OnInit {
       id: 11,
       title: 'Usuários',
       route: '/home/users',
-      icon: 'ri-dashboard-line',
+      icon: 'fas fa-users',
       childrens: [],
       hasChildren: false,
     },
@@ -129,7 +138,7 @@ export class HomeComponent implements OnInit {
       id: 12,
       title: 'Analytics',
       route: '/home/analytics',
-      icon: 'ri-user-follow-line',
+      icon: 'fas fa-chart-bar',
       childrens: [],
       hasChildren: false,
     },
@@ -137,20 +146,46 @@ export class HomeComponent implements OnInit {
       id: 13,
       title: 'Configurações',
       route: '/home/settings',
-      icon: 'ri-settings-3-line',
+      icon: 'fas fa-cogs',
       childrens: [],
       hasChildren: false,
     },
   ];
 
   ngOnInit() {
-    // Escuta o estado da sidebar para controlar a visibilidade em mobile
     this.sidebarStateService.isSidebarOpen$.subscribe((isOpen) => {
       this.isSidebarOpen = isOpen;
     });
+
+    this.sidebarStateService.isSidebarCollapsed$.subscribe((isCollapsed) => {
+      this.isSidebarCollapsed = isCollapsed;
+    });
+  }
+
+  get isSidebarRetracted(): boolean {
+    return this.isCollapsed && !this.isHovering;
+  }
+
+  toggleMenu() {
+    this.sidebarStateService.toggleSidebar();
   }
 
   closeSidebar() {
     this.sidebarStateService.closeSidebar();
+  }
+
+  toggleCollapse(): void {
+    this.isCollapsed = !this.isCollapsed;
+    this.isHovering = false;
+  }
+
+  handleMouseEnter(): void {
+    if (this.isCollapsed) {
+      this.isHovering = true;
+    }
+  }
+
+  handleMouseLeave(): void {
+    this.isHovering = false;
   }
 }

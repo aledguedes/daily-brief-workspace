@@ -1,4 +1,4 @@
-import { Component, HostListener, inject } from '@angular/core';
+import { Component, EventEmitter, HostListener, inject, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SidebarStateService } from '../../services/sidebar-state.service';
 import { INotification } from '../../model/notidication.model';
@@ -18,6 +18,7 @@ interface IMenuItem {
   templateUrl: './header.component.html',
 })
 export class HeaderComponent {
+  @Output() toggleCollapse = new EventEmitter<void>();
   private sidebarStateService = inject(SidebarStateService);
 
   userMenuItems: IMenuItem[] = [
@@ -88,5 +89,9 @@ export class HeaderComponent {
     event.stopPropagation();
     this.isNotificationOpen = false;
     this.isUserMenuOpen = !this.isUserMenuOpen;
+  }
+
+  toggleSidebarCollapse(): void {
+    this.sidebarStateService.toggleSidebarCollapse();
   }
 }

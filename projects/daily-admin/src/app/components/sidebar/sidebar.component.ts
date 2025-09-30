@@ -12,6 +12,8 @@ import { SidebarStateService } from '../../services/sidebar-state.service';
 })
 export class SidebarComponent {
   @Input({ required: true }) navItems: IMenu[] = [];
+  @Input({ required: true }) isCollapsed: boolean = false;
+
   private sidebarStateService = inject(SidebarStateService);
 
   closeMenuOnNavigate(): void {
