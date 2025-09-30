@@ -14,7 +14,7 @@ import { HomePageService } from '../services/homepage/homepage.service';
     <div class="min-h-screen flex flex-col bg-[var(--background)] text-[var(--foreground)]">
       <main class="flex-1">
         <app-hero [post]="featuredPost"></app-hero>
-        <app-post-list [posts]="recentPosts" [title]="'Posts Recentes'"></app-post-list>
+        <app-post-list [posts]="recentPosts" [title]="'Últimos Artigos'"></app-post-list>
         <app-newsletter></app-newsletter>
       </main>
     </div>

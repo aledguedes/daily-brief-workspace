@@ -8,10 +8,10 @@ import { IPost } from '../model/post.model';
   standalone: true,
   imports: [CommonModule, RouterModule],
   template: `
-    <section class="py-12 md:py-24 lg:py-32 bg-[var(--card-bg-color)]">
+    <section class="py-12 md:py-12 lg:pt-24">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div
-          class="bg-white rounded-3xl overflow-hidden hover:shadow-2xl transition-all duration-500 border border-gray-100"
+          class="bg-[var(--white-color)] dark:bg-[var(--white-color)] rounded-3xl overflow-hidden"
         >
           <div class="md:flex">
             <div class="md:w-1/2 relative">
@@ -30,9 +30,11 @@ import { IPost } from '../model/post.model';
             </div>
             <div class="md:w-1/2 p-8 lg:p-12">
               <div class="flex items-center mb-6">
-                <span class="text-gray-500 text-sm">{{ post.date }}</span>
+                <span class="text-gray-500 text-sm">{{ post.date | date }}</span>
                 <span class="mx-2 text-gray-300">•</span>
-                <span class="text-primary text-sm font-medium">{{ post.readTime }}</span>
+                <span class="text-[var(--accent)] dark:text-[var(--accent)] text-sm font-bold"
+                  >{{ post.readTime }} de leitura</span
+                >
               </div>
               <h2 class="text-3xl font-bold text-gray-900 mb-4 leading-tight tracking-tight">
                 {{ post.title }}
@@ -43,7 +45,7 @@ import { IPost } from '../model/post.model';
               <div class="flex items-center justify-between">
                 <div class="flex items-center">
                   <img
-                    [src]="post.author"
+                    [src]="authorImage"
                     [alt]="post.author"
                     class="w-10 h-10 rounded-full border-2 border-white shadow-md"
                   />
@@ -83,6 +85,8 @@ import { IPost } from '../model/post.model';
   styles: [],
 })
 export class HeroComponent {
+  authorImage: string =
+    'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=40&h=40&fit=crop&crop=face';
   @Input() post: IPost = {
     id: 0,
     title: '',

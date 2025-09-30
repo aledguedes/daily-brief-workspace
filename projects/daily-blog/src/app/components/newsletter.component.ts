@@ -7,51 +7,40 @@ import { FormsModule } from '@angular/forms';
   standalone: true,
   imports: [FormsModule, CommonModule],
   template: `
-    <section
-      class="py-8 md:py-8 bg-[var(--card-bg-color)] border-t border-gray-200 dark:border-gray-700"
-    >
-      <div class="container mx-auto px-4">
-        <div class="rounded-lg bg-primary/5 p-8 relative overflow-hidden">
-          <h2 class="text-3xl font-bold mb-4">
-            Inscreva-se na nossa Newsletter
-          </h2>
-          <p class="text-muted-foreground mb-6 max-w-[600px]">
-            Receba as últimas notícias e atualizações sobre tecnologia, IA e
-            ciência de dados diretamente na sua caixa de entrada.
-          </p>
-          <form class="flex flex-col sm:flex-row gap-4 max-w-lg">
-            <input
-              type="email"
-              placeholder="Seu email"
-              [(ngModel)]="email"
-              name="email"
-              required
-              class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
-            />
-            <button
-              type="submit"
-              class="bg-[var(--accent)] text-white hover:bg-blue-500 h-10 px-4 py-2 rounded-md text-sm font-medium whitespace-nowrap"
-              [disabled]="!email"
-              [ngClass]="{ 'opacity-50 cursor-not-allowed': !email }"
-            >
-              Inscrever-se
-            </button>
-          </form>
+    <section class="relative bg-gradient-to-br from-gray-50 to-blue-50/30 py-20 overflow-hidden">
+      <div class="absolute inset-0"></div>
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+        <div
+          class="inline-flex items-center px-4 py-2 bg-blue-100 backdrop-blur-sm rounded-full text-sm font-medium text-blue-400 mb-6 border border-blue-200"
+        >
+          📧 Newsletter Semanal
         </div>
+        <h2 class="text-4xl font-bold text-gray-900 mb-4 tracking-tight">
+          Fique por Dentro das Novidades
+        </h2>
+        <p class="text-gray-600 text-lg mb-8 max-w-2xl mx-auto font-medium leading-relaxed">
+          Receba os melhores artigos sobre tecnologia e IA diretamente no seu email.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-3 max-w-lg mx-auto">
+          <input
+            type="email"
+            placeholder="seu@email.com"
+            class="flex-1 px-5 py-2.5 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-200 focus:border-blue bg-white text-gray-900 placeholder-gray-400 transition-all duration-300 text-sm font-medium shadow-sm focus:shadow-md"
+          />
+          <button
+            class="group px-6 py-2.5 bg-blue-500 text-white rounded-xl font-medium hover:bg-blue-500 hover:shadow-lg hover:shadow-blue-200 transition-all duration-300 whitespace-nowrap text-sm tracking-wide"
+          >
+            <span class="group-hover:scale-105 transition-transform inline-block"
+              >Inscrever-se</span
+            >
+          </button>
+        </div>
+        <p class="text-gray-500 text-sm mt-4">
+          ✓ Sem spam • ✓ Cancelar a qualquer momento • ✓ Conteúdo exclusivo
+        </p>
       </div>
     </section>
   `,
-  styles: [
-    `
-      /* Estilos exclusivos do NewsletterComponent */
-      .text-muted-foreground {
-        color: hsl(var(--muted-foreground));
-      }
-      .text-primary-foreground {
-        color: hsl(var(--primary-foreground));
-      }
-    `,
-  ],
 })
 export class NewsletterComponent {
   email: string = '';

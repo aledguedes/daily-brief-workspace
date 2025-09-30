@@ -1,5 +1,5 @@
 import { FormsModule } from '@angular/forms';
-import { Component, inject, signal } from '@angular/core';
+import { Component, EventEmitter, inject, Output, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { IMenu } from '../../model/menu.model';
@@ -14,47 +14,11 @@ import { IMenu } from '../../model/menu.model';
 export class HeaderComponent {
   language = signal('pt');
   sidebarOpen = signal(false);
+  isMobileMenuOpen = signal(false);
+
+  @Output() closeRequest: EventEmitter<void> = new EventEmitter<void>();
+
   private router = inject(Router);
-
-  mobileMenuOpen = false;
-
-  navItems: IMenu[] = [
-    {
-      title: 'Dashboard',
-      route: '/home',
-      icon: 'ri-dashboard-line',
-    },
-    {
-      title: 'Posts',
-      route: '/home/posts',
-      icon: 'ri-signpost-line',
-    },
-    {
-      title: 'Logs',
-      route: '/home/logs',
-      icon: 'ri-bubble-line',
-    },
-    {
-      title: 'Usuários',
-      route: '/home/users',
-      icon: 'ri-dashboard-line',
-    },
-    {
-      title: 'Analytics',
-      route: '/home/analytics',
-      icon: 'ri-user-follow-line',
-    },
-    {
-      title: 'Configurações',
-      route: '/home/settings',
-      icon: 'ri-settings-3-line',
-    },
-    {
-      title: 'Sair',
-      route: '/',
-      icon: 'ri-logout-circle-line',
-    },
-  ];
 
   toggleSidebar() {
     this.sidebarOpen.update((value) => !value);
@@ -65,7 +29,12 @@ export class HeaderComponent {
     this.router.navigate(['/login']);
   }
 
-  toggleMobileMenu(): void {
-    this.mobileMenuOpen = !this.mobileMenuOpen;
+  toggleMobileMenu() {
+    this.isMobileMenuOpen.update((value) => !value);
+    this.closeRequest.emit();
+  }
+
+  toggleMobileSidebar() {
+    this.closeRequest.emit();
   }
 }

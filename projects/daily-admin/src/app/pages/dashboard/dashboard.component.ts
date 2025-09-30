@@ -55,6 +55,9 @@ export class DashboardComponent implements OnInit {
   dataDashboard() {
     this.dashService.getAllData().subscribe({
       next: (response: IDashboarResponse) => {
+        setTimeout(() => {
+          this.isLoading = true;
+        }, 3000);
         console.log('DASHBOARD DATA RESPONSE', response);
 
         this.blogDashboardCards = mapBackendToDashboardCards(response.analytics);
@@ -62,10 +65,6 @@ export class DashboardComponent implements OnInit {
         this.recentPosts = response.recentPosts;
         this.recentLogs =
           response.recentLogs.map((log: IDashboardLog) => mapBackendLogToDisplayItem(log)) || [];
-
-        setTimeout(() => {
-          this.isLoading = true;
-        }, 3000);
       },
       error: (err) => {
         console.log('DASHBOARD DATA ERROR', err);

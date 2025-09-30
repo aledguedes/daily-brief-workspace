@@ -7,94 +7,81 @@ import { ICategory } from '../model/category.model';
   standalone: true,
   imports: [RouterLink],
   template: `
-    <footer class=" bg-[var(--card-bg-color)]">
-      <div
-        class="container mx-auto py-8 md:py-12 px-4 border-t border-gray-200 dark:border-gray-700"
-      >
+    <footer class="bg-gray-800 text-white py-16">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-          <div class="space-y-3">
-            <h3 class="text-lg font-semibold">DailyBrief</h3>
-            <p class="text-sm text-muted-foreground">
-              O seu portal de notícias e insights sobre tecnologia e inteligência artificial.
+          <div class="col-span-1 md:col-span-2">
+            <div class="flex items-center space-x-2 mb-4">
+              <div
+                class="w-8 h-8 bg-gradient-to-br from-primary to-secondary rounded-lg flex items-center justify-center"
+              >
+                <!-- Icon here -->
+                <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                  <path
+                    d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3z"
+                  />
+                </svg>
+              </div>
+              <h3 class="text-xl font-bold">BailyBrief BLOG</h3>
+            </div>
+            <p class="text-gray-400 mb-6 max-w-md">
+              Seu destino para conteúdo de qualidade sobre tecnologia, programação e inteligência
+              artificial. Feito por desenvolvedores, para desenvolvedores.
             </p>
+            <div class="flex space-x-4">
+              @for (link of socialLinks; track $index) {
+                <a
+                  [routerLink]="link.url"
+                  class="text-gray-400 hover:text-white transition-colors p-2 hover:bg-white/10 rounded-lg"
+                >
+                  <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path [attr.d]="link.icon"></path>
+                  </svg>
+                </a>
+              }
+            </div>
           </div>
-          <div class="space-y-3">
-            <h4 class="text-sm font-semibold">Links</h4>
-            <ul class="space-y-2">
-              <li>
-                <a [routerLink]="['/']" class="text-sm text-muted-foreground hover:text-foreground"
-                  >Home</a
-                >
-              </li>
-              <li>
-                <a
-                  [routerLink]="['/categorias']"
-                  class="text-sm text-muted-foreground hover:text-foreground"
-                  >Artigos</a
-                >
-              </li>
-              <li>
-                <a
-                  [routerLink]="['/categorias']"
-                  class="text-sm text-muted-foreground hover:text-foreground"
-                  >Categorias</a
-                >
-              </li>
-              <li>
-                <a
-                  [routerLink]="['/sobre']"
-                  class="text-sm text-muted-foreground hover:text-foreground"
-                  >Sobre</a
-                >
-              </li>
-            </ul>
-          </div>
-          <div class="space-y-3">
-            <h4 class="text-sm font-semibold">Categorias</h4>
-            <ul class="space-y-2">
-              @for (category of categories; track category.id) {
+          <div>
+            <h4 class="text-lg font-semibold mb-4">Navegação</h4>
+            <ul class="space-y-3">
+              @for (link of navigationLinks; track $index) {
                 <li>
                   <a
-                    [routerLink]="['/categorias', category.slug]"
-                    class="text-sm text-muted-foreground hover:text-foreground"
+                    [routerLink]="link.url"
+                    class="text-gray-400 hover:text-white transition-colors"
+                    >{{ link.name }}</a
                   >
-                    {{ category.name }}
-                  </a>
                 </li>
               }
             </ul>
           </div>
-          <div class="space-y-3">
-            <h4 class="text-sm font-semibold">Contato</h4>
-            <ul class="space-y-2">
-              <li>
-                <a
-                  href="mailto:contato@dailybrief.com"
-                  class="text-sm text-muted-foreground hover:text-foreground"
-                >
-                  Contato
-                </a>
-              </li>
-              <li>
-                <a [routerLink]="['/']" class="text-sm text-muted-foreground hover:text-foreground"
-                  >Newsletter</a
-                >
-              </li>
-              <li>
-                <a href="#" class="text-sm text-muted-foreground hover:text-foreground">RSS</a>
-              </li>
+          <div>
+            <h4 class="text-lg font-semibold mb-4">Categorias</h4>
+            <ul class="space-y-3">
+              @for (link of categoryLinks; track $index) {
+                <li>
+                  <a
+                    [routerLink]="link.url"
+                    class="text-gray-400 hover:text-white transition-colors"
+                    >{{ link.name }}</a
+                  >
+                </li>
+              }
             </ul>
           </div>
         </div>
-        <div class="border-t border-gray-200 dark:border-gray-700 my-8"></div>
-        <div class="flex flex-col md:flex-row justify-between items-center">
-          <p class="text-sm text-muted-foreground">
-            &copy; 2025 DailyBrief. Todos os direitos reservados.
-          </p>
-          <div class="flex space-x-4 mt-4 md:mt-0">
-            <a href="#" class="text-sm text-muted-foreground hover:text-foreground">Termos</a>
-            <a href="#" class="text-sm text-muted-foreground hover:text-foreground">Privacidade</a>
-            <a href="#" class="text-sm text-muted-foreground hover:text-foreground">Cookies</a>
+        <div class="border-t border-gray-800 mt-12 pt-8">
+          <div class="flex flex-col md:flex-row justify-between items-center">
+            <p class="text-gray-400 text-sm">© 2025 TechAI Blog. Todos os direitos reservados.</p>
+            <div class="flex space-x-6 mt-4 md:mt-0">
+              @for (link of categoryLinks; track $index) {
+                <a
+                  [routerLink]="link.url"
+                  class="text-gray-400 hover:text-white transition-colors text-sm"
+                  >{{ link.name }}</a
+                >
+              }
+            </div>
           </div>
         </div>
       </div>
@@ -119,4 +106,32 @@ import { ICategory } from '../model/category.model';
 })
 export class FooterComponent {
   categories: ICategory[] = [];
+  socialLinks = [
+    { platform: 'Twitter', url: '#', icon: 'twitter-icon-path' },
+    { platform: 'Facebook', url: '#', icon: 'facebook-icon-path' },
+    { platform: 'GitHub', url: '#', icon: 'github-icon-path' },
+    { platform: 'Instagram', url: '#', icon: 'instagram-icon-path' },
+  ];
+
+  navigationLinks = [
+    { name: 'Início', url: '#' },
+    { name: 'Artigos', url: '#' },
+    { name: 'Tutoriais', url: '#' },
+    { name: 'Sobre', url: '#' },
+    { name: 'Contato', url: '#' },
+  ];
+
+  categoryLinks = [
+    { name: 'Inteligência Artificial', url: '#' },
+    { name: 'JavaScript & TypeScript', url: '#' },
+    { name: 'Python & Machine Learning', url: '#' },
+    { name: 'DevOps & Cloud', url: '#' },
+    { name: 'Segurança', url: '#' },
+  ];
+
+  legalLinks = [
+    { name: 'Política de Privacidade', url: '#' },
+    { name: 'Termos de Uso', url: '#' },
+    { name: 'RSS', url: '#' },
+  ];
 }

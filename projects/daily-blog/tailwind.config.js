@@ -3,13 +3,12 @@ const defaultTheme = require('tailwindcss/defaultTheme');
 
 module.exports = {
   content: ['./src/**/*.{html,ts,scss}'],
-  darkMode: 'class', // Habilita o modo escuro baseado em classe
+  darkMode: 'class',
   theme: {
     extend: {
       fontFamily: {
         sans: ['Inter', ...defaultTheme.fontFamily.sans],
       },
-      // Você pode adicionar outras extensões de tema específicas para daily-brief aqui
       colors: {
         primary: '#3B82F6',
         secondary: '#8B5CF6',
@@ -18,7 +17,5 @@ module.exports = {
       },
     },
   },
-  plugins: [
-    // Adicione plugins específicos para daily-brief aqui, se necessário
-  ],
+  plugins: [],
 };

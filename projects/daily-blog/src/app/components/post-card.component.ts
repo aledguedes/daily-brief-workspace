@@ -9,7 +9,7 @@ import { IPost } from '../model/post.model';
   imports: [CommonModule, RouterModule],
   template: `
     <div
-      class="group bg-white rounded-2xl shadow-md transition-all duration-300 overflow-hidden border border-gray-100 hover:border-primary/20"
+      class="group bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100 hover:border-blue-20"
     >
       <div class="relative">
         <img
@@ -44,7 +44,7 @@ import { IPost } from '../model/post.model';
           </div>
           <a
             [routerLink]="['/post', post.id]"
-            class="text-primary hover:text-primary/80 text-sm font-medium"
+            class="text-blue-500 hover:text-blue-300 text-sm font-medium"
           >
             Ler mais →
           </a>

@@ -1,80 +1,109 @@
-<header class="bg-white shadow-lg py-4 sticky top-0 z-50">
-  <div class="container mx-auto flex items-center justify-between px-4">
-    <!-- Logo -->
-    <a routerLink="/" class="flex items-center text-primary hover:text-secondary">
-      <svg class="h-8 w-8 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707.707m12.728 0l.707.707M6.343 17.657l.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
-        />
-      </svg>
-      <span class="text-2xl font-bold">MyBrand</span>
-    </a>
-
-    <!-- Mobile Menu Button -->
-    <div class="md:hidden">
-      <button
-        (click)="toggleMobileMenu()"
-        class="text-gray-800 hover:text-primary focus:outline-none transition-colors duration-300"
-      >
-        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M4 6h16M4 12h16m-7 6h7"
-          />
-        </svg>
-      </button>
-    </div>
-
-    <!-- Desktop Navigation -->
-    <nav class="hidden md:block">
-      <ul class="flex space-x-8 items-center">
-        @for (item of navItems; track item.title) {
-          <li>
-            <a
-              [routerLink]="item.route"
-              routerLinkActive="text-secondary font-semibold"
-              [routerLinkActiveOptions]="{ exact: true }"
-              class="flex items-center gap-2 hover:text-primary transition-colors duration-300"
+<nav class="bg-white shadow-sm rounded-b-xl fixed w-full z-50">
+  <div class="max-w-6xl mx-auto px-4">
+    <div class="flex justify-between">
+      <div class="flex space-x-4">
+        <!-- logo -->
+        <div>
+          <a
+            href="#"
+            class="flex items-center py-5 px-2 text-gray-700 hover:text-gray-900 transition-colors"
+          >
+            <svg
+              class="h-6 w-6 mr-1 text-blue-400"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
             >
-              <i [class]="item.icon"></i>
-              {{ item.title }}
-            </a>
-          </li>
-        }
-      </ul>
-    </nav>
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
+              />
+            </svg>
+            <span class="font-bold">Better Dev</span>
+          </a>
+        </div>
+        <!-- primary nav -->
+        <div class="hidden md:flex items-center space-x-1">
+          <a href="#" class="py-5 px-3 text-gray-700 hover:text-gray-900 transition-colors"
+            >Features</a
+          >
+          <a href="#" class="py-5 px-3 text-gray-700 hover:text-gray-900 transition-colors"
+            >Pricing</a
+          >
+        </div>
+      </div>
+      <!-- secondary nav -->
+      <div class="hidden md:flex items-center space-x-1">
+        <a href="#" class="py-5 px-3 text-gray-700 hover:text-gray-900 transition-colors">Login</a>
+        <a
+          href="#"
+          class="py-2 px-3 bg-yellow-400 hover:bg-yellow-300 text-yellow-900 font-semibold rounded-lg transition duration-300 shadow-md hover:shadow-lg"
+          >Signup</a
+        >
+      </div>
+      <!-- mobile button -->
+      <div class="md:hidden flex items-center">
+        <button class="mobile-menu-button focus:outline-none" (click)="toggleMobileMenu()">
+          <svg
+            class="w-6 h-6 text-gray-700"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 6h16M4 12h16M4 18h16"
+            />
+          </svg>
+        </button>
+      </div>
+      <!-- Sidebar Toggle Button -->
+      <div class="flex items-center md:hidden">
+        <button
+          class="text-gray-700 p-2 rounded-lg hover:bg-gray-100 transition-colors"
+          (click)="toggleMobileSidebar()"
+        >
+          <svg
+            class="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 6h16M4 12h16M4 18h7"
+            ></path>
+          </svg>
+        </button>
+      </div>
+    </div>
   </div>
-
-  <!-- Mobile Menu -->
-  @if (mobileMenuOpen) {
-    <nav
-      class="fixed top-16 left-0 w-full hover- h-screen z-50 bg-gray-50 border-t border-gray-200 md:hidden shadow-lg transition-all duration-300 ease-in-out overflow-y-auto"
-    >
-      <ul class="px-4 py-2">
-        <!-- Desktop Navigation -->
-        <nav class="hidden md:block">
-          <ul class="flex space-x-8 items-center">
-            @for (item of navItems; track item.title) {
-              <li>
-                <a
-                  [routerLink]="item.route"
-                  routerLinkActive="text-blue-500 border-b-2 border-blue-500"
-                  [routerLinkActiveOptions]="{ exact: true }"
-                  class="flex items-center gap-2 py-2 transition-colors duration-300 hover:text-blue-500 hover:border-b-2 hover:border-blue-500 border-b-2 border-transparent"
-                >
-                  <i [class]="item.icon"></i>
-                  {{ item.title }}
-                </a>
-              </li>
-            }
-          </ul>
-        </nav>
-      </ul>
-    </nav>
+  <!-- mobile menu -->
+  @if (isMobileMenuOpen()) {
+    <div class="md:hidden bg-white shadow-inner rounded-b-xl animate-fade-in-down">
+      <a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
+        >Features</a
+      >
+      <a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
+        >Pricing</a
+      >
+      <a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
+        >Login</a
+      >
+      <a
+        href="#"
+        class="block py-2 px-4 text-sm bg-yellow-400 text-yellow-900 rounded-b-lg text-center font-medium"
+        >Signup</a
+      >
+    </div>
   }
-</header>
+</nav>
