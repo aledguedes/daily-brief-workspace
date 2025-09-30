@@ -79,7 +79,7 @@ export class HomeComponent implements OnInit {
     {
       id: 1,
       title: 'Dashboard',
-      route: '/home',
+      route: '/home/dashboard',
       icon: 'fas fa-chart-line',
       childrens: [],
       hasChildren: false,
@@ -95,7 +95,7 @@ export class HomeComponent implements OnInit {
           title: 'Raw Materials',
           route: '/home/automation/raw-materials',
         },
-        { id: 4, title: 'Production', route: '/home/automation/production' },
+        { id: 4, title: 'Production', route: '/home/automation/production', badgeCount: 5 },
       ],
       hasChildren: true,
       isOpen: false,
@@ -105,11 +105,13 @@ export class HomeComponent implements OnInit {
       title: 'Posts',
       route: '/home/posts',
       icon: 'fas fa-newspaper',
+      badgeCount: 10,
       childrens: [
         {
           id: 6,
           title: 'All posts',
           route: '/home/posts/all',
+          badgeCount: 5,
         },
         { id: 7, title: 'Create post', route: '/home/posts/create' },
         { id: 8, title: 'Update post', route: '/home/posts/update' },
@@ -125,6 +127,7 @@ export class HomeComponent implements OnInit {
       icon: 'fas fa-clipboard-list',
       childrens: [],
       hasChildren: false,
+      badgeCount: 10,
     },
     {
       id: 11,

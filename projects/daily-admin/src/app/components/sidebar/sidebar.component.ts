@@ -1,6 +1,7 @@
-import { Component, inject, Input } from '@angular/core';
+import { Component, inject, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+
+import { RouterLink, RouterLinkActive, Router } from '@angular/router';
 import { IMenu } from '../../model/menu.model';
 import { SidebarStateService } from '../../services/sidebar-state.service';
 
@@ -10,11 +11,16 @@ import { SidebarStateService } from '../../services/sidebar-state.service';
   imports: [CommonModule, RouterLink, RouterLinkActive],
   templateUrl: './sidebar.component.html',
 })
-export class SidebarComponent {
+export class SidebarComponent implements OnChanges {
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log(changes);
+  }
   @Input({ required: true }) navItems: IMenu[] = [];
-  @Input({ required: true }) isCollapsed: boolean = false;
 
   private sidebarStateService = inject(SidebarStateService);
+  private router = inject(Router);
+
+  @Input() isCollapsed: boolean = false;
 
   closeMenuOnNavigate(): void {
     this.sidebarStateService.closeSidebar();
@@ -32,5 +38,12 @@ export class SidebarComponent {
     });
 
     item.isOpen = !item.isOpen;
+  }
+
+  isParentActive(item: IMenu): boolean {
+    if (!item.route || !item.hasChildren) return false;
+
+    const url = this.router.url;
+    return url.includes(item.route);
   }
 }

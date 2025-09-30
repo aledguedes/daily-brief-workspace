@@ -3,13 +3,15 @@ export interface IMenu {
   title: string;
   route: string;
   icon: string;
+  isOpen?: boolean;
+  badgeCount?: number;
   hasChildren: boolean;
   childrens?: ISubMenu[];
-  isOpen?: boolean;
 }
 
 export interface ISubMenu {
   id: number;
   title: string;
   route: string;
+  badgeCount?: number;
 }
