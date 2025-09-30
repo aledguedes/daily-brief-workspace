@@ -5,6 +5,7 @@ export interface IMenu {
   icon: string;
   hasChildren: boolean;
   childrens?: ISubMenu[];
+  isOpen?: boolean;
 }
 
 export interface ISubMenu {

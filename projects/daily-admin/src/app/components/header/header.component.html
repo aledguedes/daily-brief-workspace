@@ -1,109 +1,106 @@
-<nav class="bg-white shadow-sm rounded-b-xl fixed w-full z-50">
-  <div class="max-w-6xl mx-auto px-4">
-    <div class="flex justify-between">
-      <div class="flex space-x-4">
-        <!-- logo -->
-        <div>
-          <a
-            href="#"
-            class="flex items-center py-5 px-2 text-gray-700 hover:text-gray-900 transition-colors"
-          >
-            <svg
-              class="h-6 w-6 mr-1 text-blue-400"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
-              />
-            </svg>
-            <span class="font-bold">Better Dev</span>
-          </a>
-        </div>
-        <!-- primary nav -->
-        <div class="hidden md:flex items-center space-x-1">
-          <a href="#" class="py-5 px-3 text-gray-700 hover:text-gray-900 transition-colors"
-            >Features</a
-          >
-          <a href="#" class="py-5 px-3 text-gray-700 hover:text-gray-900 transition-colors"
-            >Pricing</a
-          >
-        </div>
-      </div>
-      <!-- secondary nav -->
-      <div class="hidden md:flex items-center space-x-1">
-        <a href="#" class="py-5 px-3 text-gray-700 hover:text-gray-900 transition-colors">Login</a>
-        <a
-          href="#"
-          class="py-2 px-3 bg-yellow-400 hover:bg-yellow-300 text-yellow-900 font-semibold rounded-lg transition duration-300 shadow-md hover:shadow-lg"
-          >Signup</a
-        >
-      </div>
-      <!-- mobile button -->
-      <div class="md:hidden flex items-center">
-        <button class="mobile-menu-button focus:outline-none" (click)="toggleMobileMenu()">
-          <svg
-            class="w-6 h-6 text-gray-700"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M4 6h16M4 12h16M4 18h16"
-            />
-          </svg>
-        </button>
-      </div>
-      <!-- Sidebar Toggle Button -->
-      <div class="flex items-center md:hidden">
+<header class="bg-white shadow-sm fixed w-full top-0 z-50">
+  <div class="flex items-center justify-between px-4 py-3">
+    <div class="flex items-center space-x-4">
+      <button (click)="toggleMenu()" class="lg:hidden text-gray-600 hover:text-gray-900">
+        <i class="fas fa-bars text-xl"></i>
+      </button>
+      <h1 class="text-xl font-bold text-indigo-600">TechBlog Admin</h1>
+    </div>
+
+    <div class="flex items-center space-x-4">
+      <div class="relative">
         <button
-          class="text-gray-700 p-2 rounded-lg hover:bg-gray-100 transition-colors"
-          (click)="toggleMobileSidebar()"
+          (click)="toggleNotificationDropdown($event)"
+          class="text-gray-600 hover:text-gray-900 relative p-1 rounded-full hover:bg-gray-100 transition"
         >
-          <svg
-            class="w-6 h-6"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
+          <i class="fas fa-bell text-xl"></i>
+          <span
+            class="absolute -top-0 -right-0.5 bg-red-500 text-white text-xs font-bold rounded-full w-4 h-4 flex items-center justify-center border border-white"
+            >{{ newNotificationsCount }}</span
           >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M4 6h16M4 12h16M4 18h7"
-            ></path>
-          </svg>
         </button>
+
+        @if (isNotificationOpen) {
+          <div
+            class="absolute right-0 mt-3 w-72 md:w-80 bg-white rounded-xl shadow-2xl z-50 ring-1 ring-gray-100 divide-y divide-gray-100 transform origin-top-right"
+          >
+            <div class="px-4 pt-4 pb-2">
+              <h3 class="text-md font-semibold text-gray-800">Notificações</h3>
+              <p class="text-xs text-indigo-600 font-medium">{{ newNotificationsCount }} novas</p>
+            </div>
+
+            <div class="border-t border-gray-100 mx-4"></div>
+
+            <ul class="py-2 space-y-1">
+              @for (notification of notifications; track notification.id) {
+                <li
+                  class="flex items-start px-4 py-2 hover:bg-indigo-50/50 cursor-pointer transition duration-150 ease-in-out"
+                >
+                  <i
+                    class="text-lg flex-shrink-0 mt-1 mr-3"
+                    [class]="notification.icon"
+                    [class]="notification.iconColor"
+                  ></i>
+                  <div>
+                    <p class="text-sm font-medium text-gray-800 leading-snug">
+                      {{ notification.message }}
+                    </p>
+                    <p class="text-xs text-gray-500">{{ notification.time }}</p>
+                  </div>
+                </li>
+              }
+            </ul>
+
+            <a
+              href="#"
+              class="block text-center py-3 text-sm font-medium text-indigo-600 hover:bg-gray-50 rounded-b-xl border-t border-gray-100"
+              >Ver todas as notificações</a
+            >
+          </div>
+        }
+      </div>
+
+      <div class="relative">
+        <button
+          (click)="toggleUserMenu($event)"
+          class="flex items-center space-x-2 p-1 rounded-full hover:bg-gray-100 transition"
+        >
+          <img
+            src="https://ui-avatars.com/api/?name=Admin&background=6366f1&color=fff"
+            alt="Avatar"
+            class="w-8 h-8 rounded-full"
+          />
+          <span class="hidden md:inline text-sm font-medium text-gray-700">Admin</span>
+        </button>
+
+        @if (isUserMenuOpen) {
+          <div
+            class="absolute right-0 mt-3 w-48 bg-white rounded-xl shadow-2xl z-50 ring-1 ring-gray-100 transform origin-top-right"
+          >
+            <ul class="py-2">
+              @for (item of userMenuItems; track item.id) {
+                <li>
+                  <a
+                    [routerLink]="item.route"
+                    (click)="isUserMenuOpen = false"
+                    [class.text-red-600]="item.label === 'Sair'"
+                    class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-indigo-50/50 hover:text-indigo-600 transition duration-150 ease-in-out"
+                  >
+                    <i
+                      class="text-lg mr-3"
+                      [class]="item.icon"
+                      [class.text-red-500]="item.label === 'Sair'"
+                      [class.text-indigo-500]="item.label !== 'Sair'"
+                    ></i>
+
+                    {{ item.label }}
+                  </a>
+                </li>
+              }
+            </ul>
+          </div>
+        }
       </div>
     </div>
   </div>
-  <!-- mobile menu -->
-  @if (isMobileMenuOpen()) {
-    <div class="md:hidden bg-white shadow-inner rounded-b-xl animate-fade-in-down">
-      <a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
-        >Features</a
-      >
-      <a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
-        >Pricing</a
-      >
-      <a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
-        >Login</a
-      >
-      <a
-        href="#"
-        class="block py-2 px-4 text-sm bg-yellow-400 text-yellow-900 rounded-b-lg text-center font-medium"
-        >Signup</a
-      >
-    </div>
-  }
-</nav>
+</header>

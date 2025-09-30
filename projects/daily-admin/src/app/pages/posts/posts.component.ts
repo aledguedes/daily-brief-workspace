@@ -3,7 +3,7 @@ import { getStatusClass } from '../../utils/badges.mapper';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { INotification } from '../../model/notification.model';
+import { IToastNotification } from '../../model/toast-notification.model';
 import { IPost } from '../../model/post.model';
 import { IPagination } from '../../model/pagination.model';
 import { PostService } from '../../services/post.service';
@@ -21,7 +21,7 @@ export class PostsComponent implements OnInit {
   private postService = inject(PostService);
   private notificationService = inject(NotificationService);
 
-  notification: INotification = {
+  notification: IToastNotification = {
     message: 'Our privacy policy has changed',
     type: 'info',
     show: true,

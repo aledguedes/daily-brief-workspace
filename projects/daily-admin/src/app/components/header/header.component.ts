@@ -1,40 +1,92 @@
-import { FormsModule } from '@angular/forms';
-import { Component, EventEmitter, inject, Output, signal } from '@angular/core';
+import { Component, HostListener, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router, RouterModule } from '@angular/router';
-import { IMenu } from '../../model/menu.model';
+import { SidebarStateService } from '../../services/sidebar-state.service';
+import { INotification } from '../../model/notidication.model';
+import { RouterLink } from '@angular/router';
+
+interface IMenuItem {
+  id: number;
+  label: string;
+  route: string;
+  icon: string; // Classe do Remix Icon (ex: 'ri-edit-line')
+}
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './header.component.html',
-  styleUrl: './header.component.scss',
 })
 export class HeaderComponent {
-  language = signal('pt');
-  sidebarOpen = signal(false);
-  isMobileMenuOpen = signal(false);
+  private sidebarStateService = inject(SidebarStateService);
 
-  @Output() closeRequest: EventEmitter<void> = new EventEmitter<void>();
+  userMenuItems: IMenuItem[] = [
+    // Ícones do Font Awesome: fas fa-user-edit, fas fa-cog, fas fa-sign-out-alt
+    { id: 1, label: 'Editar Perfil', route: '/home/profile', icon: 'fas fa-user-edit' },
+    { id: 2, label: 'Configurações', route: '/home/settings', icon: 'fas fa-cog' },
+    // Item de sair
+    { id: 3, label: 'Sair', route: '/', icon: 'fas fa-sign-out-alt' },
+  ];
 
-  private router = inject(Router);
+  notifications: INotification[] = [
+    {
+      id: 1,
+      message: 'Novo comentário no post "Angular 20"',
+      time: 'Há 5 minutos',
+      icon: 'fas fa-comment-dots', // Font Awesome
+      iconColor: 'text-indigo-500',
+    },
+    {
+      id: 2,
+      message: 'Suas visualizações aumentaram em 15%',
+      time: '1 hora atrás',
+      icon: 'fas fa-chart-line', // Font Awesome
+      iconColor: 'text-green-500',
+    },
+    {
+      id: 3,
+      message: 'Novo usuário registrado',
+      time: 'Ontem',
+      icon: 'fas fa-user-plus', // Font Awesome
+      iconColor: 'text-orange-500',
+    },
+  ];
 
-  toggleSidebar() {
-    this.sidebarOpen.update((value) => !value);
+  isUserMenuOpen: boolean = false;
+  isNotificationOpen: boolean = false;
+
+  get newNotificationsCount(): number {
+    return this.notifications.length;
   }
 
-  logout() {
-    localStorage.removeItem('mock-token');
-    this.router.navigate(['/login']);
+  // MÉTODO PRINCIPAL PARA FECHAR AMBOS AO CLICAR FORA
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent): void {
+    setTimeout(() => {
+      if (this.isNotificationOpen) {
+        this.isNotificationOpen = false;
+      }
+      if (this.isUserMenuOpen) {
+        this.isUserMenuOpen = false;
+      }
+    }, 0);
   }
 
-  toggleMobileMenu() {
-    this.isMobileMenuOpen.update((value) => !value);
-    this.closeRequest.emit();
+  toggleMenu() {
+    this.sidebarStateService.toggleSidebar();
   }
 
-  toggleMobileSidebar() {
-    this.closeRequest.emit();
+  toggleNotificationDropdown(event: MouseEvent): void {
+    event.stopPropagation();
+    // Fechar o menu de usuário se estiver aberto
+    this.isUserMenuOpen = false;
+    this.isNotificationOpen = !this.isNotificationOpen;
+  }
+
+  // NOVO MÉTODO: Alterna o dropdown de usuário
+  toggleUserMenu(event: MouseEvent): void {
+    event.stopPropagation();
+    this.isNotificationOpen = false;
+    this.isUserMenuOpen = !this.isUserMenuOpen;
   }
 }
