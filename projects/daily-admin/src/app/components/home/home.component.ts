@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from '../header/header.component';
@@ -10,70 +10,17 @@ import { IMenu } from '../../model/menu.model';
   selector: 'app-home',
   standalone: true,
   imports: [CommonModule, RouterOutlet, HeaderComponent, SidebarComponent],
-  template: `
-    <div class="bg-gray-50 min-h-screen">
-      <app-header (toggleCollapse)="toggleCollapse()" />
-
-      <div
-        id="sidebar"
-        [class.translate-x-0]="isSidebarOpen"
-        [class.-translate-x-full]="!isSidebarOpen"
-        (mouseenter)="handleMouseEnter()"
-        (mouseleave)="handleMouseLeave()"
-        [class.lg:w-20]="isSidebarRetracted"
-        [class.lg:w-64]="!isSidebarRetracted"
-        class="fixed left-0 top-16 h-full w-64 bg-white shadow-lg transform lg:translate-x-0 transition-all duration-300 ease-in-out z-40 overflow-y-auto"
-      >
-        <app-sidebar [navItems]="navItems" [isCollapsed]="isSidebarRetracted" />
-      </div>
-
-      <div
-        id="overlay"
-        [class.hidden]="!isSidebarOpen"
-        (click)="closeSidebar()"
-        class="fixed inset-0 bg-black/30 z-30 lg:hidden backdrop-blur-sm backdrop-saturate-150"
-      ></div>
-
-      <main
-        class="min-h-screen transition-all duration-300 ease-in-out p-4 pt-16"
-        [class.lg:ml-20]="isSidebarRetracted"
-        [class.lg:ml-64]="!isSidebarRetracted"
-      >
-        <div class="p-6">
-          <router-outlet />
-        </div>
-      </main>
-    </div>
-  `,
-  styles: [
-    `
-      @keyframes fadeInOverlay {
-        0% {
-          opacity: 0;
-          pointer-events: none;
-        }
-        30% {
-          opacity: 0;
-          pointer-events: none;
-        }
-        100% {
-          opacity: 1;
-          pointer-events: auto;
-        }
-      }
-
-      .animate-fade-in {
-        animation: fadeInOverlay 0.5s ease-out forwards;
-      }
-    `,
-  ],
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.scss'],
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent {
   private sidebarStateService = inject(SidebarStateService);
-  isSidebarOpen = false;
-  isSidebarCollapsed = false;
-  isCollapsed: boolean = true;
-  isHovering: boolean = false;
+  isSidebarOpen = this.sidebarStateService.isSidebarOpen;
+  isSidebarCollapsed = this.sidebarStateService.isSidebarCollapsed;
+  isCollapsed = signal<boolean>(false); // Inicializado como false para desktop
+  isHovering = signal<boolean>(false);
+
+  isSidebarRetracted = computed(() => this.isCollapsed() && !this.isHovering());
 
   navItems: IMenu[] = [
     {
@@ -155,20 +102,6 @@ export class HomeComponent implements OnInit {
     },
   ];
 
-  ngOnInit() {
-    this.sidebarStateService.isSidebarOpen$.subscribe((isOpen) => {
-      this.isSidebarOpen = isOpen;
-    });
-
-    this.sidebarStateService.isSidebarCollapsed$.subscribe((isCollapsed) => {
-      this.isSidebarCollapsed = isCollapsed;
-    });
-  }
-
-  get isSidebarRetracted(): boolean {
-    return this.isCollapsed && !this.isHovering;
-  }
-
   toggleMenu() {
     this.sidebarStateService.toggleSidebar();
   }
@@ -178,17 +111,17 @@ export class HomeComponent implements OnInit {
   }
 
   toggleCollapse(): void {
-    this.isCollapsed = !this.isCollapsed;
-    this.isHovering = false;
+    this.isCollapsed.set(!this.isCollapsed());
+    this.isHovering.set(false);
   }
 
   handleMouseEnter(): void {
-    if (this.isCollapsed) {
-      this.isHovering = true;
+    if (this.isCollapsed()) {
+      this.isHovering.set(true);
     }
   }
 
   handleMouseLeave(): void {
-    this.isHovering = false;
+    this.isHovering.set(false);
   }
 }

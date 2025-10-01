@@ -1,0 +1,18 @@
+@keyframes fadeInOverlay {
+  0% {
+    opacity: 0;
+    pointer-events: none;
+  }
+  30% {
+    opacity: 0;
+    pointer-events: none;
+  }
+  100% {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+.animate-fade-in {
+  animation: fadeInOverlay 0.5s ease-out forwards;
+}
