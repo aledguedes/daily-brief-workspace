@@ -11,21 +11,24 @@ import {
 import { IChart } from '../../model/chart.model';
 import { mapBackendToDashboardCards } from '../../utils/dashboard.mapper';
 import { CommonModule } from '@angular/common';
-import { LogItemComponent } from '../../components/log-item/log-item.component';
-import { StatCardComponent } from '../../components/stat-card/stat-card.component';
 import { PostCardDashComponent } from '../../components/post-card-dash/post-card-dash.component';
-import { ChartComponent } from '../../components/chart/chart.component';
 import { mapBackendLogToDisplayItem } from '../../utils/log.mapper';
+import { StatisticsCardComponent } from '../../components/statistics-card/statistics-card.component';
+import { dashboardMockData } from '../../data/statisticsCardMock';
+import { IStatisticsCards } from '../../model/statisticsCard.model';
+import { quickActionsMock } from '../../data/quickActionsMock';
+import { IActionButton } from '../../model/quickActions.model';
+import { QuickActionsComponent } from '../../components/quick-actions/quick-actions.component';
+import { recentPosts } from '../../data/mockData';
 
 @Component({
   selector: 'app-dashboard',
   imports: [
     CommonModule,
     RouterModule,
-    LogItemComponent,
-    StatCardComponent,
     PostCardDashComponent,
-    ChartComponent,
+    StatisticsCardComponent,
+    QuickActionsComponent,
   ],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
@@ -44,9 +47,14 @@ export class DashboardComponent implements OnInit {
   dailyAffiliateClicksChart: IChart | undefined;
   trafficSourcesChart: IChart | undefined;
 
-  // Variáveis para Posts Recentes e Logs (populadas do backend)
-  recentPosts: IRecentPost[] = [];
+  recentPosts: IRecentPost[] = recentPosts;
   recentLogs: ILogDisplayItem[] = [];
+
+  // Variáveis para Cartões Estatísticos
+  statisticsCards: IStatisticsCards[] = dashboardMockData;
+
+  // Variáveis para Ações Rápidas
+  quickActions: IActionButton[] = quickActionsMock;
 
   ngOnInit(): void {
     this.dataDashboard();
