@@ -1,4 +1,4 @@
-import { Injectable, signal } from '@angular/core';
+import { computed, Injectable, signal } from '@angular/core';
 
 @Injectable({
   providedIn: 'root',
@@ -9,6 +9,8 @@ export class SidebarStateService {
 
   isSidebarOpen = this._isSidebarOpen.asReadonly();
   isSidebarCollapsed = this._isSidebarCollapsed.asReadonly();
+
+  isSidebarRetracted = computed(() => this._isSidebarCollapsed());
 
   toggleSidebar() {
     const newState = !this._isSidebarOpen();

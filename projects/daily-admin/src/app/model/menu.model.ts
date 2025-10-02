@@ -4,7 +4,6 @@ export interface IMenu {
   route: string;
   icon: string;
   isOpen?: boolean;
-  badgeCount?: number;
   hasChildren: boolean;
   childrens?: ISubMenu[];
 }
@@ -13,5 +12,11 @@ export interface ISubMenu {
   id: number;
   title: string;
   route: string;
-  badgeCount?: number;
+}
+
+export interface IUserMenu {
+  id: number;
+  label: string;
+  route: string;
+  icon: string;
 }

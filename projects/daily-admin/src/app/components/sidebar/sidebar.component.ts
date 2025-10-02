@@ -29,11 +29,8 @@ export class SidebarComponent implements AfterViewInit {
 
   isDesktop = signal<boolean>(true);
   hasScroll = signal<boolean>(false);
-  isHovering = signal<boolean>(false);
-  isCollapsed = this.sidebarStateService.isSidebarCollapsed;
   isSidebarOpen = this.sidebarStateService.isSidebarOpen;
-
-  isEffectivelyCollapsed = computed(() => this.isCollapsed() && !this.isHovering());
+  isSidebarCollapsed = this.sidebarStateService.isSidebarCollapsed;
 
   ngOnInit() {
     this.updateIsDesktop();
@@ -44,21 +41,11 @@ export class SidebarComponent implements AfterViewInit {
     this.hasScroll.set(el.scrollHeight > el.clientHeight);
   }
 
-  onMouseEnter(): void {
-    if (!this.isDesktop()) return;
-    if (this.isCollapsed()) this.isHovering.set(true);
-  }
-
-  onMouseLeave(): void {
-    if (!this.isDesktop()) return;
-    this.isHovering.set(false);
-  }
-
   closeMenuOnNavigate(): void {
     this.sidebarStateService.closeSidebar();
   }
 
-  toggleMenu(item: IMenu): void {
+  toggleSubmenu(item: IMenu): void {
     if (!item.hasChildren) return;
 
     this.navItems.forEach((navItem) => {
@@ -66,6 +53,10 @@ export class SidebarComponent implements AfterViewInit {
     });
 
     item.isOpen = !item.isOpen;
+  }
+
+  isSubmenuOpen(item: IMenu): boolean {
+    return item.isOpen || false;
   }
 
   isParentActive(item: IMenu): boolean {
@@ -80,6 +71,5 @@ export class SidebarComponent implements AfterViewInit {
 
   private updateIsDesktop() {
     this.isDesktop.set(window.matchMedia('(min-width:1024px)').matches);
-    if (!this.isDesktop()) this.isHovering.set(false);
   }
 }
