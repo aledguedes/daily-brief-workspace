@@ -2,13 +2,18 @@
   "version": 2,
   "builds": [
     {
-      "src": "projects/daily-admin/package.json",
+      "src": "package.json",
       "use": "@vercel/static-build",
       "config": {
-        "distDir": "dist/daily-admin",
+        "distDir": "dist/daily-admin/browser",
         "buildCommand": "npm run build:daily-admin"
       }
     }
   ],
-  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
 }
