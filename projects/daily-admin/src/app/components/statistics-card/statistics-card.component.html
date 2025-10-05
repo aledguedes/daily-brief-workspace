@@ -1,0 +1,37 @@
+<div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 hover:shadow-md transition">
+  <div class="flex items-center gap-4">
+    <!-- Ícone com fundo dinâmico -->
+    <div
+      class="w-14 h-14 rounded-xl flex items-center justify-center flex-shrink-0"
+      [ngClass]="statisticsCard.bgColor"
+    >
+      <i class="text-2xl" [ngClass]="[statisticsCard.icon, statisticsCard.color]"></i>
+    </div>
+
+    <!-- Conteúdo -->
+    <div class="flex-1 min-w-0 text-end">
+      <p class="text-slate-500 text-xs font-medium uppercase tracking-wide mb-1">
+        {{ statisticsCard.title }}
+      </p>
+      <h3 class="text-2xl font-bold text-slate-800 mb-1">
+        {{ statisticsCard.value }}
+      </h3>
+
+      <!-- Badge dinâmico -->
+      @if (statisticsCard.percentage) {
+        <span
+          [ngClass]="statisticsCard.isPositive ? 'text-green-600' : 'text-red-600'"
+          class="inline-flex items-center text-xs font-medium"
+        >
+          <i [ngClass]="statisticsCard.isPositive ? 'fas fa-arrow-up' : 'fas fa-arrow-down'"></i>
+          {{ statisticsCard.percentage }}% {{ statisticsCard.status }}
+        </span>
+      } @else {
+        <span class="inline-flex items-center text-xs font-medium text-orange-600">
+          <i class="fas fa-edit mr-1"></i>
+          {{ statisticsCard.status }}
+        </span>
+      }
+    </div>
+  </div>
+</div>

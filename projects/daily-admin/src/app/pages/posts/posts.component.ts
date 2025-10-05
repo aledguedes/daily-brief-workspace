@@ -3,16 +3,17 @@ import { getStatusClass } from '../../utils/badges.mapper';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { INotification } from '../../model/notification.model';
+import { IToastNotification } from '../../model/toast-notification.model';
 import { IPost } from '../../model/post.model';
 import { IPagination } from '../../model/pagination.model';
 import { PostService } from '../../services/post.service';
 import { NotificationService } from '../../services/notification.service';
+import { ModalPostCreateComponent } from '../../components/modal-post-create/modal-post-create.component';
 
 @Component({
   selector: 'app-posts',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink],
+  imports: [CommonModule, FormsModule, RouterLink, ModalPostCreateComponent],
   templateUrl: './posts.component.html',
   styleUrls: ['./posts.component.scss'],
 })
@@ -20,7 +21,7 @@ export class PostsComponent implements OnInit {
   private postService = inject(PostService);
   private notificationService = inject(NotificationService);
 
-  notification: INotification = {
+  notification: IToastNotification = {
     message: 'Our privacy policy has changed',
     type: 'info',
     show: true,
@@ -29,7 +30,10 @@ export class PostsComponent implements OnInit {
 
   posts: IPost[] = [];
   paginatedPosts: IPost[] = [];
+
   statusFilter: string = '';
+
+  isModalOpen = false;
 
   pageSize: number = 10;
   totalPages: number = 1;
@@ -44,24 +48,6 @@ export class PostsComponent implements OnInit {
   };
 
   currentLanguage: 'PT' | 'EN' | 'ES' = 'PT';
-
-  newPost: IPost = {
-    id: 0,
-    title: { PT: '', EN: '', ES: '' },
-    excerpt: { PT: '', EN: '', ES: '' },
-    content: { PT: '', EN: '', ES: '' },
-    image: '',
-    author: 'Admin',
-    tags: [],
-    category: '',
-    metaDescription: { PT: '', EN: '', ES: '' },
-    affiliateLinks: { PT: '', EN: '', ES: '' },
-    status: 'PENDING',
-    date: '',
-    readTime: '',
-    updatedAt: '',
-    createdAt: '',
-  };
 
   ngOnInit(): void {
     this.loadMockData();
@@ -121,26 +107,7 @@ export class PostsComponent implements OnInit {
     return flag === 'approved' ? 'Post aprovado com sucesso!' : 'Post rejeitado com sucesso!';
   }
 
-  createPost(): void {
-    this.newPost.id = this.posts.length + 1;
-    this.posts.push(this.newPost);
-    this.newPost = {
-      id: 0,
-      title: { PT: '', EN: '', ES: '' },
-      excerpt: { PT: '', EN: '', ES: '' },
-      content: { PT: '', EN: '', ES: '' },
-      image: '',
-      author: 'Admin',
-      tags: [],
-      category: '',
-      metaDescription: { PT: '', EN: '', ES: '' },
-      affiliateLinks: { PT: '', EN: '', ES: '' },
-      status: 'PENDING',
-      date: '',
-      readTime: '',
-      updatedAt: '',
-      createdAt: '',
-    };
-    console.log('Post created');
+  closeModal(event: boolean) {
+    this.isModalOpen = false;
   }
 }

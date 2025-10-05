@@ -1,0 +1,17 @@
+<div
+  class="w-full border border-transparent hover:border-slate-200 hover:bg-slate-100 rounded-lg transition"
+>
+  <a
+    [ngClass]="['group-hover:' + action.hoverBackground]"
+    class="flex flex-col items-center p-4 rounded-lg w-full group"
+    [routerLink]="action.router"
+  >
+    <div
+      class="w-12 h-12 rounded-lg flex items-center justify-center mb-3 transition"
+      [ngClass]="[action.background, 'group-hover:' + action.hoverBackground]"
+    >
+      <i class="fas text-xl" [ngClass]="[action.icon, action.color]"></i>
+    </div>
+    <span class="text-sm font-medium text-slate-700">{{ action.label }}</span>
+  </a>
+</div>

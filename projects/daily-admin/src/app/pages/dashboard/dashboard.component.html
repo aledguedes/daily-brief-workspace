@@ -1,47 +1,34 @@
 <div class="container">
-  <!-- Cabeçalho -->
-  <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
-    <div class="space-y-1">
-      <h1 class="text-2xl font-bold tracking-tight">Dashboard</h1>
-      <p class="text-muted-foreground">Visão geral do desempenho do blog.</p>
-    </div>
+  <!-- Welcome Section -->
+  <div class="mb-8">
+    <h2 class="text-3xl font-bold text-slate-800 mb-2">Bem-vindo de volta! 👋</h2>
+    <p class="text-slate-600">Aqui está um resumo do seu conteúdo</p>
   </div>
 
-  <!-- Cartões Estatísticos -->
-  <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-4 mb-8">
-    @for (stat of blogDashboardCards; track $index) {
-      <app-stat-card [stat]="stat"></app-stat-card>
+  <!-- statistics card -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+    @for (stat of statisticsCards; track $index) {
+      <app-statistics-card [statisticsCard]="stat" />
     }
   </div>
 
-  <!-- Gráficos -->
-  <div class="grid gap-6 lg:grid-cols-12 mb-8">
-    <div class="lg:col-span-5 flex flex-col gap-6">
-      <app-chart
-        [title]="'Posts por Status'"
-        [data]="postsByStatusChart"
-        [chartType]="'doughnut'"
-      />
-
-      <app-chart [title]="'Fontes de Tráfego'" [data]="trafficSourcesChart" [chartType]="'bar'" />
-    </div>
-    <div class="lg:col-span-7 flex">
-      <app-chart
-        class="w-full"
-        [title]="'Visualizações (últimos 7 dias)'"
-        [data]="viewsOverTimeChart"
-        [chartType]="'line'"
-      />
+  <!-- Quick Actions -->
+  <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 mb-8">
+    <h3 class="text-lg font-semibold text-slate-800 mb-4">Ações Rápidas</h3>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      @for (action of quickActions; track $index) {
+        <app-quick-actions [action]="action" />
+      }
     </div>
   </div>
 
   <!-- Posts Recentes e Logs -->
-  <div class="grid gap-6 lg:grid-cols-12 mb-8">
-    <div class="bg-white shadow-lg lg:col-span-6">
-      <app-post-card-dash [posts]="recentPosts" [selectedLanguage]="'PT'" />
+  <div class="grid gap-12 lg:grid-cols-12 mb-8">
+    <div class="bg-white shadow-lg lg:col-span-12">
+      <app-post-card-dash [post]="recentPosts" [selectedLanguage]="'PT'" />
     </div>
-    <div class="bg-white shadow-lg lg:col-span-6">
+    <!-- <div class="bg-white shadow-lg lg:col-span-6">
       <app-log-item [logs]="recentLogs" />
-    </div>
+    </div> -->
   </div>
 </div>

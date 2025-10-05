@@ -1,0 +1,47 @@
+.active {
+  background-color: #e2e8f0; /* Um tom de cinza claro para indicar o link ativo */
+  font-weight: bold; /* Aumenta o peso da fonte */
+  color: #1d4ed8; /* Azul para o texto ativo */
+}
+
+/* NOVO: Estilos para o Efeito Ripple */
+$ripple-color: rgba(99, 102, 241, 0.2); // Indigo-500 com transparência
+
+.relative {
+  position: relative;
+}
+
+.overflow-hidden {
+  overflow: hidden;
+}
+
+.menu-item,
+a[routerLink]:not(.submenu a) {
+  &:active::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: $ripple-color;
+    pointer-events: none;
+    opacity: 0;
+
+    animation: ripple-effect 0.3s ease-out forwards;
+  }
+}
+
+@keyframes ripple-effect {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.5);
+  }
+}

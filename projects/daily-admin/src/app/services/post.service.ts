@@ -1,5 +1,6 @@
+import { isPlatformBrowser } from '@angular/common';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { IPost } from '../../app/model/post.model';
 import { GenericService } from './generic.service';
@@ -8,10 +9,16 @@ import { GenericService } from './generic.service';
   providedIn: 'root',
 })
 export class PostService {
-  private auth_token: string = localStorage.getItem('daily-token') || '';
+  private auth_token: string = '';
 
   private http = inject(HttpClient);
   private genericService = inject(GenericService);
+
+  constructor() {
+    if (isPlatformBrowser(inject(PLATFORM_ID))) {
+      this.auth_token = localStorage.getItem('daily-token') || '';
+    }
+  }
 
   getAllPosts(page: number, size: number) {
     return this.genericService.getPaginated<IPost>('posts', page, size);
