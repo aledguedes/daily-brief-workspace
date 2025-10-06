@@ -20,6 +20,7 @@ import { quickActionsMock } from '../../data/quickActionsMock';
 import { IActionButton } from '../../model/quickActions.model';
 import { QuickActionsComponent } from '../../components/quick-actions/quick-actions.component';
 import { recentPosts } from '../../data/mockData';
+import { IPost } from '../../model/post.model';
 
 @Component({
   selector: 'app-dashboard',
@@ -47,7 +48,7 @@ export class DashboardComponent implements OnInit {
   dailyAffiliateClicksChart: IChart | undefined;
   trafficSourcesChart: IChart | undefined;
 
-  recentPosts: IRecentPost[] = recentPosts;
+  recentPosts: IPost[] = recentPosts;
   recentLogs: ILogDisplayItem[] = [];
 
   // Variáveis para Cartões Estatísticos
@@ -70,7 +71,7 @@ export class DashboardComponent implements OnInit {
 
         this.blogDashboardCards = mapBackendToDashboardCards(response.analytics);
         this.populateIChart(response.analytics);
-        this.recentPosts = response.recentPosts;
+        // this.recentPosts = response.recentPosts;
         this.recentLogs =
           response.recentLogs.map((log: IDashboardLog) => mapBackendLogToDisplayItem(log)) || [];
       },

@@ -20,13 +20,8 @@ export const routes: Routes = [
           import('./pages/dashboard/dashboard.component').then((c) => c.DashboardComponent),
       },
       {
-        path: 'posts', // Removi pathMatch para evitar conflito com posts/:id
-        loadComponent: () => import('./pages/posts/posts.component').then((c) => c.PostsComponent),
-      },
-      {
-        path: 'posts/:id',
-        loadComponent: () =>
-          import('./components/post-view/post-view.component').then((c) => c.PostViewComponent),
+        path: 'posts',
+        loadChildren: () => import('./pages/posts/posts.routes').then((m) => m.POSTS_ROUTES),
       },
       {
         path: 'users',

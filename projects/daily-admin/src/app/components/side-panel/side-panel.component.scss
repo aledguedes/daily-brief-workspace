@@ -1,0 +1,39 @@
+:host {
+  font-family: 'Inter', sans-serif;
+}
+
+.side-panel-overlay {
+  &.opacity-0 {
+    display: none;
+  }
+}
+
+.side-panel-content {
+  &.translate-x-full {
+    transform: translateX(100%);
+  }
+  &.translate-x-0 {
+    transform: translateX(0);
+  }
+}
+
+.tab-content {
+  display: none;
+  &.active {
+    display: block;
+  }
+}
+
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
