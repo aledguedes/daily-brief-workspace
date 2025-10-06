@@ -16,6 +16,8 @@ export interface IPost {
   readTime: string;
   updatedAt: string;
   createdAt: string;
+  sources: string[];
+  link: string;
 }
 
 export interface ISideManuArticle {

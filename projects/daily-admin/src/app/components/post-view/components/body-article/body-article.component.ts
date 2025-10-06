@@ -52,6 +52,8 @@ export class BodyArticleComponent implements OnChanges {
     readTime: '',
     updatedAt: '',
     createdAt: '',
+    sources: [],
+    link: '',
   };
 
   currentLang = signal<'PT' | 'EN' | 'ES'>('PT');

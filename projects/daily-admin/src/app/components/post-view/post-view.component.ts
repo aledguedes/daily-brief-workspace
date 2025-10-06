@@ -54,6 +54,8 @@ export class PostViewComponent implements OnInit {
     readTime: '',
     updatedAt: '',
     createdAt: '',
+    sources: [],
+    link: '',
   };
 
   ngOnInit() {

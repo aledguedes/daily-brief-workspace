@@ -5,6 +5,11 @@ body {
   background-color: #f3f4f6;
 }
 
+/* styles.scss */
+body.no-scroll {
+  overflow: hidden !important; /* Força a desativação do scroll */
+}
+
 .prose h2 {
   @apply text-2xl font-semibold text-gray-900 mt-6 mb-4;
 }

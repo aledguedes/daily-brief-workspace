@@ -1,0 +1,152 @@
+<!-- BACKDROP -->
+<div
+  class="side-panel-overlay fixed inset-0 bg-black/60 z-[99] transition-opacity duration-300 ease-out"
+  [class.opacity-0]="!isOpen"
+  [class.pointer-events-none]="!isOpen"
+  (click)="onClose()"
+  id="sidePanel"
+></div>
+
+<!-- PAINEL -->
+<aside
+  class="side-panel-content fixed top-0 right-0 w-full max-w-[800px] h-full bg-white z-[100] shadow-[-10px_0_30px_rgba(0,0,0,0.2)] transform transition-transform duration-700 ease-[cubic-bezier(0.25,0.1,0.25,1)] flex flex-col"
+  [ngClass]="panelClass"
+>
+  <!-- HEADER -->
+  <header class="p-6 border-b border-gray-100">
+    <h2 class="text-xl font-bold text-gray-800" id="panelTitle">
+      Detalhes do Artigo #{{ article.id || 'N/A' }}
+    </h2>
+    <p class="text-sm text-gray-700" id="panelSubtitle">
+      {{ article.title.PT || 'Título não disponível' }}
+    </p>
+    <div class="mt-3">
+      <span
+        id="panelStatusBadge"
+        class="inline-flex items-center text-white text-xs font-bold px-3 py-1 rounded-full shadow-sm"
+        [ngClass]="statusColor"
+      >
+        <span class="w-2 h-2 bg-white rounded-full mr-2 animate-pulse"></span>
+        {{ statusLabel || 'Pendente' }}
+      </span>
+    </div>
+    <button
+      (click)="onClose()"
+      class="absolute top-4 right-4 text-gray-400 hover:text-gray-700 transition p-2 rounded-lg"
+      aria-label="Fechar painel"
+    >
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M6 18L18 6M6 6l12 12"
+        />
+      </svg>
+    </button>
+  </header>
+
+  <!-- TABS -->
+  <nav class="px-6 flex border-b border-gray-100 text-sm font-semibold">
+    @for (tab of tabs; track tab.id) {
+      <button
+        (click)="setActiveTab(tab.id)"
+        class="p-3 border-b-2 transition-all duration-200"
+        [ngClass]="{
+          'border-purple-600 text-purple-600 bg-purple-50': activeTab === tab.id,
+          'border-transparent text-gray-500 hover:text-gray-700 hover:bg-gray-100':
+            activeTab !== tab.id,
+        }"
+        [attr.id]="'tab-btn-' + tab.id"
+      >
+        {{ tab.label }}
+      </button>
+    } @empty {
+      <span class="text-gray-400 text-xs italic">Nenhum tab disponível.</span>
+    }
+  </nav>
+
+  <!-- CONTEÚDO -->
+  <section class="flex-1 overflow-y-auto p-6 space-y-6">
+    <!-- Aba: Conteúdo & Detalhes -->
+    <div
+      [attr.id]="'tab-details'"
+      class="tab-content"
+      [ngClass]="{ active: activeTab === 'tab-details' }"
+    >
+      <div class="bg-white rounded-xl p-6 border border-gray-200 shadow-sm">
+        <div class="flex items-center mb-4">
+          <div class="w-1.5 h-6 bg-purple-500 rounded-full mr-3"></div>
+          <h4 class="font-bold text-gray-900 text-xl">Preview do Conteúdo Gerado</h4>
+        </div>
+        <div class="space-y-4 text-gray-700">
+          <p>{{ getPanelDetails().generated_content_preview.summary }}</p>
+          <div
+            class="bg-gradient-to-r from-purple-50 to-blue-50 p-4 rounded-lg border-l-4 border-purple-500"
+          >
+            <h6 class="font-semibold text-gray-800 mb-2 text-sm">Tópicos:</h6>
+            <ul class="text-sm space-y-1.5 list-disc pl-5">
+              @for (topic of getPanelDetails().generated_content_preview.topics; track topic) {
+                <li>{{ topic }}</li>
+              } @empty {
+                <li class="text-gray-400 italic">Nenhum tópico disponível.</li>
+              }
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="bg-white rounded-xl p-6 border border-gray-200 shadow-sm">
+        <div class="flex items-center mb-4">
+          <div class="w-1.5 h-6 bg-blue-500 rounded-full mr-3"></div>
+          <h4 class="font-bold text-gray-900">Prompt de Imagem Sugerido</h4>
+        </div>
+        <p
+          class="text-sm text-gray-700 italic bg-blue-50 p-4 rounded-lg border-l-4 border-blue-500"
+        >
+          {{ getPanelDetails().image_prompt }}
+        </p>
+      </div>
+    </div>
+
+    <!-- Aba: Dados Brutos -->
+    <div [attr.id]="'tab-raw'" class="tab-content" [ngClass]="{ active: activeTab === 'tab-raw' }">
+      <textarea
+        id="rawMaterialContent"
+        class="w-full h-[300px] bg-gray-50 border border-gray-200 text-sm rounded-xl p-4 text-gray-700 font-mono resize-none"
+        readonly
+        [value]="getPanelDetails().raw_material"
+      ></textarea>
+    </div>
+
+    <!-- Aba: Histórico & Logs -->
+    <div
+      [attr.id]="'tab-logs'"
+      class="tab-content"
+      [ngClass]="{ active: activeTab === 'tab-logs' }"
+    >
+      <ul class="space-y-3 text-sm text-gray-700" id="historyLogContent">
+        @for (log of getPanelDetails().logs; track log) {
+          <li class="p-3 bg-gray-50 rounded-lg border border-gray-200">{{ log }}</li>
+        } @empty {
+          <li class="text-gray-400 italic">Nenhum log disponível.</li>
+        }
+      </ul>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="p-5 border-t border-gray-100 bg-gray-50 flex justify-end gap-3">
+    <button
+      (click)="handleFlowAction('submit', article.id)"
+      class="px-4 py-2.5 rounded-xl text-sm font-semibold bg-green-500 text-white hover:bg-green-600 transition"
+    >
+      Submeter Post
+    </button>
+    <button
+      (click)="handleFlowAction('regenerate', article.id)"
+      class="px-4 py-2.5 rounded-xl text-sm font-semibold bg-blue-100 text-blue-700 hover:bg-blue-200 transition"
+    >
+      Gerar Novamente
+    </button>
+  </footer>
+</aside>
