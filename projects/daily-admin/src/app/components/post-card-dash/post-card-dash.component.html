@@ -1,6 +1,6 @@
-<div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+<div class="bg-white rounded-xl shadow-md border border-slate-200 p-6">
   <div class="flex items-center justify-between mb-6">
-    <h3 class="text-lg font-semibold text-slate-800">Artigos Recentes</h3>
+    <h3 class="text-xl font-semibold text-slate-800">Artigos Recentes</h3>
     <a
       [routerLink]="['/home/posts']"
       class="text-indigo-600 text-sm font-medium hover:text-indigo-700"
@@ -8,29 +8,52 @@
     >
   </div>
 
-  <div class="space-y-4">
-    <!-- Iteração sobre os artigos -->
+  <div class="space-y-6">
     @for (article of post; track article.id) {
       <div
-        class="flex items-center justify-between p-4 rounded-lg hover:bg-slate-50 transition border border-slate-100"
+        class="flex flex-col md:flex-row md:items-center md:justify-between rounded-lg p-3 hover:bg-slate-50 transition-all duration-300 border border-slate-100"
       >
-        <div class="flex items-center space-x-4">
-          <!-- Imagem do artigo -->
-          <div class="w-16 h-16" [ngClass]="article.featuredImage"></div>
-          <div>
-            <!-- Título e descrição do artigo -->
-            <h4 class="font-semibold text-slate-800">{{ article.title[selectedLanguage] }}</h4>
-            <p class="text-sm text-slate-500">{{ article.excerpt[selectedLanguage] }}</p>
+        <div class="flex flex-col md:flex-row items-center p-3 space-x-4 w-full">
+          <!-- Imagem ou ícone padrão -->
+          <div class="w-20 h-20 rounded-lg overflow-hidden flex-shrink-0">
+            @if (article.image) {
+              <img
+                [src]="article.image"
+                alt="Imagem do artigo"
+                class="object-cover w-full h-full rounded-lg"
+              />
+            } @else {
+              <div
+                class="w-full h-full bg-slate-300 flex items-center justify-center text-slate-500 rounded-lg"
+              >
+                <span class="text-2xl">📄</span>
+              </div>
+            }
+          </div>
+
+          <!-- Conteúdo do artigo -->
+          <div class="flex flex-col w-full">
+            <div class="flex justify-between items-center mb-3">
+              <h4 class="text-lg font-semibold text-slate-800">
+                {{ article.title[selectedLanguage] }}
+              </h4>
+              <!-- Status do artigo (posicionado ao final no mobile) -->
+              <span
+                class="hidden sm:inline-block px-3 py-1 text-xs font-medium rounded-full"
+                [ngClass]="getStatusClass(article.status)"
+              >
+                {{ article.status }}
+              </span>
+            </div>
+            <p class="text-sm text-slate-500 mb-4">{{ article.excerpt[selectedLanguage] }}</p>
+            <span
+              class="sm:hidden self-start inline-block px-3 py-1 text-xs font-medium rounded-full"
+              [ngClass]="getStatusClass(article.status)"
+            >
+              {{ article.status }}
+            </span>
           </div>
         </div>
-
-        <!-- Status do artigo -->
-        <span
-          class="px-3 py-1 text-sm font-medium rounded-full"
-          [ngClass]="getStatusClass(article.status)"
-        >
-          {{ article.status }}
-        </span>
       </div>
     }
   </div>

@@ -1,0 +1,95 @@
+<article
+  class="group bg-white rounded-2xl shadow-md border border-gray-100 overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
+>
+  <!-- Capa / Imagem -->
+  <div
+    class="relative h-52 bg-gradient-to-br from-purple-600 to-pink-600 bg-center bg-cover"
+    [ngStyle]="{ 'background-image': article.image ? 'url(' + article.image + ')' : '' }"
+  >
+    <!-- Status -->
+    <div
+      class="absolute top-4 right-4 flex items-center text-white text-xs font-semibold px-3 py-1 rounded-full shadow-md backdrop-blur-md"
+      [ngClass]="ui.statusClass"
+    >
+      <span class="w-2 h-2 rounded-full bg-white mr-2 animate-pulse"></span>
+      {{ ui.statusLabel }}
+    </div>
+
+    <!-- Overlay -->
+    <div
+      class="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/70 via-black/30 to-transparent"
+    >
+      <div class="mb-1">
+        <span
+          class="px-2 py-1 rounded-full bg-gradient-to-r from-purple-600 to-blue-600 text-white m-0 text-xs font-bold"
+        >
+          #{{ article.id }} &mdash; {{ article.category || 'Sem categoria' }}
+        </span>
+      </div>
+      <h3 class="text-lg font-bold text-white leading-tight line-clamp-1">
+        {{ article.title.PT || 'Título não disponível' }}
+      </h3>
+      <p class="text-sm text-gray-200/90 line-clamp-2 mt-1">
+        {{ article.excerpt.PT || 'Sem resumo disponível' }}
+      </p>
+    </div>
+  </div>
+
+  <!-- Corpo -->
+  <div class="p-6">
+    <!-- Linha superior: autor + data -->
+    <div class="flex items-center justify-between text-sm text-gray-500 mb-3">
+      <div class="flex items-center gap-2">
+        <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+          />
+        </svg>
+        <span>{{ article.date || 'Data indefinida' }}</span>
+      </div>
+      <span>{{ article.readTime || '5 min' }} de leitura</span>
+    </div>
+
+    <!-- Descrição -->
+    <p
+      class="text-gray-700 text-sm leading-relaxed line-clamp-3 mb-5 group-hover:text-gray-900 transition-colors"
+    >
+      {{ article.metaDescription.PT || 'Sem descrição disponível.' }}
+    </p>
+
+    <!-- Tags -->
+    <div class="flex flex-wrap gap-2 mb-6">
+      @if (ui.tagColors.length > 0) {
+        @for (tag of ui.tagColors; track tag.label) {
+          <span
+            class="px-3 py-1 rounded-lg text-xs font-semibold border transition-colors"
+            [ngClass]="tag.class"
+          >
+            {{ tag.label }}
+          </span>
+        }
+      } @else {
+        <span class="text-gray-400 text-xs italic">Sem tags</span>
+      }
+    </div>
+
+    <!-- Botão -->
+    <button
+      (click)="onOpenDetails()"
+      class="w-full flex items-center justify-center px-5 py-2.5 rounded-xl bg-gradient-to-r from-purple-600 to-blue-600 text-white font-semibold text-sm hover:from-purple-700 hover:to-blue-700 transition-colors shadow-sm hover:shadow-md"
+    >
+      <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
+        />
+      </svg>
+      Ver Detalhes
+    </button>
+  </div>
+</article>

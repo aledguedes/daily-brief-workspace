@@ -1,14 +1,14 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { getStatusClass } from '../../utils/badges.mapper';
+import { getStatusClass } from '../../../../utils/badges.mapper';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { IToastNotification } from '../../model/toast-notification.model';
-import { IPost } from '../../model/post.model';
-import { IPagination } from '../../model/pagination.model';
-import { PostService } from '../../services/post.service';
-import { NotificationService } from '../../services/notification.service';
-import { ModalPostCreateComponent } from '../../components/modal-post-create/modal-post-create.component';
+import { IToastNotification } from '../../../../model/toast-notification.model';
+import { IPost } from '../../../../model/post.model';
+import { IPagination } from '../../../../model/pagination.model';
+import { PostService } from '../../../../services/post.service';
+import { NotificationService } from '../../../../services/notification.service';
+import { ModalPostCreateComponent } from '../../../../components/modal-post-create/modal-post-create.component';
 
 @Component({
   selector: 'app-posts',

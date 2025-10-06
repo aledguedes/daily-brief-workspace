@@ -1,89 +1,103 @@
 import { IRecentPost } from '../model/dashboard.model';
+import { IPost } from '../model/post.model';
 
-export const recentPosts: IRecentPost[] = [
+export const recentPosts: IPost[] = [
   {
     id: 1,
-    featuredImage:
-      'https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?q=80&w=2070&auto=format&fit=crop',
     title: {
-      PT: 'Como começar a investir na bolsa de valores em 2025',
-      EN: 'How to start investing in the stock market in 2025',
-      ES: 'Cómo empezar a invertir en la bolsa de valores en 2025',
+      EN: 'Mobile Programming: Build Your Future',
+      ES: 'Programación Móvil: Construye tu Futuro',
+      PT: 'Programação para Dispositivos Móveis: Construa seu Futuro',
+    },
+    content: {
+      EN: '<p>Unlock the power of mobile programming! Learn how to build apps for smartphones and tablets, leveraging the latest technologies and frameworks.  Discover exciting career opportunities and the creative freedom of mobile app development. Explore resources and tutorials to start your journey today.</p><p>Mobile programming offers a wide range of possibilities, from developing simple utilities to complex games and enterprise solutions.  With the right skills, you can create innovative apps that solve problems and improve lives.  Start learning and build your future.</p><p>Ready to get started? Check out these resources:<ul><li><a href="https://developer.android.com/" target="_blank" rel="noopener noreferrer">Android Developer Website</a></li><li><a href="https://developer.apple.com/" target="_blank" rel="noopener noreferrer">Apple Developer Website</a></li></ul></p>',
+      ES: '<p>¡Desbloquea el poder de la programación móvil! Aprende a crear aplicaciones para teléfonos inteligentes y tabletas, aprovechando las últimas tecnologías y frameworks. Descubre emocionantes oportunidades profesionales y la libertad creativa del desarrollo de aplicaciones móviles. Explora recursos y tutoriales para comenzar tu viaje hoy.</p><p>La programación móvil ofrece una amplia gama de posibilidades, desde el desarrollo de utilidades simples hasta juegos complejos y soluciones empresariales. Con las habilidades adecuadas, puedes crear aplicaciones innovadoras que resuelvan problemas y mejoren vidas. Comienza a aprender y construye tu futuro.</p><p>¿Listo para empezar? Consulta estos recursos:<ul><li><a href="https://developer.android.com/" target="_blank" rel="noopener noreferrer">Sitio web de desarrolladores de Android</a></li><li><a href="https://developer.apple.com/" target="_blank" rel="noopener noreferrer">Sitio web de desarrolladores de Apple</a></li></ul></p>',
+      PT: '<p>Libere o poder da programação para dispositivos móveis! Aprenda a criar aplicativos para smartphones e tablets, utilizando as mais recentes tecnologias e frameworks. Descubra oportunidades de carreira emocionantes e a liberdade criativa do desenvolvimento de aplicativos móveis. Explore recursos e tutoriais para começar sua jornada hoje.</p><p>A programação para dispositivos móveis oferece uma ampla gama de possibilidades, desde o desenvolvimento de utilitários simples a jogos complexos e soluções corporativas. Com as habilidades certas, você pode criar aplicativos inovadores que resolvem problemas e melhoram vidas. Comece a aprender e construa seu futuro.</p><p>Pronto para começar? Confira esses recursos:<ul><li><a href="https://developer.android.com/" target="_blank" rel="noopener noreferrer">Site de Desenvolvedores Android</a></li><li><a href="https://developer.apple.com/" target="_blank" rel="noopener noreferrer">Site de Desenvolvedores Apple</a></li></ul></p>',
     },
     excerpt: {
-      PT: 'Aprenda como dar os primeiros passos no mundo dos investimentos na bolsa de valores com este guia completo para iniciantes.',
-      EN: 'Learn how to take your first steps in the world of stock market investments with this complete guide for beginners.',
-      ES: 'Aprenda cómo dar sus primeros pasos en el mundo de las inversiones en la bolsa de valores con esta guía completa para principiantes.',
+      EN: 'Learn mobile programming and unlock a world of app development possibilities.  Discover resources and start building your future!',
+      ES: '¡Aprende programación móvil y desbloquea un mundo de posibilidades en el desarrollo de aplicaciones! ¡Descubre recursos e inicia la construcción de tu futuro!',
+      PT: 'Aprenda programação para dispositivos móveis e desbloqueie um mundo de possibilidades de desenvolvimento de aplicativos. Descubra recursos e comece a construir seu futuro!',
+    },
+    metaDescription: {
+      EN: 'Learn mobile app development: Android and iOS programming, resources, tutorials, and career opportunities.',
+      ES: 'Aprende desarrollo de aplicaciones móviles: programación Android e iOS, recursos, tutoriales y oportunidades profesionales.',
+      PT: 'Aprenda desenvolvimento de aplicativos móveis: programação Android e iOS, recursos, tutoriais e oportunidades de carreira.',
+    },
+    image: 'https://placehold.co/600x400.png?text=Mobile+Programming',
+    author: 'Equipe DailyBrief',
+    tags: ['Programação em celulares', 'DailyBrief', 'Automação', 'social'],
+    category: 'Geral',
+    affiliateLinks: {
+      PT: '',
+      EN: '',
+      ES: '',
     },
     status: 'PENDING',
-    category: 'Finanças',
+    createdAt: '2025-07-18T19:42:49.435188+00:00Z',
+    updatedAt: '2025-10-03T00:00:00.000000+00:00Z', // Adicionei o campo updatedAt
+    date: '2025-07-18', // Adicionei o campo date
+    readTime: '1 min',
+    sources: [
+      'https://www.tudocelular.com/curiosidade/noticias/n237449/sun-day-cofundador-twitter-lanca-app-vitamina-d.html',
+      'https://olhardigital.com.br/2025/06/22/cinema-e-streaming/5-inovacoes-cientificas-criadas-no-predio-lumon-da-serie-ruptura/',
+      'https://www.tecmundo.com.br/seguranca/405663-como-e-por-que-utilizar-o-controle-parental-para-garantir-um-ambiente-online-seguro-para-criancas.htm',
+      'https://www.pragmatismopolitico.com.br/2025/06/use-seu-celular-para-abrir-a-maquina-de-mineracao-sunnymining.html',
+      'https://www.tecmundo.com.br/produto/405242-smart-monitor-samsung-de-32-pelo-menor-preco-saiba-como-aproveitar.htm',
+      'https://www.terra.com.br/economia/funcionario-suspeito-de-facilitar-ataque-hacker-a-empresa-que-opera-pix-recebeu-r-15-mil-diz-policia,716dff3a5ac5384969ebb3d027a10c648tdhzvaj.html',
+      'https://gizmodo.uol.com.br/apple-macbook-air-m1/',
+      'https://manualdousuario.net/links-do-dia-20250618/',
+      'https://olhardigital.com.br/2025/06/18/dicas-e-tutoriais/10-aplicativos-para-iphone-que-vao-fazer-a-diferenca-no-seu-dia-a-dia/',
+    ],
+    link: 'https://dailybrief.com/post/6',
   },
   {
     id: 2,
-    featuredImage:
-      'https://images.unsplash.com/photo-1595039838779-9d40c98e9c7c?q=80&w=2070&auto=format&fit=crop',
     title: {
-      PT: 'Como a Inteligência Artificial está transformando o Marketing Digital',
-      EN: 'How Artificial Intelligence is transforming Digital Marketing',
-      ES: 'Cómo la Inteligencia Artificial está transformando el Marketing Digital',
+      EN: 'Mobile Programming: A Comprehensive Guide',
+      ES: 'Programación Móvil: Una Guía Completa',
+      PT: 'Programação para Celular: Um Guia Completo',
+    },
+    content: {
+      EN: '<p>Mobile programming is the process of developing software applications for mobile devices like smartphones and tablets...</p>',
+      ES: '<p>La programación móvil es el proceso de desarrollar aplicaciones de software para dispositivos móviles...</p>',
+      PT: '<p>Programação para celular é o processo de desenvolver aplicativos de software para dispositivos móveis...</p>',
     },
     excerpt: {
-      PT: 'Descubra como a IA está mudando as estratégias de marketing digital e como as empresas podem se adaptar a esta nova realidade.',
-      EN: 'Discover how AI is changing digital marketing strategies and how companies can adapt to this new reality.',
-      ES: 'Descubra cómo la IA está cambiando las estrategias de marketing digital y cómo las empresas pueden adaptarse a esta nueva realidad.',
+      EN: 'Mobile programming involves developing apps for smartphones and tablets, requiring consideration of platform specifics, UI/UX design, performance optimization, and security.',
+      ES: 'La programación móvil implica desarrollar aplicaciones para teléfonos inteligentes y tabletas, requiriendo la consideración de aspectos específicos de la plataforma, diseño de UI/UX, optimización del rendimiento y seguridad.',
+      PT: 'Programação para celular envolve desenvolver aplicativos para smartphones e tablets, requerendo consideração de especificidades da plataforma, design de UI/UX, otimização de desempenho e segurança.',
     },
-    status: 'APPROVED',
-    category: 'Marketing',
-  },
-  {
-    id: 3,
-    featuredImage:
-      'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?q=80&w=2070&auto=format&fit=crop',
-    title: {
-      PT: '10 receitas veganas fáceis e rápidas para o dia a dia',
-      EN: '10 easy and quick vegan recipes for everyday',
-      ES: '10 recetas veganas fáciles y rápidas para el día a día',
+    metaDescription: {
+      EN: 'Learn about the key aspects of mobile app development, including platform-specific development, cross-platform frameworks, UI/UX design, and performance optimization.',
+      ES: 'Aprenda sobre los aspectos clave del desarrollo de aplicaciones móviles, incluyendo el desarrollo específico de la plataforma, los frameworks multiplataforma, el diseño de UI/UX y la optimización del rendimiento.',
+      PT: 'Aprenda sobre os aspectos-chave do desenvolvimento de aplicativos móveis, incluindo desenvolvimento específico para plataforma, frameworks multiplataforma, design de UI/UX e otimização de desempenho.',
     },
-    excerpt: {
-      PT: 'Aprenda a preparar pratos veganos deliciosos e práticos em menos de 30 minutos para uma rotina mais saudável.',
-      EN: 'Learn to prepare delicious and practical vegan dishes in less than 30 minutes for a healthier routine.',
-      ES: 'Aprenda a preparar platos veganos deliciosos y prácticos en menos de 30 minutos para una rutina más saludable.',
-    },
-    status: 'REJECTED',
-    category: 'Culinária',
-  },
-  {
-    id: 4,
-    featuredImage:
-      'https://images.unsplash.com/photo-1626785774573-4b799315345d?q=80&w=2071&auto=format&fit=crop',
-    title: {
-      PT: 'As principais tendências de design gráfico para 2025',
-      EN: 'The main graphic design trends for 2025',
-      ES: 'Las principales tendencias de diseño gráfico para 2025',
-    },
-    excerpt: {
-      PT: 'Conheça as tendências de design gráfico que vão dominar o mercado criativo em 2025 e como se preparar para elas.',
-      EN: 'Learn about the graphic design trends that will dominate the creative market in 2025 and how to prepare for them.',
-      ES: 'Conozca las tendencias de diseño gráfico que dominarán el mercado creativo en 2025 y cómo prepararse para ellas.',
+    image: 'https://placehold.co/600x400.png?text=Mobile+Programming&font=roboto',
+    author: 'Equipe DailyBrief',
+    tags: ['Programação em celulares', 'DailyBrief', 'Automação'],
+    category: 'Geral',
+    affiliateLinks: {
+      PT: '',
+      EN: '',
+      ES: '',
     },
     status: 'PENDING',
-    category: 'Design',
-  },
-  {
-    id: 5,
-    featuredImage:
-      'https://images.unsplash.com/photo-1611365892117-00d043284c8c?q=80&w=2070&auto=format&fit=crop',
-    title: {
-      PT: 'Guia completo sobre energia solar residencial: economia e sustentabilidade',
-      EN: 'Complete guide to residential solar energy: economy and sustainability',
-      ES: 'Guía completo sobre energía solar residencial: economía y sostenibilidad',
-    },
-    excerpt: {
-      PT: 'Descubra como a energia solar pode reduzir suas contas de luz e ajudar o meio ambiente com este guia completo para residências.',
-      EN: 'Discover how solar energy can reduce your electricity bills and help the environment with this complete guide for homes.',
-      ES: 'Descubra cómo la energía solar puede reducir sus facturas de electricidad y ayudar al medio ambiente con esta guía completa para hogares.',
-    },
-    status: 'APPROVED',
-    category: 'Sustentabilidade',
+    createdAt: '2025-07-18T19:42:49.435188+00:00Z',
+    updatedAt: '2025-10-03T00:00:00.000000+00:00Z', // Adicionei o campo updatedAt
+    date: '2025-07-18', // Adicionei o campo date
+    readTime: '5 min',
+    sources: [
+      'https://www.tudocelular.com/curiosidade/noticias/n237449/sun-day-cofundador-twitter-lanca-app-vitamina-d.html',
+      'https://olhardigital.com.br/2025/06/22/cinema-e-streaming/5-inovacoes-cientificas-criadas-no-predio-lumon-da-serie-ruptura/',
+      'https://www.tecmundo.com.br/seguranca/405663-como-e-por-que-utilizar-o-controle-parental-para-garantir-um-ambiente-online-seguro-para-criancas.htm',
+      'https://www.pragmatismopolitico.com.br/2025/06/use-seu-celular-para-abrir-a-maquina-de-mineracao-sunnymining.html',
+      'https://www.tecmundo.com.br/produto/405242-smart-monitor-samsung-de-32-pelo-menor-preco-saiba-como-aproveitar.htm',
+      'https://www.terra.com.br/economia/funcionario-suspeito-de-facilitar-ataque-hacker-a-empresa-que-opera-pix-recebeu-r-15-mil-diz-policia,716dff3a5ac5384969ebb3d027a10c648tdhzvaj.html',
+      'https://gizmodo.uol.com.br/apple-macbook-air-m1/',
+      'https://manualdousuario.net/links-do-dia-20250618/',
+      'https://olhardigital.com.br/2025/06/18/dicas-e-tutoriais/10-aplicativos-para-iphone-que-vao-fazer-a-diferenca-no-seu-dia-a-dia/',
+    ],
+    link: 'https://dailybrief.com/post/2',
   },
 ];
