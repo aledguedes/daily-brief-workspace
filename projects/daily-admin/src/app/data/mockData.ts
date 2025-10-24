@@ -1,5 +1,11 @@
 import { IRecentPost } from '../model/dashboard.model';
 import { IPost } from '../model/post.model';
+import {
+  IRawMaterial,
+  IRawMaterialByMaterialIds,
+  IRawMaterialContentResponse,
+  IRawMaterialId,
+} from '../model/raw_materials';
 
 export const recentPosts: IPost[] = [
   {

@@ -1,65 +1,64 @@
-import { Component, inject, Renderer2 } from '@angular/core';
+import { Component, inject, OnInit, Renderer2 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { recentPosts } from '../../../../data/mockData';
-import { ArticleCardComponent } from '../../../../components/article-card/article-card.component';
-import { IPost } from '../../../../model/post.model';
 import { SidePanelComponent } from '../../../../components/side-panel/side-panel.component';
+import { IRawMaterial } from '../../../../model/raw_materials';
+import { ArticleCardAutomationComponent } from '../../../../components/article-card-automation/article-card-automation.component';
+import { AutomationService } from '../../../../services/automation.service';
 
 @Component({
   selector: 'app-post-list',
-  imports: [CommonModule, ArticleCardComponent, SidePanelComponent],
+  imports: [CommonModule, ArticleCardAutomationComponent, SidePanelComponent],
   templateUrl: './post-list.component.html',
   styleUrl: './post-list.component.scss',
 })
-export class PostListComponent {
+export class PostListComponent implements OnInit {
   private renderer = inject(Renderer2);
-  selectedArticle: IPost = {
-    id: 0,
-    title: {
-      PT: '',
-      EN: '',
-      ES: '',
+  private automationService = inject(AutomationService);
+
+  selectedArticle: IRawMaterial = {
+    theme: '',
+    user_id: '',
+    task_id: '',
+    status: {
+      id: 0,
+      name: '',
+      display_name: '',
+      bg_class: '',
+      text_class: '',
     },
-    excerpt: {
-      PT: '',
-      EN: '',
-      ES: '',
-    },
-    content: {
-      PT: '',
-      EN: '',
-      ES: '',
-    },
-    image: '',
-    author: '',
-    tags: [],
-    category: '',
-    metaDescription: {
-      PT: '',
-      EN: '',
-      ES: '',
-    },
-    affiliateLinks: {
-      PT: '',
-      EN: '',
-      ES: '',
-    },
-    status: 'PENDING',
-    date: '',
-    readTime: '',
-    updatedAt: '',
-    createdAt: '',
-    sources: [],
-    link: '',
+    created_at: '',
+    updated_at: '',
+    content_type: '',
+    generated_content: '',
+    raw_material_ids: [],
+    automation_request_id: '',
+    suggested_image_prompt: '',
   };
   panelOpen: boolean = false;
-  recentPosts: IPost[] = recentPosts;
+  recentPosts: IRawMaterial[] = [];
 
   filters = [
     { id: 'all', label: 'Todos', active: true },
     { id: 'completed', label: 'Concluídos', active: false },
     { id: 'progress', label: 'Em Progresso', active: false },
   ];
+
+  ngOnInit(): void {
+    this.getAllRawMaterials();
+  }
+
+  getAllRawMaterials() {
+    this.automationService.listAllMaterials().subscribe({
+      next: (response) => {
+        console.log('LIST ALL MATERIALS:', response);
+
+        this.recentPosts = response;
+      },
+      error: (error) => {
+        console.error('Error fetching raw materials:', error);
+      },
+    });
+  }
 
   setActiveFilter(filterId: string): void {
     this.filters = this.filters.map((filter) => ({
@@ -68,8 +67,8 @@ export class PostListComponent {
     }));
   }
 
-  openSidePanel(articleId: number): void {
-    const articleData = recentPosts.filter((article) => article.id === articleId)[0];
+  openSidePanel(taskId: string): void {
+    const articleData = this.recentPosts.filter((article) => article.task_id === taskId)[0];
     if (articleData) {
       this.selectedArticle = articleData;
       this.panelOpen = true;
@@ -84,43 +83,23 @@ export class PostListComponent {
   closeSidePanel(): void {
     this.panelOpen = false;
     this.selectedArticle = {
-      id: 0,
-      title: {
-        PT: '',
-        EN: '',
-        ES: '',
+      theme: '',
+      user_id: '',
+      task_id: '',
+      status: {
+        id: 0,
+        name: '',
+        display_name: '',
+        bg_class: '',
+        text_class: '',
       },
-      excerpt: {
-        PT: '',
-        EN: '',
-        ES: '',
-      },
-      content: {
-        PT: '',
-        EN: '',
-        ES: '',
-      },
-      image: '',
-      author: '',
-      tags: [],
-      category: '',
-      metaDescription: {
-        PT: '',
-        EN: '',
-        ES: '',
-      },
-      affiliateLinks: {
-        PT: '',
-        EN: '',
-        ES: '',
-      },
-      status: 'PENDING',
-      date: '',
-      readTime: '',
-      updatedAt: '',
-      createdAt: '',
-      sources: [],
-      link: '',
+      created_at: '',
+      updated_at: '',
+      content_type: '',
+      generated_content: '',
+      raw_material_ids: [],
+      automation_request_id: '',
+      suggested_image_prompt: '',
     };
     // Remove a classe 'no-scroll' do <body>
     this.renderer.removeClass(document.body, 'no-scroll');

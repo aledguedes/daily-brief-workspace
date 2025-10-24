@@ -1,0 +1,207 @@
+<div
+  class="card bg-white rounded-2xl overflow-hidden flex flex-col transition shadow-md border border-slate-200 hover:-translate-y-0.5 hover:shadow-lg hover:border-slate-300"
+>
+  <div
+    class="relative h-48 bg-gradient-to-br from-purple-600 to-pink-600 bg-center bg-cover"
+    [style.backgroundImage]="'url(' + (urlImage + '?text=dailyBrief+Automation') + ')'"
+  >
+    <div
+      [class]="
+        'absolute top-4 right-4 status-badge px-3 py-1 rounded-full text-xs font-bold flex items-center shadow-md ' +
+        task.status.text_class +
+        ' ' +
+        task.status.bg_class
+      "
+    >
+      <span [class]="'relative status-pulse mr-2 ' + task.status.text_class">
+        <div class="w-2 h-2 bg-current rounded-full"></div>
+      </span>
+      {{ task.status.display_name }}
+    </div>
+
+    <div class="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/60 to-transparent">
+      <div class="text-white/80 text-xs font-semibold mb-1 truncate">ID: {{ task.task_id }}</div>
+      <h3 class="text-white font-bold text-xl mb-1 leading-tight truncate" [title]="task.theme">
+        {{ task.theme }}
+      </h3>
+      <div class="flex items-center gap-2">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="w-4 h-4 text-white/90"
+        >
+          <rect x="5" y="5" width="14" height="14" rx="2" ry="2" />
+          <path d="M15 9h2" />
+          <path d="M15 15h2" />
+          <path d="M9 9h.01" />
+          <path d="M9 15h.01" />
+          <path d="M12 18v3" />
+          <path d="M12 3v3" />
+          <path d="M18 12h3" />
+          <path d="M3 12h3" />
+          <path d="M15 12h2" />
+          <path d="M15 15h2" />
+          <path d="M9 9h.01" />
+          <path d="M9 15h.01" />
+        </svg>
+        <p class="text-white/90 text-sm">{{ task.content_type }}</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex-1 px-6 py-5 space-y-4 text-[15px] md:text-[16px] text-slate-700">
+    <div
+      class="flex items-center gap-3 p-3 bg-slate-50 border-l-4 border-r-4 border-indigo-400 rounded-lg"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="w-5 h-5 text-indigo-500"
+      >
+        <path d="M8 2v4" />
+        <path d="M16 2v4" />
+        <rect x="3" y="4" width="18" height="18" rx="2" />
+        <path d="M3 10h18" />
+      </svg>
+      <span class="text-sm font-medium text-slate-700">Data de Criação:</span>
+      <span class="text-sm text-slate-600">{{ task.created_at | date: 'dd/MM/yyyy' }}</span>
+    </div>
+
+    <div
+      class="flex items-center gap-3 p-3 bg-slate-50 border-l-4 border-r-4 border-yellow-400 rounded-lg"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="w-5 h-5 text-yellow-500"
+      >
+        <circle cx="12" cy="12" r="10" />
+        <polyline points="12,6 12,12 16,14" />
+      </svg>
+      <span class="text-sm font-medium text-slate-700">Hora de Criação:</span>
+      <span class="text-sm text-slate-600">{{ task.created_at | date: 'HH:mm:ss' }}</span>
+    </div>
+
+    <div
+      class="flex items-center gap-3 p-3 bg-slate-50 border-l-4 border-r-4 border-green-400 rounded-lg"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="w-5 h-5 text-green-500"
+      >
+        <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+        <circle cx="12" cy="7" r="4" />
+      </svg>
+      <span class="text-sm font-medium text-slate-700">Autor:</span>
+      <span class="text-sm font-semibold text-slate-700">{{ task.user_id }}</span>
+    </div>
+
+    <div>
+      <p class="text-xs uppercase tracking-wide text-slate-500 mb-2 flex items-center gap-1">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="w-3 h-3 text-amber-500"
+        >
+          <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+          <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+        </svg>
+        URLs processadas
+      </p>
+
+      <div
+        class="flex flex-wrap gap-1.5"
+        [class.justify-between]="hiddenIdsCount > 0"
+        [class.justify-start]="hiddenIdsCount === 0"
+      >
+        @for (id of visibleRawMaterialIds; track id) {
+          <span
+            class="text-[12px] font-mono bg-amber-50 text-amber-800 border border-amber-100 px-2 py-1 rounded-md"
+          >
+            {{ id.toString().slice(0, 25) + '...' }}
+          </span>
+        }
+
+        @if (hiddenIdsCount > 0) {
+          <span
+            class="text-[12px] font-mono bg-slate-200 text-slate-700 border border-slate-300 px-2 py-1 rounded-md"
+          >
+            +{{ hiddenIdsCount }}
+          </span>
+        } @else {
+          <span
+            class="text-[12px] font-mono bg-amber-50 text-amber-800 border border-amber-100 px-2 py-1 rounded-md"
+          >
+            {{ gapProcessUrl }}
+          </span>
+        }
+      </div>
+    </div>
+  </div>
+
+  <div class="px-6 py-4 border-t border-slate-100 bg-white">
+    <button
+      [disabled]="task.status.id === 6"
+      (click)="openDetails.emit(task.task_id)"
+      class="w-full flex items-center justify-center gap-2 text-base font-medium py-2 rounded-md transition"
+      [ngClass]="
+        task.status.id === 6
+          ? 'bg-slate-400 cursor-not-allowed text-slate-600'
+          : 'bg-indigo-600 text-white hover:bg-indigo-700'
+      "
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="w-5 h-5"
+      >
+        <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
+        <circle cx="12" cy="12" r="3" />
+      </svg>
+      Ver Resultados
+    </button>
+  </div>
+</div>

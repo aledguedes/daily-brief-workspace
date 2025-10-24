@@ -50,8 +50,9 @@
   <main class="max-w-7xl mx-auto pb-24">
     <div id="articlesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       @if (recentPosts && recentPosts.length > 0) {
-        @for (article of recentPosts; track article.id) {
-          <app-article-card [article]="article" (openDetails)="openSidePanel($event)" />
+        @for (article of recentPosts; track article.task_id) {
+          <!-- <app-article-card [article]="article" (openDetails)="openSidePanel($event)" /> -->
+          <app-article-card-automation [task]="article" (openDetails)="openSidePanel($event)" />
         }
       } @else {
         <p class="text-xl text-red-500 font-semibold mt-8 col-span-full text-center">
