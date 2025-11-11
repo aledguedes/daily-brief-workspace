@@ -3,17 +3,13 @@
 <!-- Status -->
 <div class="mb-6">
   <span class="block text-sm font-semibold text-gray-500 uppercase tracking-wide mb-1">Status</span>
-  @if (data.status === 'PENDING') {
-    <span
-      class="inline-block px-2 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800"
-    >
-      Pendente
-    </span>
-  } @else {
-    <span class="inline-block px-2 py-1 rounded-full text-xs font-medium bg-gray-200 text-gray-800">
-      {{ data.status }}
-    </span>
-  }
+
+  <span
+    class="inline-block px-2 py-1 rounded-full text-xs font-medium"
+    [ngClass]="[data.status.bgClass, data.status.textClass]"
+  >
+    {{ data.status.name + ' - ' + data.status.displayName }}
+  </span>
 </div>
 
 <!-- Datas -->
@@ -38,7 +34,7 @@
   <span class="block text-sm font-semibold text-gray-500 uppercase tracking-wide mb-1"
     >Categoria</span
   >
-  <p class="text-sm text-gray-700">{{ data.category }}</p>
+  <p class="text-sm text-gray-700">{{ data.category.name }}</p>
 </div>
 
 <!-- Tags -->

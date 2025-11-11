@@ -15,7 +15,7 @@
   <!-- HEADER -->
   <header class="p-6 border-b border-gray-100">
     <h2 class="text-xl font-bold text-gray-800" id="panelTitle">
-      Detalhes do Artigo #{{ article.task_id || 'N/A' }}
+      Detalhes do Artigo #{{ article.taskId || 'N/A' }}
     </h2>
     <p class="text-sm text-gray-700" id="panelSubtitle">
       {{ article.theme || 'Título não disponível' }}
@@ -24,9 +24,9 @@
       <span
         id="panelStatusBadge"
         class="inline-flex items-center text-xs font-bold px-3 py-1 rounded-full shadow-md"
-        [ngClass]="[article.status.bg_class, article.status.text_class]"
+        [ngClass]="[article.status.bgClass, article.status.textClass]"
       >
-        {{ article.status.name + ' - ' + article.status.display_name }}
+        {{ article.status.name + ' - ' + article.status.displayName }}
       </span>
     </div>
     <button
@@ -73,27 +73,6 @@
       class="tab-content"
       [ngClass]="{ active: activeTab === 'tab-details' }"
     >
-      <div class="bg-white rounded-xl p-6 border border-gray-200 shadow-sm mb-3">
-        <div class="flex items-center mb-4">
-          <div class="w-1.5 h-6 bg-purple-500 rounded-full mr-3"></div>
-          <h4 class="font-bold text-gray-900 text-xl">Preview do Conteúdo Gerado</h4>
-        </div>
-        <div class="space-y-4 text-gray-700">
-          <div
-            class="bg-gradient-to-r from-purple-50 to-blue-50 p-4 rounded-lg border-l-4 border-purple-500"
-          >
-            <ul class="text-sm space-y-1.5 list-disc pl-5">
-              @if (article.generated_content) {
-                <li style="list-style: none">
-                  {{ article.generated_content.slice(0, 500) + '...' }}
-                </li>
-              } @else {
-                <li class="text-gray-400 italic">Nenhum tópico disponível.</li>
-              }
-            </ul>
-          </div>
-        </div>
-      </div>
       <div class="bg-white rounded-xl p-6 border border-gray-200 shadow-sm">
         <div class="flex items-center mb-4">
           <div class="w-1.5 h-6 bg-blue-500 rounded-full mr-3"></div>
@@ -102,33 +81,117 @@
         <p
           class="text-sm text-gray-700 italic bg-blue-50 p-4 rounded-lg border-l-4 border-blue-500"
         >
-          {{ article.suggested_image_prompt || 'Nenhum prompt disponível.' }}
+          {{ article.suggestedImagePrompt || 'Nenhum prompt disponível.' }}
         </p>
+      </div>
+
+      <div class="bg-white rounded-xl p-6 border border-gray-200 shadow-sm mb-3">
+        <div class="flex items-center mb-4">
+          <div class="w-1.5 h-6 bg-purple-500 rounded-full mr-3"></div>
+          <h4 class="font-bold text-gray-900 text-xl">URLs de origem</h4>
+        </div>
+        <div class="space-y-4 text-gray-700">
+          <div
+            class="bg-gradient-to-r from-purple-50 to-blue-50 p-4 rounded-lg border-l-4 border-purple-500"
+          >
+            <ul class="text-sm space-y-1.5 list-disc pl-5">
+              @if (article.sourceUrls) {
+                @for (url of article.sourceUrls; track $index) {
+                  <li style="list-style: none">
+                    <a
+                      class="text-blue-600 hover:underline mb-2"
+                      [href]="url"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      >{{ url }}</a
+                    >
+                  </li>
+                }
+              } @else {
+                <li class="text-gray-400 italic">Nenhuma URL disponível.</li>
+              }
+            </ul>
+          </div>
+        </div>
       </div>
     </div>
 
     <!-- Aba: Dados Brutos -->
     <div [attr.id]="'tab-raw'" class="tab-content" [ngClass]="{ active: activeTab === 'tab-raw' }">
       <div class="my-3 flex flex-wrap gap-2">
-        @for (raw of article.raw_material_ids; track $index) {
+        @for (raw of article.rawMaterialIds; track $index) {
           <span
             class="inline-flex items-center bg-indigo-100 text-indigo-700 text-xs font-bold px-3 py-1 rounded-full shadow-sm cursor-pointer"
             [title]="raw"
             (click)="handleClick(raw)"
           >
             <span class="w-2 h-2 bg-indigo-700 rounded-full mr-2 animate-pulse"></span>
-            {{ article.raw_material_ids.length > 1 ? raw.slice(0, 15) + '...' : raw }}
+            {{ article.rawMaterialIds.length > 1 ? raw.slice(0, 15) + '...' : raw }}
           </span>
         }
       </div>
 
       @if (showTextArea) {
-        <textarea
-          id="rawMaterialContent"
-          class="w-full h-[300px] bg-gray-50 border border-gray-200 text-sm rounded-xl p-4 text-gray-700 font-mono resize-none"
-          readonly
-          [value]="currentValue"
-        ></textarea>
+        <div class="space-y-4">
+          <textarea
+            id="rawMaterialContent"
+            class="w-full h-[300px] bg-gray-50 border border-gray-200 text-sm rounded-xl p-4 text-gray-700 font-mono resize-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+            [(ngModel)]="currentRawMaterial.content"
+            placeholder="Conteúdo do material bruto..."
+          ></textarea>
+
+          <!-- Footer com botão de atualizar -->
+          <div class="pt-4 border-t border-gray-200">
+            <button
+              (click)="updateRawMaterials()"
+              class="w-full flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium py-2.5 px-4 rounded-lg transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+              [disabled]="!currentRawMaterial.content.trim() || isUpdatingRawMaterial"
+            >
+              @if (isUpdatingRawMaterial) {
+                <svg
+                  class="animate-spin w-4 h-4"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    class="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    stroke-width="4"
+                  ></circle>
+                  <path
+                    class="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                  ></path>
+                </svg>
+                Atualizando...
+              } @else {
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="w-4 h-4"
+                >
+                  <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16" />
+                  <path d="M3 7v9h9" />
+                  <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8" />
+                  <path d="M21 17v-9h-9" />
+                </svg>
+                Atualizar Material Bruto
+              }
+            </button>
+          </div>
+        </div>
       }
     </div>
 
@@ -140,29 +203,29 @@
     >
       <ul class="space-y-3 text-sm text-gray-700" id="historyLogContent">
         <li class="p-3 bg-gray-50 rounded-lg border border-gray-200">
-          Criado em: {{ article.created_at || 'Data não informada' }}
+          Criado em: {{ article.createdAt || 'Data não informada' }}
         </li>
         <li class="p-3 bg-gray-50 rounded-lg border border-gray-200">
           Atualizado em:
-          {{ article.updated_at || 'Data não informada' }}
+          {{ article.updatedAt || 'Data não informada' }}
         </li>
       </ul>
     </div>
   </section>
 
   <!-- FOOTER -->
-  <!-- <footer class="p-5 border-t border-gray-100 bg-gray-50 flex justify-end gap-3">
+  <footer class="p-5 border-t border-gray-100 bg-gray-50 flex justify-end gap-3">
     <button
-      (click)="handleFlowAction('submit', article.task_id)"
+      (click)="handleFlowAction('submit', article.taskId)"
       class="px-4 py-2.5 rounded-xl text-sm font-semibold bg-green-500 text-white hover:bg-green-600 transition"
     >
       Submeter Post
     </button>
     <button
-      (click)="handleFlowAction('regenerate', article.task_id)"
+      (click)="handleFlowAction('regenerate', article.taskId)"
       class="px-4 py-2.5 rounded-xl text-sm font-semibold bg-blue-100 text-blue-700 hover:bg-blue-200 transition"
     >
       Gerar Novamente
     </button>
-  </footer> -->
+  </footer>
 </aside>

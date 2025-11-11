@@ -25,11 +25,22 @@ export class PostViewComponent implements OnInit {
   postId: string = '0';
 
   sideMenuArticle: ISideManuArticle = {
-    status: '',
+    status: {
+      id: 0,
+      name: '',
+      displayName: '',
+      bgClass: '',
+      textClass: '',
+    },
     createdAt: '',
     updatedAt: '',
     author: '',
-    category: '',
+    category: {
+      id: 0,
+      name: '',
+      description: '',
+      targetAudience: '',
+    },
     tags: [],
     affiliateLinks: {
       PT: '',
@@ -39,33 +50,61 @@ export class PostViewComponent implements OnInit {
   };
 
   article: IPost = {
-    id: 0,
-    title: { PT: '', EN: '', ES: '' },
-    excerpt: { PT: '', EN: '', ES: '' },
-    content: { PT: '', EN: '', ES: '' },
-    image: '',
-    author: '',
+    id: '',
+    title: {
+      PT: '',
+      EN: '',
+      ES: '',
+    },
+    excerpt: {
+      PT: '',
+      EN: '',
+      ES: '',
+    },
+    content: {
+      PT: '',
+      EN: '',
+      ES: '',
+    },
+    image: null,
+    author: null,
     tags: [],
-    category: '',
-    metaDescription: { PT: '', EN: '', ES: '' },
-    affiliateLinks: { PT: '', EN: '', ES: '' },
-    status: 'PENDING',
-    date: '',
-    readTime: '',
-    updatedAt: '',
+    category: {
+      id: 0,
+      name: '',
+      description: '',
+      targetAudience: '',
+    },
+    metaDescription: {
+      PT: '',
+      EN: '',
+      ES: '',
+    },
+    affiliateLinks: {
+      PT: '',
+      EN: '',
+      ES: '',
+    },
+    status: {
+      id: 0,
+      name: '',
+      displayName: '',
+      bgClass: '',
+      textClass: '',
+    },
+    readTime: null,
     createdAt: '',
-    sources: [],
-    link: '',
+    updatedAt: '',
   };
 
   ngOnInit() {
     this.postId = this.actRoute.snapshot.paramMap.get('id') || '';
     if (this.postId) {
-      this.getPostById(+this.postId);
+      this.getPostById(this.postId);
     }
   }
 
-  getPostById(postId: number) {
+  getPostById(postId: string) {
     this.postService.getPostById(postId).subscribe({
       next: (response: IPost) => {
         this.article = response;
@@ -78,7 +117,7 @@ export class PostViewComponent implements OnInit {
   }
 
   patchPost(statusFlag: string) {
-    this.postService.patchPost(+this.postId, statusFlag).subscribe({
+    this.postService.patchPost(this.postId, statusFlag).subscribe({
       next: (response: IPost) => {
         const message = this.messageNotification(statusFlag);
         this.notificationService.show('Atualização post', 'success', message);
@@ -104,10 +143,10 @@ export class PostViewComponent implements OnInit {
       status: response.status,
       createdAt: response.createdAt,
       updatedAt: response.updatedAt,
-      author: response.author,
+      author: response.author || '',
       category: response.category,
       tags: response.tags ?? [],
-      affiliateLinks: response.affiliateLinks,
+      affiliateLinks: { PT: '', EN: '', ES: '' },
     };
   }
 }

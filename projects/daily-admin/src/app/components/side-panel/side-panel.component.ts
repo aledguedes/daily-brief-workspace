@@ -8,34 +8,34 @@ import {
   inject,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IRawMaterial, IRawMaterialByMaterialIds } from '../../model/raw_materials';
+import { IRawMaterial, IRawMaterialByMaterialIds, IRawMaterialId } from '../../model/raw_materials';
 import { AutomationService } from '../../services/automation.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-side-panel',
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './side-panel.component.html',
   styleUrl: './side-panel.component.scss',
 })
 export class SidePanelComponent {
   @Input() article: IRawMaterial = {
-    theme: '',
-    user_id: '',
-    task_id: '',
+    taskId: '',
+    userId: '',
+    theme: null,
+    contentType: null,
+    rawMaterialIds: [],
+    suggestedImagePrompt: null,
+    createdAt: '',
+    updatedAt: '',
+    sourceUrls: [],
     status: {
       id: 0,
       name: '',
-      display_name: '',
-      bg_class: '',
-      text_class: '',
+      displayName: '',
+      bgClass: '',
+      textClass: '',
     },
-    created_at: '',
-    updated_at: '',
-    content_type: '',
-    generated_content: '',
-    raw_material_ids: [],
-    automation_request_id: '',
-    suggested_image_prompt: '',
   };
   @Input() isOpen = false;
   @Output() closePanel = new EventEmitter<void>();
@@ -44,11 +44,18 @@ export class SidePanelComponent {
   panelClass = '';
   statusColor = '';
   statusLabel = '';
-  currentValue: string = '';
+  currentRawMaterial: {
+    content: string;
+    rawMaterialId: string;
+  } = {
+    content: '',
+    rawMaterialId: '',
+  };
   activeTab = 'tab-details';
   tagColorMap: Record<string, string> = {};
 
   showTextArea: boolean = false;
+  isUpdatingRawMaterial: boolean = false;
 
   tabs = [
     { id: 'tab-details', label: 'Conteúdo & Detalhes' },
@@ -66,7 +73,6 @@ export class SidePanelComponent {
       this.panelClass = this.isOpen
         ? 'translate-x-0 opacity-100'
         : 'translate-x-full opacity-0 pointer-events-none';
-      // Garante que a aba inicial seja 'tab-details' ao abrir o painel
       if (this.isOpen) {
         this.activeTab = 'tab-details';
       }
@@ -93,9 +99,45 @@ export class SidePanelComponent {
   handleClick(raw: string): void {
     this.showTextArea = true;
 
-    this.automationService.getRawMaterialById(raw).subscribe((data) => {
-      console.log('Clicked raw material:', raw, data);
-      this.currentValue = data.raw_content;
+    this.automationService.getRawMaterialById(raw).subscribe({
+      next: (data: IRawMaterialId) => {
+        console.log('Clicked raw material:', raw, data);
+        this.currentRawMaterial = {
+          content: data.content.replace(/\\n/g, '\n') || '',
+          rawMaterialId: raw,
+        };
+      },
+      error: (err) => {
+        console.error('Error fetching raw material:', err);
+      },
     });
+  }
+
+  updateRawMaterials(): void {
+    this.isUpdatingRawMaterial = true;
+    
+    const materialUpdate = {
+      content: this.currentRawMaterial.content,
+    };
+    console.log('materialUpdate', materialUpdate);
+    
+    this.automationService
+      .updateRawMaterialById(this.currentRawMaterial.rawMaterialId, materialUpdate)
+      .subscribe({
+        next: (data: IRawMaterialId) => {
+          console.log('Updated raw material:', data);
+          this.handleFlowAction('refresh_raw_materials', this.currentRawMaterial.rawMaterialId);
+          
+          // Após 3 segundos, mudar para a primeira tab
+          setTimeout(() => {
+            this.setActiveTab('tab-details');
+            this.isUpdatingRawMaterial = false;
+          }, 3000);
+        },
+        error: (err) => {
+          console.error('Error updating raw material:', err);
+          this.isUpdatingRawMaterial = false;
+        },
+      });
   }
 }

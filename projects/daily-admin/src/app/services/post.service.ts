@@ -4,6 +4,8 @@ import { inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { IPost } from '../../app/model/post.model';
 import { GenericService } from './generic.service';
+import { IPagination } from '../model/pagination.model';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -20,8 +22,14 @@ export class PostService {
     }
   }
 
-  getAllPosts(page: number, size: number) {
-    return this.genericService.getPaginated<IPost>('posts', page, size);
+  getAllPosts(page: number, size: number): Observable<IPagination<IPost>> {
+    const headers = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${this.auth_token}`,
+      }),
+    };
+    return this.http.get<IPagination<IPost>>(`${environment.apiUrl}/posts`, headers);
   }
 
   createPost(form: any) {
@@ -34,7 +42,7 @@ export class PostService {
     return this.http.post<IPost>(`${environment.apiUrl}/posts`, JSON.stringify(form), headers);
   }
 
-  getPostById(id: number) {
+  getPostById(id: string) {
     const headers = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -44,7 +52,7 @@ export class PostService {
     return this.http.get<IPost>(`${environment.apiUrl}/posts/${id}`, headers);
   }
 
-  patchPost(id: number, flagStatus: string = 'approve') {
+  patchPost(id: string, flagStatus: string = 'approve') {
     const headers = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',

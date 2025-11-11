@@ -65,7 +65,7 @@
               </td>
               <td class="px-6 py-4 whitespace-nowrap">
                 <span
-                  [ngClass]="getStatusClass(post.status)"
+                  [ngClass]="getStatusClass(post.status.displayName)"
                   class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full"
                 >
                   {{ post.status }}
@@ -75,14 +75,14 @@
                 <div class="flex items-center space-x-2">
                   <button
                     (click)="patchPost(post.id, 'approve')"
-                    [disabled]="post.status !== 'PENDING'"
+                    [disabled]="post.status.id !== 1"
                     class="border border-green-600 text-green-600 bg-transparent px-3 py-1 rounded-md shadow hover:bg-green-600 hover:text-white transition-colors flex items-center disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     <i class="ri-checkbox-circle-line"></i>
                   </button>
                   <button
                     (click)="patchPost(post.id, 'reject')"
-                    [disabled]="post.status !== 'PENDING'"
+                    [disabled]="post.status.id !== 1"
                     class="border border-red-600 text-red-600 bg-transparent px-3 py-1 rounded-lg shadow hover:bg-red-600 hover:text-white transition-colors flex items-center disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     <i class="ri-close-circle-line"></i>

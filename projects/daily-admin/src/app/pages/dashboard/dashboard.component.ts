@@ -19,7 +19,6 @@ import { IStatisticsCards } from '../../model/statisticsCard.model';
 import { quickActionsMock } from '../../data/quickActionsMock';
 import { IActionButton } from '../../model/quickActions.model';
 import { QuickActionsComponent } from '../../components/quick-actions/quick-actions.component';
-import { recentPosts } from '../../data/mockData';
 import { IPost } from '../../model/post.model';
 
 @Component({
@@ -48,7 +47,7 @@ export class DashboardComponent implements OnInit {
   dailyAffiliateClicksChart: IChart | undefined;
   trafficSourcesChart: IChart | undefined;
 
-  recentPosts: IPost[] = recentPosts;
+  recentPosts: IPost[] = [];
   recentLogs: ILogDisplayItem[] = [];
 
   // Variáveis para Cartões Estatísticos

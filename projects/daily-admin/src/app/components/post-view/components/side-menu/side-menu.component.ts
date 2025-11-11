@@ -10,11 +10,22 @@ import { CommonModule } from '@angular/common';
 })
 export class SideMenuComponent {
   @Input() data: ISideManuArticle = {
-    status: '',
+    status: {
+      id: 0,
+      name: '',
+      displayName: '',
+      bgClass: '',
+      textClass: '',
+    },
     createdAt: '',
     updatedAt: '',
     author: '',
-    category: '',
+    category: {
+      id: 0,
+      name: '',
+      description: '',
+      targetAudience: '',
+    },
     tags: [],
     affiliateLinks: {
       PT: '',

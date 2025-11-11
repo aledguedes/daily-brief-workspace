@@ -8,19 +8,19 @@
     <div
       [class]="
         'absolute top-4 right-4 status-badge px-3 py-1 rounded-full text-xs font-bold flex items-center shadow-md ' +
-        task.status.text_class +
+        task.status.textClass +
         ' ' +
-        task.status.bg_class
+        task.status.bgClass
       "
     >
-      <span [class]="'relative status-pulse mr-2 ' + task.status.text_class">
+      <span [class]="'relative status-pulse mr-2 ' + task.status.textClass">
         <div class="w-2 h-2 bg-current rounded-full"></div>
       </span>
-      {{ task.status.display_name }}
+      {{ task.status.displayName }}
     </div>
 
     <div class="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/60 to-transparent">
-      <div class="text-white/80 text-xs font-semibold mb-1 truncate">ID: {{ task.task_id }}</div>
+      <div class="text-white/80 text-xs font-semibold mb-1 truncate">ID: {{ task.taskId }}</div>
       <h3 class="text-white font-bold text-xl mb-1 leading-tight truncate" [title]="task.theme">
         {{ task.theme }}
       </h3>
@@ -51,7 +51,7 @@
           <path d="M9 9h.01" />
           <path d="M9 15h.01" />
         </svg>
-        <p class="text-white/90 text-sm">{{ task.content_type }}</p>
+        <p class="text-white/90 text-sm">{{ task.contentType }}</p>
       </div>
     </div>
   </div>
@@ -78,7 +78,7 @@
         <path d="M3 10h18" />
       </svg>
       <span class="text-sm font-medium text-slate-700">Data de Criação:</span>
-      <span class="text-sm text-slate-600">{{ task.created_at | date: 'dd/MM/yyyy' }}</span>
+      <span class="text-sm text-slate-600">{{ task.createdAt | date: 'dd/MM/yyyy' }}</span>
     </div>
 
     <div
@@ -100,7 +100,7 @@
         <polyline points="12,6 12,12 16,14" />
       </svg>
       <span class="text-sm font-medium text-slate-700">Hora de Criação:</span>
-      <span class="text-sm text-slate-600">{{ task.created_at | date: 'HH:mm:ss' }}</span>
+      <span class="text-sm text-slate-600">{{ task.createdAt | date: 'HH:mm:ss' }}</span>
     </div>
 
     <div
@@ -122,10 +122,10 @@
         <circle cx="12" cy="7" r="4" />
       </svg>
       <span class="text-sm font-medium text-slate-700">Autor:</span>
-      <span class="text-sm font-semibold text-slate-700">{{ task.user_id }}</span>
+      <span class="text-sm font-semibold text-slate-700">{{ task.userId }}</span>
     </div>
 
-    <div>
+    <div class="mt-8">
       <p class="text-xs uppercase tracking-wide text-slate-500 mb-2 flex items-center gap-1">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -147,29 +147,29 @@
 
       <div
         class="flex flex-wrap gap-1.5"
-        [class.justify-between]="hiddenIdsCount > 0"
-        [class.justify-start]="hiddenIdsCount === 0"
+        [class.justify-between]="hiddenIdsCount() > 0"
+        [class.justify-start]="hiddenIdsCount() === 0"
       >
-        @for (id of visibleRawMaterialIds; track id) {
+        @for (formattedId of formattedRawMaterialIds(); track formattedId) {
           <span
             class="text-[12px] font-mono bg-amber-50 text-amber-800 border border-amber-100 px-2 py-1 rounded-md"
           >
-            {{ id.toString().slice(0, 25) + '...' }}
+            {{ formattedId }}
           </span>
         }
 
-        @if (hiddenIdsCount > 0) {
+        @if (hiddenIdsCount() > 0) {
           <span
             class="text-[12px] font-mono bg-slate-200 text-slate-700 border border-slate-300 px-2 py-1 rounded-md"
           >
-            +{{ hiddenIdsCount }}
+            +{{ hiddenIdsCount() }}
           </span>
-        } @else {
+          <!-- } @else {
           <span
             class="text-[12px] font-mono bg-amber-50 text-amber-800 border border-amber-100 px-2 py-1 rounded-md"
           >
             {{ gapProcessUrl }}
-          </span>
+          </span> -->
         }
       </div>
     </div>
@@ -178,7 +178,7 @@
   <div class="px-6 py-4 border-t border-slate-100 bg-white">
     <button
       [disabled]="task.status.id === 6"
-      (click)="openDetails.emit(task.task_id)"
+      (click)="openDetails.emit(task.taskId)"
       class="w-full flex items-center justify-center gap-2 text-base font-medium py-2 rounded-md transition"
       [ngClass]="
         task.status.id === 6

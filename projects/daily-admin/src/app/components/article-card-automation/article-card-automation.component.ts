@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, signal, computed, effect } from '@angular/core';
 import { IRawMaterial } from '../../model/raw_materials';
 import { CommonModule } from '@angular/common';
 
@@ -10,53 +10,77 @@ import { CommonModule } from '@angular/common';
 })
 export class ArticleCardAutomationComponent {
   @Output() openDetails = new EventEmitter<string>();
-  @Input({ required: true }) task: IRawMaterial = {
-    theme: '',
-    user_id: '',
-    task_id: '',
+  @Input({ required: true }) set task(value: IRawMaterial) {
+    this.taskSignal.set(value);
+  }
+
+  private taskSignal = signal<IRawMaterial>({
+    taskId: '',
+    userId: '',
+    theme: null,
+    contentType: null,
+    rawMaterialIds: [],
+    suggestedImagePrompt: null,
+    createdAt: '',
+    updatedAt: '',
+    sourceUrls: [],
     status: {
       id: 0,
       name: '',
-      display_name: '',
-      bg_class: '',
-      text_class: '',
+      displayName: '',
+      bgClass: '',
+      textClass: '',
     },
-    created_at: '',
-    updated_at: '',
-    content_type: '',
-    generated_content: '',
-    raw_material_ids: [],
-    automation_request_id: '',
-    suggested_image_prompt: '',
-  };
+  });
 
   urlImage: string = 'https://placehold.co/600x400.png';
   gapProcessUrl: string = 'Falha na geração do conteúdo por texto.';
 
   private readonly MAX_VISIBLE_IDS = 1;
 
+  // Signals computados para evitar chamadas de funções no template
+  visibleRawMaterialIds = computed(() =>
+    this.taskSignal().rawMaterialIds.slice(0, this.MAX_VISIBLE_IDS),
+  );
+
+  hiddenIdsCount = computed(() => this.taskSignal().rawMaterialIds.length - this.MAX_VISIBLE_IDS);
+
+
+  // Signal para IDs formatados (evita toString().slice() no template)
+  // Se houver apenas 1 item, mostra completo. Se houver mais, trunca.
+  formattedRawMaterialIds = computed(() => {
+    const ids = this.visibleRawMaterialIds();
+    const totalIds = this.taskSignal().rawMaterialIds.length;
+    
+    return ids.map(id => {
+      const idStr = id.toString();
+      // Se houver apenas 1 ID no total, mostra completo
+      if (totalIds === 1) {
+        return idStr;
+      }
+      // Se houver mais de 1 ID, trunca conforme o original
+      return idStr.slice(0, 29) + '...';
+    });
+  });
+
+  // Getter para acessar a task no template
+  get task(): IRawMaterial {
+    return this.taskSignal();
+  }
+
   ngOnInit(): void {
-    if (!this.task) {
+    if (!this.taskSignal()) {
       console.error('Task data is required for TaskCardComponent');
     }
-  }
-
-  get visibleRawMaterialIds(): string[] {
-    // Sempre pega só o primeiro ID (máximo 1)
-    return this.task.raw_material_ids.slice(0, this.MAX_VISIBLE_IDS);
-  }
-
-  get hiddenIdsCount(): number {
-    // Quantidade restante após o 1º ID
-    const count = this.task.raw_material_ids.length - this.MAX_VISIBLE_IDS;
-    return count > 0 ? count : 0;
   }
 
   formatDate(date: string): string {
     return new Date(date).toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' });
   }
 
-  gradientByStatus(status: string): string {
+  // Signals computados para status (evita múltiplas chamadas de função)
+  statusGradient = computed(() => {
+    const status = this.taskSignal().status.name;
     switch (status) {
       case 'APPROVED':
         return 'from-emerald-500 to-green-600';
@@ -67,9 +91,10 @@ export class ArticleCardAutomationComponent {
       default:
         return 'from-slate-500 to-slate-600';
     }
-  }
+  });
 
-  backgroundByStatus(status: string): string {
+  statusBackground = computed(() => {
+    const status = this.taskSignal().status.name;
     switch (status) {
       case 'APPROVED':
         return 'bg-green-100';
@@ -82,9 +107,10 @@ export class ArticleCardAutomationComponent {
       default:
         return 'bg-slate-100';
     }
-  }
+  });
 
-  colorByStatus(status: string): string {
+  statusTextColor = computed(() => {
+    const status = this.taskSignal().status.name;
     switch (status) {
       case 'APPROVED':
         return 'text-green-800';
@@ -95,9 +121,10 @@ export class ArticleCardAutomationComponent {
       default:
         return 'text-slate-700';
     }
-  }
+  });
 
-  pulseColorByStatus(status: string): string {
+  statusPulseColor = computed(() => {
+    const status = this.taskSignal().status.name;
     switch (status) {
       case 'APPROVED':
         return 'text-green-500';
@@ -108,9 +135,9 @@ export class ArticleCardAutomationComponent {
       default:
         return 'text-slate-400';
     }
-  }
+  });
 
   onOpenDetails(): void {
-    this.openDetails.emit(this.task.task_id);
+    this.openDetails.emit(this.taskSignal().taskId);
   }
 }

@@ -52,9 +52,7 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
-    // this.isLoading = true;
-    this.router.navigate(['/home']);
-    return;
+    this.isLoading = true;
     if (this.loginForm.valid) {
       this.loginService.login(this.loginForm.value).subscribe({
         next: (response) => {

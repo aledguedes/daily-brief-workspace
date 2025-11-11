@@ -37,3 +37,9 @@
     opacity: 0.5;
   }
 }
+
+// Estilo para garantir que as quebras de linha sejam visíveis no textarea
+#rawMaterialContent {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}

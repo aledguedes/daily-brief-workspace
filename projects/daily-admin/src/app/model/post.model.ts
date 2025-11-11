@@ -1,31 +1,33 @@
 import { MultilangText } from '../types/general.types';
+import { ICategory } from './category.model';
+import { IStatus } from './status.model';
 
 export interface IPost {
-  id: number;
+  id: string;
   title: MultilangText;
   excerpt: MultilangText;
   content: MultilangText;
-  image: string;
-  author: string;
+  image: string | null;
+  author: string | null;
   tags: string[];
-  category: string;
+  category: ICategory;
   metaDescription: MultilangText;
-  affiliateLinks: MultilangText;
-  status: 'PENDING' | 'APPROVED' | 'REJECTED' | 'DRAFT';
-  date: string;
-  readTime: string;
-  updatedAt: string;
+  affiliateLinks: MultilangText | Record<string, unknown>;
+  status: IStatus;
+  publishedAt?: string | null;
+  readTime: string | null;
   createdAt: string;
-  sources: string[];
-  link: string;
+  updatedAt: string;
+  sources?: string[];
+  link?: string;
 }
 
 export interface ISideManuArticle {
-  status: 'PENDING' | 'APPROVED' | 'REJECTED' | 'DRAFT' | string;
+  status: IStatus;
   createdAt: string;
   updatedAt: string;
   author: string;
-  category: string;
+  category: ICategory;
   tags: string[];
   affiliateLinks: MultilangText;
 }

@@ -1,3 +1,4 @@
+import { PostAutomationComponent } from './components/post-automation/post-automation.component';
 import { Routes } from '@angular/router';
 
 export const POSTS_ROUTES: Routes = [
@@ -6,7 +7,14 @@ export const POSTS_ROUTES: Routes = [
     loadComponent: () => import('./components/posts/posts.component').then((c) => c.PostsComponent),
   },
   {
-    path: 'all',
+    path: 'all-automations',
+    loadComponent: () =>
+      import('./components/post-automation/post-automation.component').then(
+        (c) => c.PostAutomationComponent,
+      ),
+  },
+  {
+    path: 'all-generateds',
     loadComponent: () =>
       import('./components/post-list/post-list.component').then((c) => c.PostListComponent),
   },

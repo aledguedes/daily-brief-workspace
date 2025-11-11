@@ -26,15 +26,33 @@
           />
         </div>
       </div>
+
+      <!-- Filtros -->
+      <div class="flex flex-wrap gap-2">
+        @for (filter of filters; track filter.id) {
+          <button
+            type="button"
+            class="filter-chip px-4 py-2 rounded-xl text-sm font-semibold transition-colors"
+            [ngClass]="{
+              'bg-gray-200 text-gray-900 font-bold': filter.active,
+              'bg-gray-100 text-gray-700 hover:bg-gray-200': !filter.active,
+            }"
+            (click)="setActiveFilter(filter.id)"
+          >
+            {{ filter.label }}
+          </button>
+        }
+      </div>
     </div>
   </div>
 
   <!-- LISTA DE ARTIGOS -->
   <main class="max-w-7xl mx-auto pb-24">
     <div id="articlesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      @if (posts && posts.length > 0) {
-        @for (article of posts; track $index) {
-          <app-article-card [article]="article" />
+      @if (recentPosts && recentPosts.length > 0) {
+        @for (article of recentPosts; track article.taskId) {
+          <!-- <app-article-card [article]="article" (openDetails)="openSidePanel($event)" /> -->
+          <app-article-card-automation [task]="article" (openDetails)="openSidePanel($event)" />
         }
       } @else {
         <p class="text-xl text-red-500 font-semibold mt-8 col-span-full text-center">
@@ -43,4 +61,7 @@
       }
     </div>
   </main>
+  <!-- SIDE PANEL -->
+  <app-side-panel [article]="selectedArticle" [isOpen]="panelOpen" (closePanel)="closeSidePanel()">
+  </app-side-panel>
 </div>

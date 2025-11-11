@@ -33,10 +33,10 @@ export const sidebarMenus: IMenu[] = [
     childrens: [
       {
         id: 6,
-        title: 'All posts',
-        route: '/home/posts/all',
+        title: 'Automation posts',
+        route: '/home/posts/all-automations',
       },
-      { id: 7, title: 'Create post', route: '/home/posts/create' },
+      { id: 7, title: 'Generated Post', route: '/home/posts/all-generateds' },
       { id: 8, title: 'Update post', route: '/home/posts/update' },
       { id: 9, title: 'Delete post', route: '/home/posts/delete' },
     ],

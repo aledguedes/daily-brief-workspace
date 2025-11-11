@@ -17,7 +17,7 @@ import { IPost } from '../../../../model/post.model';
 })
 export class BodyArticleComponent implements OnChanges {
   @Input() article: IPost = {
-    id: 0,
+    id: '',
     title: {
       PT: '',
       EN: '',
@@ -33,10 +33,15 @@ export class BodyArticleComponent implements OnChanges {
       EN: '',
       ES: '',
     },
-    image: '',
-    author: '',
+    image: null,
+    author: null,
     tags: [],
-    category: '',
+    category: {
+      id: 0,
+      name: '',
+      description: '',
+      targetAudience: '',
+    },
     metaDescription: {
       PT: '',
       EN: '',
@@ -47,13 +52,16 @@ export class BodyArticleComponent implements OnChanges {
       EN: '',
       ES: '',
     },
-    status: 'PENDING',
-    date: '',
-    readTime: '',
-    updatedAt: '',
+    status: {
+      id: 0,
+      name: '',
+      displayName: '',
+      bgClass: '',
+      textClass: '',
+    },
+    readTime: null,
     createdAt: '',
-    sources: [],
-    link: '',
+    updatedAt: '',
   };
 
   currentLang = signal<'PT' | 'EN' | 'ES'>('PT');

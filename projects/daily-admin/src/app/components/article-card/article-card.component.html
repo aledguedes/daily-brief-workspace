@@ -8,22 +8,25 @@
   >
     <!-- Status -->
     <div
-      class="absolute top-4 right-4 flex items-center text-white text-xs font-semibold px-3 py-1 rounded-full shadow-md backdrop-blur-md"
-      [ngClass]="ui.statusClass"
+      class="absolute top-4 right-4 flex items-center text-xs font-semibold px-3 py-1 rounded-full shadow-md backdrop-blur-md"
+      [ngClass]="[article.status.bgClass]"
     >
-      <span class="w-2 h-2 rounded-full bg-white mr-2 animate-pulse"></span>
-      {{ ui.statusLabel }}
+      <span
+        class="w-2 h-2 rounded-full mr-2 animate-pulse"
+        [ngClass]="article.status.textClass"
+      ></span>
+      {{ article.status.displayName }}
     </div>
 
     <!-- Overlay -->
     <div
       class="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/70 via-black/30 to-transparent"
     >
-      <div class="mb-1">
+      <div class="mb-4">
         <span
           class="px-2 py-1 rounded-full bg-gradient-to-r from-purple-600 to-blue-600 text-white m-0 text-xs font-bold"
         >
-          #{{ article.id }} &mdash; {{ article.category || 'Sem categoria' }}
+          #{{ article.id }} &mdash; {{ article.category.name || 'Sem categoria' }}
         </span>
       </div>
       <h3 class="text-lg font-bold text-white leading-tight line-clamp-1">
@@ -48,7 +51,7 @@
             d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
           />
         </svg>
-        <span>{{ article.date || 'Data indefinida' }}</span>
+        <span>{{ article.createdAt || 'Data indefinida' | date: 'dd/MM/yyyy' }}</span>
       </div>
       <span>{{ article.readTime || '5 min' }} de leitura</span>
     </div>
@@ -62,13 +65,10 @@
 
     <!-- Tags -->
     <div class="flex flex-wrap gap-2 mb-6">
-      @if (ui.tagColors.length > 0) {
-        @for (tag of ui.tagColors; track tag.label) {
-          <span
-            class="px-3 py-1 rounded-lg text-xs font-semibold border transition-colors"
-            [ngClass]="tag.class"
-          >
-            {{ tag.label }}
+      @if (article.tags.length > 0) {
+        @for (tag of article.tags; track $index) {
+          <span class="px-3 py-1 rounded-lg text-xs font-semibold border transition-colors">
+            {{ tag }}
           </span>
         }
       } @else {
@@ -78,7 +78,7 @@
 
     <!-- Botão -->
     <button
-      (click)="onOpenDetails()"
+      (click)="onOpenDetails(article.id)"
       class="w-full flex items-center justify-center px-5 py-2.5 rounded-xl bg-gradient-to-r from-purple-600 to-blue-600 text-white font-semibold text-sm hover:from-purple-700 hover:to-blue-700 transition-colors shadow-sm hover:shadow-md"
     >
       <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">

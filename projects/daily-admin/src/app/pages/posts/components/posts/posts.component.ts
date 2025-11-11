@@ -89,8 +89,8 @@ export class PostsComponent implements OnInit {
   // Make the imported function available to the template
   public getStatusClass = getStatusClass;
 
-  patchPost(postId: number, statusFlag: string = 'approve') {
-    this.postService.patchPost(+postId, statusFlag).subscribe({
+  patchPost(postId: string, statusFlag: string = 'approve') {
+    this.postService.patchPost(postId, statusFlag).subscribe({
       next: (response: IPost) => {
         const idx = this.posts.findIndex((p) => p.id === postId);
         if (idx !== -1) {
