@@ -1,16 +1,16 @@
+import { ISourceMaterial } from './sourceMaterial.model';
 import { IStatus } from './status.model';
 
 export interface IRawMaterial {
   taskId: string;
   userId: string;
+  status: IStatus;
   theme: string | null;
   contentType: string | null;
-  rawMaterialIds: string[];
   suggestedImagePrompt: string | null;
   createdAt: string;
   updatedAt: string;
-  sourceUrls: string[];
-  status: IStatus;
+  sourceMaterials: ISourceMaterial[];
 }
 
 export interface IRawMaterialId {
@@ -24,15 +24,6 @@ export interface IRawMaterialId {
 
 export interface IRawMaterialContentResponse {
   [id: string]: string;
-}
-
-export interface IRawMaterialByMaterialIds {
-  id: string;
-  url: string;
-  user_id: string;
-  taskId: string;
-  content: string;
-  created_at: string;
 }
 
 export interface IRawMaterialUpdateRequest {

@@ -1,30 +1,29 @@
 import { Routes } from '@angular/router';
 
 export const routes: Routes = [
-  { path: '', pathMatch: 'full', redirectTo: 'home' },
+  // { path: '', pathMatch: 'full', redirectTo: 'home' },
+  {
+    path: '',
+    loadComponent: () => import('./pages/landing.component').then((c) => c.LandingComponent),
+  },
   {
     path: 'home',
-    loadComponent: () =>
-      import('./pages/home.component').then(c => c.HomeComponent),
+    loadComponent: () => import('./pages/home.component').then((c) => c.HomeComponent),
   },
   {
     path: 'post/:id',
-    loadComponent: () =>
-      import('./pages/post-detail.component').then(c => c.PostDetailComponent),
+    loadComponent: () => import('./pages/post-detail.component').then((c) => c.PostDetailComponent),
   },
   {
     path: 'category/:category',
-    loadComponent: () =>
-      import('./pages/category.component').then(c => c.CategoryComponent),
+    loadComponent: () => import('./pages/category.component').then((c) => c.CategoryComponent),
   },
   {
     path: 'about',
-    loadComponent: () =>
-      import('./pages/about.component').then(c => c.AboutComponent),
+    loadComponent: () => import('./pages/about.component').then((c) => c.AboutComponent),
   },
   {
     path: 'contact',
-    loadComponent: () =>
-      import('./pages/contact.component').then(c => c.ContactComponent),
+    loadComponent: () => import('./pages/contact.component').then((c) => c.ContactComponent),
   },
 ];

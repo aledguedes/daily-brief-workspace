@@ -8,6 +8,12 @@
   --accent: #3b82f6;
   --card-bg-color: #ffffff;
   --white-color: #ffffff;
+  --mint-green: #5FFFD7;
+  --mint-accent: #00D9A3;
+  --bg-light: #F5F5F5;
+  --bg-dark: #2C3E50;
+  --text-primary: #1A1A1A;
+  --text-secondary: #666666;
 }
 
 .dark {
@@ -40,6 +46,10 @@ app-root {
 * {
   box-sizing: border-box;
   font-family: 'Inter', sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Poppins', sans-serif;
 }
 
 .prose h2 {

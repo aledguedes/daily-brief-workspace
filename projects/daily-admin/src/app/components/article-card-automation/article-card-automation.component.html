@@ -150,9 +150,9 @@
         [class.justify-between]="hiddenIdsCount() > 0"
         [class.justify-start]="hiddenIdsCount() === 0"
       >
-        @for (formattedId of formattedRawMaterialIds(); track formattedId) {
+        @for (formattedId of formattedsourceMaterials(); track formattedId) {
           <span
-            class="text-[12px] font-mono bg-amber-50 text-amber-800 border border-amber-100 px-2 py-1 rounded-md"
+            class="text-[12px] font-mono bg-amber-50 text-amber-800 border border-amber-100 px-2 py-1 rounded-md truncate"
           >
             {{ formattedId }}
           </span>

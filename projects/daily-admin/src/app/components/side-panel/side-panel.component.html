@@ -95,15 +95,15 @@
             class="bg-gradient-to-r from-purple-50 to-blue-50 p-4 rounded-lg border-l-4 border-purple-500"
           >
             <ul class="text-sm space-y-1.5 list-disc pl-5">
-              @if (article.sourceUrls) {
-                @for (url of article.sourceUrls; track $index) {
+              @if (article.sourceMaterials.length > 0) {
+                @for (article of article.sourceMaterials; track $index) {
                   <li style="list-style: none">
                     <a
                       class="text-blue-600 hover:underline mb-2"
-                      [href]="url"
+                      [href]="article.url"
                       target="_blank"
                       rel="noopener noreferrer"
-                      >{{ url }}</a
+                      >{{ article.url }}</a
                     >
                   </li>
                 }
@@ -119,19 +119,45 @@
     <!-- Aba: Dados Brutos -->
     <div [attr.id]="'tab-raw'" class="tab-content" [ngClass]="{ active: activeTab === 'tab-raw' }">
       <div class="my-3 flex flex-wrap gap-2">
-        @for (raw of article.rawMaterialIds; track $index) {
+        @for (raw of article.sourceMaterials; track $index) {
           <span
-            class="inline-flex items-center bg-indigo-100 text-indigo-700 text-xs font-bold px-3 py-1 rounded-full shadow-sm cursor-pointer"
+            class="inline-flex items-center text-xs font-bold px-3 py-1 rounded-full shadow-sm cursor-pointer"
+            [ngClass]="{
+              'bg-green-100': raw.status === 'SUCCESS',
+              'bg-red-100': raw.status === 'FAILED',
+              'text-green-500': raw.status === 'SUCCESS',
+              'text-red-500': raw.status === 'FAILED',
+            }"
             [title]="raw"
-            (click)="handleClick(raw)"
+            (click)="handleClick(raw.rawId)"
           >
-            <span class="w-2 h-2 bg-indigo-700 rounded-full mr-2 animate-pulse"></span>
-            {{ article.rawMaterialIds.length > 1 ? raw.slice(0, 15) + '...' : raw }}
+            <span
+              class="w-2 h-2 rounded-full mr-2 animate-pulse"
+              [ngClass]="{
+                'bg-green-700': raw.status === 'SUCCESS',
+                'bg-red-700': raw.status === 'FAILED',
+              }"
+            ></span>
+            {{ article.sourceMaterials.length > 1 ? raw.id.slice(0, 15) + '...' : raw.rawId }}
           </span>
         }
       </div>
-
       @if (showTextArea) {
+        <div
+          style="font-size: 13px"
+          class="bg-indigo-50 text-indigo-700 rounded-xl p-2 mb-4 border border-gray-200 shadow-sm"
+        >
+          <a
+            class="text-indigo-600 hover:underline"
+            [href]="currentRawMaterial.url"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <i class="fa-solid fa-link mr-3"></i>
+            {{ currentRawMaterial.url.slice(0, 100) + '...' }}</a
+          >
+        </div>
+
         <div class="space-y-4">
           <textarea
             id="rawMaterialContent"
@@ -195,37 +221,34 @@
       }
     </div>
 
-    <!-- Aba: Histórico & Logs -->
+    <!-- Aba: Metadados TaskId -->
     <div
-      [attr.id]="'tab-logs'"
+      [attr.id]="'tab-metadatadados'"
       class="tab-content"
-      [ngClass]="{ active: activeTab === 'tab-logs' }"
+      [ngClass]="{ active: activeTab === 'tab-metadatadados' }"
     >
-      <ul class="space-y-3 text-sm text-gray-700" id="historyLogContent">
-        <li class="p-3 bg-gray-50 rounded-lg border border-gray-200">
-          Criado em: {{ article.createdAt || 'Data não informada' }}
-        </li>
-        <li class="p-3 bg-gray-50 rounded-lg border border-gray-200">
-          Atualizado em:
-          {{ article.updatedAt || 'Data não informada' }}
-        </li>
-      </ul>
+      <app-task-edit-infos [task]="article" />
+    </div>
+
+    <div
+      [attr.id]="'tab-actions'"
+      class="tab-content"
+      [ngClass]="{ active: activeTab === 'tab-actions' }"
+    >
+      <div class="p-5 border-t border-gray-100 bg-gray-50 flex justify-end gap-3">
+        <button
+          (click)="handleFlowAction('submit', article.taskId)"
+          class="px-4 py-2.5 rounded-xl text-sm font-semibold bg-green-500 text-white hover:bg-green-600 transition"
+        >
+          Submeter Post
+        </button>
+        <button
+          (click)="handleFlowAction('regenerate', article.taskId)"
+          class="px-4 py-2.5 rounded-xl text-sm font-semibold bg-blue-100 text-blue-700 hover:bg-blue-200 transition"
+        >
+          Gerar Novamente
+        </button>
+      </div>
     </div>
   </section>
-
-  <!-- FOOTER -->
-  <footer class="p-5 border-t border-gray-100 bg-gray-50 flex justify-end gap-3">
-    <button
-      (click)="handleFlowAction('submit', article.taskId)"
-      class="px-4 py-2.5 rounded-xl text-sm font-semibold bg-green-500 text-white hover:bg-green-600 transition"
-    >
-      Submeter Post
-    </button>
-    <button
-      (click)="handleFlowAction('regenerate', article.taskId)"
-      class="px-4 py-2.5 rounded-xl text-sm font-semibold bg-blue-100 text-blue-700 hover:bg-blue-200 transition"
-    >
-      Gerar Novamente
-    </button>
-  </footer>
 </aside>

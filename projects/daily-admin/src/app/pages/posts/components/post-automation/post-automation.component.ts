@@ -27,12 +27,6 @@ export class PostAutomationComponent {
   selectedArticle: IRawMaterial = {
     taskId: '',
     userId: '',
-    theme: null,
-    contentType: null,
-    rawMaterialIds: [],
-    suggestedImagePrompt: null,
-    createdAt: '',
-    updatedAt: '',
     status: {
       id: 0,
       name: '',
@@ -40,7 +34,12 @@ export class PostAutomationComponent {
       bgClass: '',
       textClass: '',
     },
-    sourceUrls: [],
+    theme: null,
+    contentType: null,
+    suggestedImagePrompt: null,
+    createdAt: '',
+    updatedAt: '',
+    sourceMaterials: [],
   };
   panelOpen: boolean = false;
   recentPosts: IRawMaterial[] = [];
@@ -93,12 +92,6 @@ export class PostAutomationComponent {
     this.selectedArticle = {
       taskId: '',
       userId: '',
-      theme: null,
-      contentType: null,
-      rawMaterialIds: [],
-      suggestedImagePrompt: null,
-      createdAt: '',
-      updatedAt: '',
       status: {
         id: 0,
         name: '',
@@ -106,7 +99,12 @@ export class PostAutomationComponent {
         bgClass: '',
         textClass: '',
       },
-      sourceUrls: [],
+      theme: null,
+      contentType: null,
+      suggestedImagePrompt: null,
+      createdAt: '',
+      updatedAt: '',
+      sourceMaterials: [],
     };
     // Remove a classe 'no-scroll' do <body>
     this.renderer.removeClass(document.body, 'no-scroll');

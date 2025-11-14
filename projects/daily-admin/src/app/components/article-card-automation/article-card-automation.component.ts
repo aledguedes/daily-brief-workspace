@@ -19,11 +19,10 @@ export class ArticleCardAutomationComponent {
     userId: '',
     theme: null,
     contentType: null,
-    rawMaterialIds: [],
+    sourceMaterials: [],
     suggestedImagePrompt: null,
     createdAt: '',
     updatedAt: '',
-    sourceUrls: [],
     status: {
       id: 0,
       name: '',
@@ -39,28 +38,21 @@ export class ArticleCardAutomationComponent {
   private readonly MAX_VISIBLE_IDS = 1;
 
   // Signals computados para evitar chamadas de funções no template
-  visibleRawMaterialIds = computed(() =>
-    this.taskSignal().rawMaterialIds.slice(0, this.MAX_VISIBLE_IDS),
+  visiblesourceMaterials = computed(() =>
+    this.taskSignal().sourceMaterials.slice(0, this.MAX_VISIBLE_IDS),
   );
 
-  hiddenIdsCount = computed(() => this.taskSignal().rawMaterialIds.length - this.MAX_VISIBLE_IDS);
-
+  hiddenIdsCount = computed(
+    () => Math.max(0, this.taskSignal().sourceMaterials.length - this.MAX_VISIBLE_IDS),
+  );
 
   // Signal para IDs formatados (evita toString().slice() no template)
   // Se houver apenas 1 item, mostra completo. Se houver mais, trunca.
-  formattedRawMaterialIds = computed(() => {
-    const ids = this.visibleRawMaterialIds();
-    const totalIds = this.taskSignal().rawMaterialIds.length;
-    
-    return ids.map(id => {
-      const idStr = id.toString();
-      // Se houver apenas 1 ID no total, mostra completo
-      if (totalIds === 1) {
-        return idStr;
-      }
-      // Se houver mais de 1 ID, trunca conforme o original
-      return idStr.slice(0, 29) + '...';
-    });
+  formattedsourceMaterials = computed(() => {
+    const materials = this.visiblesourceMaterials();
+    const total = this.taskSignal().sourceMaterials.length;
+
+    return materials.map((m) => (total === 1 ? m.id : m.id.slice(0, 29) + '...'));
   });
 
   // Getter para acessar a task no template
